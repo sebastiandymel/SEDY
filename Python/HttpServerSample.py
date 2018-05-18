@@ -15,15 +15,17 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
         #
         # PARSE HEADER
-        #
         
+        # http://127.0.0.1:8081/?id=1&category_Id=123&imie=seba
+        # 
+
         query = urlparse(self.path).query
         query_components = dict(qc.split("=") for qc in query.split("&"))
  
         # Send message back to client
         message = "Hello world!" + query_components["imie"]
-
-        for i in range(10000):        
+        
+        for i in range(100):        
             message = message + str(i) + "\n"
              
         # Write content as utf-8 data
