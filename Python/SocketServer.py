@@ -12,7 +12,19 @@ class MyUDPHandler(socketserver.BaseRequestHandler):
         data = self.request[0].strip()
         socket = self.request[1]
         print("{} wrote:".format(self.client_address[0]))
-        print(data)
+        
+        cmdValue = str(data)
+        
+        print(cmdValue[6:-1])
+
+        if cmdValue[6:-1] == "1":
+            socket.sendto(bytes("OK", "utf-8"), self.client_address)
+        else:
+            socket.sendto(bytes("ERR", "utf-8"), self.client_address)
+            
+
+
+        # Send response to client
         socket.sendto(data.upper(), self.client_address)
 
 if __name__ == "__main__":
