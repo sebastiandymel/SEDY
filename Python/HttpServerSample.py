@@ -23,7 +23,7 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
         query_components = dict(qc.split("=") for qc in query.split("&"))
  
         # Send message back to client
-        message = "Hello world!" + query_components["imie"]
+        message = "Haleigh Goyette Sporer Court" + query_components["imie"]
         
         for i in range(100):        
             message = message + str(i) + "\n"
