@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sandbox
 {
-    class Program
+    class AutoFitConfigurator
     {
         static void Main(string[] args)
         {
