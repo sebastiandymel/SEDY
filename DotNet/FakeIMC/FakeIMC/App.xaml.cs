@@ -21,6 +21,17 @@ namespace FakeIMC
             var mw = new MainWindow();
             mw.DataContext = new MainViewModel(new ImcModel());
             mw.Show();
+
+
+            var configuration = new Updater.UpdaterConfiguration()
+            { 
+                RemoteLocations = new [] {@"C:\temp"},
+                AppName = "FakeIMC",
+                CurrentVersion = new Version(2,3,4),
+                UpdateCheckInterval = 3000
+            };
+            var updateWatcher = new Updater.UpdaterService(new Updater.Updater(), configuration);
+            updateWatcher.StartMonitoring();
         }
     }
 
