@@ -38,8 +38,8 @@ namespace Updater
                 var newFile = Path.Combine(newDirPath, file.Name);
                 File.Copy(file.FullName, newFile);
                 ZipFile.ExtractToDirectory(newFile, newDirPath);
-                RemoveAllFilesFrom(newDirPath);
-
+                File.Delete(newFile);
+                
                 //
                 // CLOSE APP AND UPDATE
                 //

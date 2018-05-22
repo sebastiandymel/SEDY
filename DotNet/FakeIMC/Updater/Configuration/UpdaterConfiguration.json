@@ -1,0 +1,19 @@
+﻿{
+  
+    "RemoteLocations": [ "C:\\temp" ],
+
+    "AppName": "FakeIMC",
+
+    "UpdateCheckInterval": 3000.0,
+
+    "CurrentVersion": {
+      "Major": 2,
+      "Minor": 3,
+      "Build": 4,
+      "Revision": -1,
+      "MajorRevision": -1,
+      "MinorRevision": -1
+    }
+  }
+
+

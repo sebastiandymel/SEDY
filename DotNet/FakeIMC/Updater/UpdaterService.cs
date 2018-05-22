@@ -11,24 +11,40 @@ namespace Updater
     {
         private readonly Updater updater;
         private readonly UpdaterConfiguration configuration;
-        private readonly CancellationToken cancelationToken;
-        private bool autoUpdate;
+        private readonly IUpdateConfirmation confirmation;
+        private readonly CancellationTokenSource cancelationToken;
 
-        public UpdaterService(Updater updater, UpdaterConfiguration configuration)
+        public UpdaterService(Updater updater, UpdaterConfiguration configuration, IUpdateConfirmation confirmation)
         {
             this.updater = updater;
             this.configuration = configuration;
-            this.cancelationToken = new CancellationToken();
+            this.confirmation = confirmation;
+            this.cancelationToken = new CancellationTokenSource();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="updater"></param>
+        /// <param name="reader"></param>
+        /// <param name="confirmation"></param>
+        public UpdaterService(Updater updater, IUpdaterConfigurationReader reader, IUpdateConfirmation confirmation)
+            : this (updater, reader.Read(), confirmation)
+        {
         }
 
         /// <summary>
         /// Start monitoring for new version
         /// </summary>
         /// <param name="auto"></param>
-        public void StartMonitoring(bool auto = true)
+        public void StartMonitoring()
         {
-            this.autoUpdate = auto;
             Task.Factory.StartNew(async () => { await DoMonitor(); });
+        }
+
+        public void StopMonitoring()
+        {
+            this.cancelationToken?.Cancel();
         }
 
         private async Task DoMonitor()
@@ -38,14 +54,17 @@ namespace Updater
                 return;
             }
 
-            while (!this.cancelationToken.IsCancellationRequested)
+            while (!this.cancelationToken.Token.IsCancellationRequested)
             {
                 try
                 {
                     var chosenVersion = this.configuration.CurrentVersion;
                     FileInfo toUpdate = null;
+
                     foreach (var location in this.configuration.RemoteLocations)
                     {
+                        this.cancelationToken.Token.ThrowIfCancellationRequested();
+
                         if (!Directory.Exists(location))
                         {
                             continue;
@@ -60,6 +79,7 @@ namespace Updater
 
                         foreach (var item in files)
                         {
+                            this.cancelationToken.Token.ThrowIfCancellationRequested();
                             var fileVersion = GetVersion(item.Name);
                             if (fileVersion > chosenVersion)
                             {
@@ -71,18 +91,24 @@ namespace Updater
 
                     if (chosenVersion != this.configuration.CurrentVersion)
                     {
+                        this.cancelationToken.Token.ThrowIfCancellationRequested();
+
                         FileToUpdate = toUpdate;
                         NewVersionAvailable(this, EventArgs.Empty);
 
-                        if (this.autoUpdate)
+                        if (await this.confirmation.ShouldPerformUpdate(chosenVersion))
                         {
                             this.updater.Update(toUpdate);
                         }
+                        else
+                        {
+                            return;
+                        }
                     }
                 }
+                catch(TaskCanceledException) { }
                 catch
-                {
-
+                { 
                 }
 
                 await Task.Delay(TimeSpan.FromMilliseconds(this.configuration.UpdateCheckInterval));

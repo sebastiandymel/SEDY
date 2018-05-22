@@ -2,6 +2,10 @@
 
 namespace Updater
 {
+    /// <summary>
+    /// Configuration of the updater service
+    /// </summary>
+    [Serializable]
     public class UpdaterConfiguration
     {
         /// <summary>
@@ -19,6 +23,9 @@ namespace Updater
         /// </summary>
         public double UpdateCheckInterval { get; set; }
 
+        /// <summary>
+        /// Current version of the software
+        /// </summary>
         public Version CurrentVersion { get; set; }
     }
 }
