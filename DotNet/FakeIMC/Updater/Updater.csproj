@@ -64,6 +64,8 @@
     <Compile Include="UpdateConfirmation.cs" />
     <Compile Include="Updater.cs" />
     <Compile Include="UpdaterConfiguration.cs" />
+    <Compile Include="UpdateResult.cs" />
+    <Compile Include="UpdaterException.cs" />
     <Compile Include="UpdaterService.cs" />
     <Compile Include="UpdaterServiceFacade.cs" />
   </ItemGroup>

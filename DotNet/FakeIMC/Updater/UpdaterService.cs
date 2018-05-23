@@ -98,7 +98,11 @@ namespace Updater
 
                         FileToUpdate = toUpdate;
 
-                        await this.updater.Update(toUpdate, chosenVersion, confirmation);
+                        var result = await this.updater.Update(toUpdate, chosenVersion, confirmation);
+                        if (result == UpdateResult.UserStopped || result == UpdateResult.WrongFile)
+                        {
+                            return;
+                        }
                     }
                 }
                 catch(TaskCanceledException) { }

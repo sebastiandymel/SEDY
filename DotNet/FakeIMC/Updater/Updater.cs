@@ -15,11 +15,11 @@ namespace Updater
             this.closeApplicationImplementation = closeApplicationImplementation;
         }
 
-        public async Task Update(FileInfo file, Version newVersion, IUpdateConfirmation confirmation)
+        public async Task<UpdateResult> Update(FileInfo file, Version newVersion, IUpdateConfirmation confirmation)
         {
             if (file == null)
             {
-                return;
+                return UpdateResult.WrongFile;
             }
             try
             {
@@ -38,7 +38,7 @@ namespace Updater
                 var shouldDownloadFile = await confirmation.ShouldDownloadUpdate(newVersion);
                 if (!shouldDownloadFile)
                 {
-                    return;
+                    return UpdateResult.UserStopped;
                 }
 
                 Directory.CreateDirectory(newDirPath);
@@ -73,7 +73,7 @@ namespace Updater
                 var startInstallation = await confirmation.ShouldPerformUpdate(newVersion);
                 if (!startInstallation)
                 {
-                    return;
+                    return UpdateResult.UserStopped;
                 }
 
                 //
@@ -89,6 +89,8 @@ namespace Updater
                 await confirmation.NotifyUpdateFailed(ex.Message, ex.InnerException);
                 throw new UpdaterException("Update process failed.", ex);
             }
+
+            return UpdateResult.Success;
         }
 
         private static void RemoveAllFilesFrom(string newDirPath)
@@ -113,17 +115,6 @@ namespace Updater
             {
                 throw new UpdaterException("Update failed. It was not possible to remove temporary directory", ex);
             }
-        }
-    }
-
-    public class UpdaterException: Exception
-    {
-        public UpdaterException(string message) : base(message)
-        {
-        }
-
-        public UpdaterException(string message, Exception innerException) : base(message, innerException)
-        {
         }
     }
 }
