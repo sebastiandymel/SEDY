@@ -8,7 +8,17 @@ namespace Updater
     {
         public async Task<bool> ShouldPerformUpdate(Version newVersion)
         {
-            var result = MessageBox.Show($"New version of the software is available: [{newVersion}]. Click OK to proceed.", "NEW VERSION AVAILABLE", MessageBoxButton.OKCancel);
+            MessageBoxResult result = default(MessageBoxResult);
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                result = MessageBox.Show(
+                    Application.Current.MainWindow,
+                    $"New version of the software is available: [{newVersion}]. Click OK to proceed.",
+                    "NEW VERSION AVAILABLE",
+                    MessageBoxButton.OKCancel,
+                    MessageBoxImage.Information,
+                    MessageBoxResult.OK);
+            });
 
             return result == MessageBoxResult.OK;
         }

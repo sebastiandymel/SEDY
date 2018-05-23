@@ -49,10 +49,13 @@ namespace Updater
 
         private async Task DoMonitor()
         {
-            if (this.configuration.RemoteLocations == null || this.configuration.RemoteLocations.Length == 0)
+            if (!this.configuration.IsValid())
             {
                 return;
             }
+
+            // INITIAL DELAY WHEN STARTING APPLICATION
+            await Task.Delay(1000);
 
             while (!this.cancelationToken.Token.IsCancellationRequested)
             {
@@ -94,7 +97,6 @@ namespace Updater
                         this.cancelationToken.Token.ThrowIfCancellationRequested();
 
                         FileToUpdate = toUpdate;
-                        NewVersionAvailable(this, EventArgs.Empty);
 
                         if (await this.confirmation.ShouldPerformUpdate(chosenVersion))
                         {
@@ -107,7 +109,7 @@ namespace Updater
                     }
                 }
                 catch(TaskCanceledException) { }
-                catch
+                catch(Exception ex)
                 { 
                 }
 
@@ -144,9 +146,7 @@ namespace Updater
         }
 
         private FileInfo FileToUpdate {get;set;}
-
-        public event EventHandler NewVersionAvailable = delegate { };   
-        
+                
         public void RequestUpdate()
         {
             if (this.FileToUpdate != null)

@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.IO.Compression;
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace Updater
 {
     public class Updater
     {
-        public Updater()
-        {
+        private readonly Action closeApplicationImplementation;
 
+        public Updater(Action closeApplicationImplementation)
+        {
+            this.closeApplicationImplementation = closeApplicationImplementation;
         }
 
         public void Update(FileInfo file)
@@ -54,10 +52,7 @@ namespace Updater
                 //
                 // CLOSE APP AND UPDATE
                 //
-                System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() => 
-                {
-                    System.Windows.Application.Current.MainWindow.Close();
-                }));
+                this.closeApplicationImplementation?.Invoke();
                 
             }
             catch (Exception ex)

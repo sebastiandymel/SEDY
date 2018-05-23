@@ -14,10 +14,10 @@ namespace Updater
         public string[] RemoteLocations { get; set; }
 
         /// <summary>
-        /// Name of the app to match
+        /// Pattern to search updater file name. For example "*FakeIMC*.exe".
         /// </summary>
-        public string FilePattern { get; set; }    
-        
+        public string FilePattern { get; set; }
+
         /// <summary>
         /// Ms interval
         /// </summary>
@@ -27,5 +27,18 @@ namespace Updater
         /// Current version of the software
         /// </summary>
         public Version CurrentVersion { get; set; }
+
+        internal bool IsValid()
+        {
+            if (this.RemoteLocations == null ||
+                this.RemoteLocations.Length == 0 ||
+                string.IsNullOrEmpty(this.FilePattern) ||
+                this.UpdateCheckInterval == 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
