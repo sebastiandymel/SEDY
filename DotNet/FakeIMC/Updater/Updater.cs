@@ -43,13 +43,27 @@ namespace Updater
 
                 Directory.CreateDirectory(newDirPath);
                 var newFile = Path.Combine(newDirPath, file.Name);
-                File.Copy(file.FullName, newFile, overwrite: true);
+                try
+                {
+                    File.Copy(file.FullName, newFile, overwrite: true);
+                }
+                catch(Exception ex)
+                {
+                    throw new UpdaterException("Update failed. It was not possible to copy installer to local drive.", ex);
+                }
                 string installerFilePath = string.Empty;
 
                 if (file.Extension == ".zip")
                 {
-                    ZipFile.ExtractToDirectory(newFile, newDirPath);
-                    File.Delete(newFile);
+                    try
+                    {
+                        ZipFile.ExtractToDirectory(newFile, newDirPath);
+                        File.Delete(newFile);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new UpdaterException("Update failed. It was not possible to extract zip file", ex);
+                    }
                 }
                 if (file.Extension == ".exe")
                 {
@@ -72,7 +86,8 @@ namespace Updater
             }
             catch (Exception ex)
             {
-                UpdateFailed(this, EventArgs.Empty);
+                await confirmation.NotifyUpdateFailed(ex.Message, ex.InnerException);
+                throw new UpdaterException("Update process failed.", ex);
             }
         }
 
@@ -94,9 +109,21 @@ namespace Updater
                     Directory.Delete(newDirPath);
                 }
             }
-            catch { }
+            catch(Exception ex)
+            {
+                throw new UpdaterException("Update failed. It was not possible to remove temporary directory", ex);
+            }
+        }
+    }
+
+    public class UpdaterException: Exception
+    {
+        public UpdaterException(string message) : base(message)
+        {
         }
 
-        public event EventHandler UpdateFailed = delegate { };
+        public UpdaterException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }

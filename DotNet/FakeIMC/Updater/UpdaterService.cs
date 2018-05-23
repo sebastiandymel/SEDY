@@ -102,6 +102,10 @@ namespace Updater
                     }
                 }
                 catch(TaskCanceledException) { }
+                catch(UpdaterException ex)
+                {
+                    return;
+                }
                 catch(Exception ex)
                 { 
                 }

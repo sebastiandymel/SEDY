@@ -6,6 +6,19 @@ namespace Updater
 {
     public class UpdateConfirmation : IUpdateConfirmation
     {
+        public async Task NotifyUpdateFailed(string details, Exception ex)
+        {
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                MessageBox.Show(
+                    Application.Current.MainWindow,
+                    details + ex?.Message,
+                    "Update process failed",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            });
+        }
+
         public async Task<bool> ShouldDownloadUpdate(Version newVersion)
         {
             MessageBoxResult result = default(MessageBoxResult);
