@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.IO.Compression;
 using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Updater
 {
@@ -37,15 +39,26 @@ namespace Updater
                 Directory.CreateDirectory(newDirPath);
                 var newFile = Path.Combine(newDirPath, file.Name);
                 File.Copy(file.FullName, newFile);
-                ZipFile.ExtractToDirectory(newFile, newDirPath);
-                File.Delete(newFile);
-                
+                if (file.Extension == ".zip")
+                {
+                    ZipFile.ExtractToDirectory(newFile, newDirPath);
+                    File.Delete(newFile);
+                }
+                if (file.Extension == ".exe")
+                {
+                    ProcessStartInfo startInfo = new ProcessStartInfo(newFile);
+                    startInfo.Verb = "runas";
+                    Process.Start(startInfo);                    
+                }
+
                 //
                 // CLOSE APP AND UPDATE
                 //
-
-                // NOTIFY
-                UpdateSuccessful(this, EventArgs.Empty);
+                System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() => 
+                {
+                    System.Windows.Application.Current.MainWindow.Close();
+                }));
+                
             }
             catch (Exception ex)
             {
@@ -75,6 +88,5 @@ namespace Updater
         }
 
         public event EventHandler UpdateFailed = delegate { };
-        public event EventHandler UpdateSuccessful = delegate { };
     }
 }

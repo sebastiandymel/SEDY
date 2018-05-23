@@ -71,7 +71,7 @@ namespace Updater
                         }
 
                         var di = new DirectoryInfo(location);
-                        var files = di.GetFiles($"*{this.configuration.AppName}*.zip");
+                        var files = di.GetFiles(this.configuration.FilePattern);
                         if (files.Length == 0)
                         {
                             continue;

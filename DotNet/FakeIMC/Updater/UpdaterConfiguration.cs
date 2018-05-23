@@ -16,7 +16,7 @@ namespace Updater
         /// <summary>
         /// Name of the app to match
         /// </summary>
-        public string AppName { get; set; }    
+        public string FilePattern { get; set; }    
         
         /// <summary>
         /// Ms interval
