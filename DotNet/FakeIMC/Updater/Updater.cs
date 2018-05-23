@@ -2,6 +2,7 @@
 using System.IO.Compression;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Updater
 {
@@ -14,7 +15,7 @@ namespace Updater
             this.closeApplicationImplementation = closeApplicationImplementation;
         }
 
-        public void Update(FileInfo file)
+        public async Task Update(FileInfo file, Version newVersion, IUpdateConfirmation confirmation)
         {
             if (file == null)
             {
@@ -34,9 +35,17 @@ namespace Updater
                 //
                 // COPY ZIP FILE AND UNZIP TO TEMP FOLDER
                 // 
+                var shouldDownloadFile = await confirmation.ShouldDownloadUpdate(newVersion);
+                if (!shouldDownloadFile)
+                {
+                    return;
+                }
+
                 Directory.CreateDirectory(newDirPath);
                 var newFile = Path.Combine(newDirPath, file.Name);
-                File.Copy(file.FullName, newFile);
+                File.Copy(file.FullName, newFile, overwrite: true);
+                string installerFilePath = string.Empty;
+
                 if (file.Extension == ".zip")
                 {
                     ZipFile.ExtractToDirectory(newFile, newDirPath);
@@ -44,16 +53,22 @@ namespace Updater
                 }
                 if (file.Extension == ".exe")
                 {
-                    ProcessStartInfo startInfo = new ProcessStartInfo(newFile);
-                    startInfo.Verb = "runas";
-                    Process.Start(startInfo);                    
+                    installerFilePath = newFile;
+                }
+
+                var startInstallation = await confirmation.ShouldPerformUpdate(newVersion);
+                if (!startInstallation)
+                {
+                    return;
                 }
 
                 //
                 // CLOSE APP AND UPDATE
                 //
-                this.closeApplicationImplementation?.Invoke();
-                
+                ProcessStartInfo startInfo = new ProcessStartInfo(installerFilePath);
+                startInfo.Verb = "runas";
+                Process.Start(startInfo);
+                this.closeApplicationImplementation?.Invoke();                
             }
             catch (Exception ex)
             {

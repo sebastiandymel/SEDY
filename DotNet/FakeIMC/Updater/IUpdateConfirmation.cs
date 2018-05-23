@@ -15,5 +15,7 @@ namespace Updater
         /// <param name="newVersion">New Version of the software available to update</param>
         /// <returns></returns>
         Task<bool> ShouldPerformUpdate(Version newVersion);
+
+        Task<bool> ShouldDownloadUpdate(Version newVersion);
     }
 }

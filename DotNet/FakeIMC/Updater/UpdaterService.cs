@@ -98,14 +98,7 @@ namespace Updater
 
                         FileToUpdate = toUpdate;
 
-                        if (await this.confirmation.ShouldPerformUpdate(chosenVersion))
-                        {
-                            this.updater.Update(toUpdate);
-                        }
-                        else
-                        {
-                            return;
-                        }
+                        await this.updater.Update(toUpdate, chosenVersion, confirmation);
                     }
                 }
                 catch(TaskCanceledException) { }
@@ -146,13 +139,5 @@ namespace Updater
         }
 
         private FileInfo FileToUpdate {get;set;}
-                
-        public void RequestUpdate()
-        {
-            if (this.FileToUpdate != null)
-            {
-                this.updater.Update(FileToUpdate);
-            }
-        }
     }
 }
