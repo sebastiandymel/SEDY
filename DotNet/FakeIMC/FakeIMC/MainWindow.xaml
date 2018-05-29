@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:FakeIMC"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
     Title="FAKE IMC MODULE"
     Width="800"
     Height="450"
@@ -22,6 +23,128 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
+
+
+        <!--
+            DIALOG HOST
+        -->
+
+        <materialDesign:DialogHost
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="3"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+            <materialDesign:DialogHost.DialogContent>
+
+                <StackPanel Margin="16">
+
+                    <TextBlock>Add a new fruit.</TextBlock>
+
+                    <TextBox
+                        x:Name="FruitTextBox"
+                        Margin="0,8,0,0"
+                        HorizontalAlignment="Stretch" />
+
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+
+                        <Button
+                            Margin="0,8,8,0"
+                            Command="materialDesign:DialogHost.CloseDialogCommand"
+                            IsDefault="True"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+
+                            <Button.CommandParameter>
+
+                                <system:Boolean>True</system:Boolean>
+
+                            </Button.CommandParameter>
+                            ACCEPT
+                        </Button>
+
+                        <Button
+                            Margin="0,8,8,0"
+                            Command="materialDesign:DialogHost.CloseDialogCommand"
+                            IsCancel="True"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+
+                            <Button.CommandParameter>
+
+                                <system:Boolean>False</system:Boolean>
+
+                            </Button.CommandParameter>
+                            CANCEL
+                        </Button>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+            </materialDesign:DialogHost.DialogContent>
+
+            <Border
+                MinWidth="256"
+                MinHeight="256"
+                BorderBrush="{DynamicResource PrimaryHueMidBrush}"
+                BorderThickness="1"
+                ClipToBounds="True">
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="*" />
+
+                        <RowDefinition Height="Auto" />
+
+                    </Grid.RowDefinitions>
+
+                    <ListBox x:Name="FruitListBox">
+
+                        <ListBoxItem>Apple</ListBoxItem>
+
+                        <ListBoxItem>Banana</ListBoxItem>
+
+                        <ListBoxItem>Pear</ListBoxItem>
+
+                    </ListBox>
+
+                    <materialDesign:ColorZone
+                        Grid.Row="1"
+                        Effect="{DynamicResource MaterialDesignShadowDepth5}"
+                        Mode="PrimaryMid">
+
+                        <TextBlock Margin="16">Fruit Bowl</TextBlock>
+
+                    </materialDesign:ColorZone>
+
+                    <Button
+                        Grid.Row="0"
+                        Margin="0,0,28,-20"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
+
+                        <Viewbox Width="22" Height="22">
+
+                            <Canvas Width="24" Height="24">
+
+                                <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" />
+
+                            </Canvas>
+
+                        </Viewbox>
+
+                    </Button>
+
+                </Grid>
+
+            </Border>
+
+        </materialDesign:DialogHost>
+
+
 
 
 
@@ -139,118 +262,27 @@
 
         <Grid
             Grid.Row="1"
-            Grid.Column="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
             Margin="16">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button
-                    Grid.Column="1"
-                    Margin="0,20,24,0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Click="Button_Click"
-                    Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
-                    ToolTip="Export to XML">
-                    <materialDesign:PackIcon
-                        Width="32"
-                        Height="32"
-                        Kind="Export" />
-                </Button>
-                <Button
-                    Grid.Column="1"
-                    Margin="0,20,24,0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Click="Button_Click"
-                    Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
-                    ToolTip="Connect to NOAH">
-                    <materialDesign:PackIcon
-                        Width="32"
-                        Height="32"
-                        Kind="Autorenew" />
-                </Button>
-                <Button
-                    Grid.Column="1"
-                    Margin="0,20,24,0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
-                    ToolTip="Import from XML">
-                    <materialDesign:PackIcon
-                        Width="32"
-                        Height="32"
-                        Kind="Import" />
-                </Button>
+                <ToolBarTray VerticalAlignment="Top">
+                    <ToolBar
+                        ClipToBounds="False"
+                        Header="Configuration:"
+                        Style="{DynamicResource MaterialDesignToolBar}">
 
-                <materialDesign:PopupBox
-                    Margin="0,20,24,0"
-                    VerticalAlignment="Top"
-                    PlacementMode="BottomAndAlignCentres"
-                    Style="{StaticResource MaterialDesignMultiFloatingActionAccentPopupBox}"
-                    ToolTip="Send error">
-                    <materialDesign:PopupBox.ToggleCheckedContent>
-                        <materialDesign:PackIcon
-                            Width="32"
-                            Height="32"
-                            Kind="GestureTap" />
-                    </materialDesign:PopupBox.ToggleCheckedContent>
-                    <materialDesign:PopupBox.ToggleContent>
-                        <materialDesign:PackIcon
-                            Width="32"
-                            Height="32"
-                            Kind="RepeatOff" />
-                    </materialDesign:PopupBox.ToggleContent>
-                    <StackPanel>
-                        <Button ToolTip="One">
-                            1
-                        </Button>
-                        <Button IsEnabled="False" ToolTip="Two">
-                            2
-                        </Button>
-                        <Button ToolTip="Three">
-                            3
-                        </Button>
-                    </StackPanel>
-                </materialDesign:PopupBox>
+                        <CheckBox Content="Randomize curves" />
+                        <CheckBox Content="Add REUG to REAG" />
+                        <Separator />
+                        <CheckBox Content="Heart beat" />
+                        <Separator />
+                        <ComboBox materialDesign:HintAssist.Hint="Send error" />
+
+                    </ToolBar>
+                </ToolBarTray>
 
             </StackPanel>
-            <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}">
-                <materialDesign:Flipper.FrontContent>
-                    <Button
-                        Width="192"
-                        Margin="8"
-                        Command="{x:Static materialDesign:Flipper.FlipCommand}"
-                        Style="{StaticResource MaterialDesignFlatButton}">
-                        ADVANCED SETTINGS
-                    </Button>
-                </materialDesign:Flipper.FrontContent>
-                <materialDesign:Flipper.BackContent>
-                    <Grid Height="256" HorizontalAlignment="Stretch">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <materialDesign:ColorZone Padding="6" Mode="PrimaryMid">
-                            <StackPanel Orientation="Horizontal">
-                                <Button
-                                    HorizontalAlignment="Left"
-                                    Command="{x:Static materialDesign:Flipper.FlipCommand}"
-                                    Style="{StaticResource MaterialDesignToolForegroundButton}">
-                                    <materialDesign:PackIcon HorizontalAlignment="Right" Kind="ArrowLeft" />
-                                </Button>
-                                <TextBlock Margin="8,0,0,0" VerticalAlignment="Center">
-                                    EDIT RESPONSE
-                                </TextBlock>
-                            </StackPanel>
-                        </materialDesign:ColorZone>
-                        <Grid
-                            Grid.Row="1"
-                            Width="480"
-                            Margin="0,6,0,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Top" />
-                    </Grid>
-                </materialDesign:Flipper.BackContent>
-            </materialDesign:Flipper>
         </Grid>
     </Grid>
 </Window>

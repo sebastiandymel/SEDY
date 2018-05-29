@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeContract", "FakeContrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater.csproj", "{C3978E71-FB77-42C1-A788-B1827E09E40D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater.Wcf", "Updater.Wcf\Updater.Wcf.csproj", "{CBED66E1-6537-4B1C-93A9-ACA586D846F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C3978E71-FB77-42C1-A788-B1827E09E40D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3978E71-FB77-42C1-A788-B1827E09E40D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3978E71-FB77-42C1-A788-B1827E09E40D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBED66E1-6537-4B1C-93A9-ACA586D846F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBED66E1-6537-4B1C-93A9-ACA586D846F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBED66E1-6537-4B1C-93A9-ACA586D846F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBED66E1-6537-4B1C-93A9-ACA586D846F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
