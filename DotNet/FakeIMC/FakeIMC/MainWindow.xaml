@@ -24,12 +24,6 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-
-
-
-
-
-
         <StackPanel
             Grid.RowSpan="3"
             Grid.Column="1"
@@ -140,11 +134,6 @@
                 <materialDesign:PackIcon Kind="Heart" />
             </materialDesign:ToggleButtonAssist.OnContent>
         </ToggleButton>
-
-
-
-
-
 
         <Grid
             Grid.Row="1"
@@ -264,14 +253,9 @@
                             Width="25"
                             Height="25"
                             Kind="Palette" />
-
-
                     </Button>
-
                 </Grid>
-
             </Border>
-
         </materialDesign:DialogHost>
     </Grid>
 </Window>

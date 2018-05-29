@@ -68,8 +68,8 @@ namespace FakeIMC
             });
         }
 
-        public ReactiveCommand LightDarkSwitch { get; set; }
         public IEnumerable<Swatch> Swatches { get; set; }
+        public ReactiveCommand LightDarkSwitch { get; set; }        
         public ReactiveCommand<Swatch> ApplyPrimaryCommand { get; }
     }
 
