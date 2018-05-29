@@ -18,7 +18,7 @@ namespace FakeIMC
                 int i = 0;
                 while (true)
                 {
-                    await Task.Delay(200);
+                    await Task.Delay(50);
                     DataChanged.OnNext(new LogItem
                     {
                         Text= "Some value " + i++,

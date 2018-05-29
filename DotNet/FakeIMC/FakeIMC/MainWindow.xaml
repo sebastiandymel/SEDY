@@ -85,6 +85,12 @@
             <ScrollViewer>
                 <Grid Background="#FF012456">
                     <ItemsControl Margin="8" ItemsSource="{Binding Log}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type local:LogItem}">
                                 <TextBlock
@@ -170,8 +176,8 @@
             Grid.RowSpan="4"
             Grid.ColumnSpan="5"
             HorizontalAlignment="Stretch"
-            Background="{DynamicResource MaterialDesignPaper}"
-            VerticalAlignment="Stretch">
+            VerticalAlignment="Stretch"
+            Background="{DynamicResource MaterialDesignPaper}">
 
             <materialDesign:DialogHost.DialogContent>
 
@@ -198,16 +204,22 @@
                     </ScrollViewer>
 
 
+                    <materialDesign:Card
+                        Grid.Row="1"
+                        Margin="0,16,0,0"
+                        Padding="16"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                        <StackPanel
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal">
+                            <Label Content="Switch Dark/Light: " />
+                            <ToggleButton Command="{Binding Skin.LightDarkSwitch}" />
+                        </StackPanel>
+                    </materialDesign:Card>
                     <StackPanel
                         Grid.Row="1"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Bottom"
-                        Orientation="Horizontal">
-                        <Label Content="Switch Dark/Light: " />
-                        <ToggleButton Margin="0,0,0,4" Command="{Binding Skin.LightDarkSwitch}" />
-                    </StackPanel>
-                    <StackPanel
-                        Grid.Row="1"
+                        Margin="0,22,0,0"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
                         <Button
