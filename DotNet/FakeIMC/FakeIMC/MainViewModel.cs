@@ -1,5 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
+using MaterialDesignColors;
+using MaterialDesignThemes.Wpf;
 using Reactive.Bindings;
+using System.Collections.Generic;
+using System.Reactive;
 using System.Reactive.Linq;
 
 namespace FakeIMC
@@ -35,6 +39,13 @@ namespace FakeIMC
 
             ClearLog = new ReactiveCommand();
             ClearLog.Subscribe(() => Log.Clear());
+
+            Swatches = new SwatchesProvider().Swatches;
+            ApplyPrimaryCommand = new ReactiveCommand<Swatch>();
+            ApplyPrimaryCommand.Subscribe(Observer.Create<Swatch>(s =>
+            {
+                new PaletteHelper().ReplacePrimaryColor(s);
+            }));
         }
 
         public ReactiveCommand ClearLog { get; set; }
@@ -45,6 +56,13 @@ namespace FakeIMC
         public ReactiveCollection<LogItem> Log { get; set; }
 
         public ReactiveCommand LightDarkSwitch { get; set; }
+
+
+        public IEnumerable<Swatch> Swatches { get; set; }
+
+        public ReactiveCommand<Swatch> ApplyPrimaryCommand { get; } 
+
+
     }
 
     public class LogItem

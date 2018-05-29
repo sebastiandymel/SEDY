@@ -25,126 +25,6 @@
         </Grid.RowDefinitions>
 
 
-        <!--
-            DIALOG HOST
-        -->
-
-        <materialDesign:DialogHost
-            Grid.RowSpan="3"
-            Grid.ColumnSpan="3"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <materialDesign:DialogHost.DialogContent>
-
-                <StackPanel Margin="16">
-
-                    <TextBlock>Add a new fruit.</TextBlock>
-
-                    <TextBox
-                        x:Name="FruitTextBox"
-                        Margin="0,8,0,0"
-                        HorizontalAlignment="Stretch" />
-
-                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-
-                        <Button
-                            Margin="0,8,8,0"
-                            Command="materialDesign:DialogHost.CloseDialogCommand"
-                            IsDefault="True"
-                            Style="{StaticResource MaterialDesignFlatButton}">
-
-                            <Button.CommandParameter>
-
-                                <system:Boolean>True</system:Boolean>
-
-                            </Button.CommandParameter>
-                            ACCEPT
-                        </Button>
-
-                        <Button
-                            Margin="0,8,8,0"
-                            Command="materialDesign:DialogHost.CloseDialogCommand"
-                            IsCancel="True"
-                            Style="{StaticResource MaterialDesignFlatButton}">
-
-                            <Button.CommandParameter>
-
-                                <system:Boolean>False</system:Boolean>
-
-                            </Button.CommandParameter>
-                            CANCEL
-                        </Button>
-
-                    </StackPanel>
-
-                </StackPanel>
-
-            </materialDesign:DialogHost.DialogContent>
-
-            <Border
-                MinWidth="256"
-                MinHeight="256"
-                BorderBrush="{DynamicResource PrimaryHueMidBrush}"
-                BorderThickness="1"
-                ClipToBounds="True">
-
-                <Grid>
-
-                    <Grid.RowDefinitions>
-
-                        <RowDefinition Height="*" />
-
-                        <RowDefinition Height="Auto" />
-
-                    </Grid.RowDefinitions>
-
-                    <ListBox x:Name="FruitListBox">
-
-                        <ListBoxItem>Apple</ListBoxItem>
-
-                        <ListBoxItem>Banana</ListBoxItem>
-
-                        <ListBoxItem>Pear</ListBoxItem>
-
-                    </ListBox>
-
-                    <materialDesign:ColorZone
-                        Grid.Row="1"
-                        Effect="{DynamicResource MaterialDesignShadowDepth5}"
-                        Mode="PrimaryMid">
-
-                        <TextBlock Margin="16">Fruit Bowl</TextBlock>
-
-                    </materialDesign:ColorZone>
-
-                    <Button
-                        Grid.Row="0"
-                        Margin="0,0,28,-20"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom"
-                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
-                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
-
-                        <Viewbox Width="22" Height="22">
-
-                            <Canvas Width="24" Height="24">
-
-                                <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" />
-
-                            </Canvas>
-
-                        </Viewbox>
-
-                    </Button>
-
-                </Grid>
-
-            </Border>
-
-        </materialDesign:DialogHost>
-
-
 
 
 
@@ -284,5 +164,104 @@
 
             </StackPanel>
         </Grid>
+
+
+        <materialDesign:DialogHost
+            Grid.RowSpan="4"
+            Grid.ColumnSpan="5"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+
+            <materialDesign:DialogHost.DialogContent>
+
+                <StackPanel Margin="16">
+
+                    <ScrollViewer
+                        Margin="0,12,0,0"
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Auto">
+
+                        <ItemsControl
+                            MaxWidth="600"
+                            ItemTemplate="{DynamicResource DataTemplate.Swatch}"
+                            ItemsSource="{Binding Swatches, Mode=OneTime}">
+
+                            <ItemsControl.ItemsPanel>
+
+                                <ItemsPanelTemplate>
+
+                                    <WrapPanel />
+
+                                </ItemsPanelTemplate>
+
+                            </ItemsControl.ItemsPanel>
+
+                        </ItemsControl>
+
+                    </ScrollViewer>
+
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+
+                        <Button
+                            Margin="0,8,8,0"
+                            Command="materialDesign:DialogHost.CloseDialogCommand"
+                            IsDefault="True"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+
+                            <Button.CommandParameter>
+
+                                <system:Boolean>True</system:Boolean>
+
+                            </Button.CommandParameter>
+                            ACCEPT
+                        </Button>
+
+                        <Button
+                            Margin="0,8,8,0"
+                            Command="materialDesign:DialogHost.CloseDialogCommand"
+                            IsCancel="True"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+
+                            <Button.CommandParameter>
+
+                                <system:Boolean>False</system:Boolean>
+
+                            </Button.CommandParameter>
+                            CANCEL
+                        </Button>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+            </materialDesign:DialogHost.DialogContent>
+
+            <Border ClipToBounds="True">
+
+                <Grid>
+
+                    <Button
+                        Grid.Row="0"
+                        Margin="0,0,16,16"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        ToolTip="Change skin">
+
+
+                        <materialDesign:PackIcon
+                            Width="25"
+                            Height="25"
+                            Kind="Palette" />
+
+
+                    </Button>
+
+                </Grid>
+
+            </Border>
+
+        </materialDesign:DialogHost>
     </Grid>
 </Window>
