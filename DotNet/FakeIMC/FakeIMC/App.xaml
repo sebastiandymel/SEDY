@@ -103,7 +103,7 @@
                             </Border.Background>
 
                             <Button
-                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ApplyPrimaryCommand, Mode=OneTime}"
+                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Skin.ApplyPrimaryCommand, Mode=OneTime}"
                                 CommandParameter="{Binding}"
                                 Style="{DynamicResource Style.PalleteButton}">
 

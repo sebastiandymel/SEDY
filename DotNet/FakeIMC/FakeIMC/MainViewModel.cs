@@ -28,24 +28,12 @@ namespace FakeIMC
                 });
 
 
-            var light = false;
-            var pallette = new MaterialDesignThemes.Wpf.PaletteHelper();
-            LightDarkSwitch = new ReactiveCommand();
-            LightDarkSwitch.Subscribe(() => 
-            {
-                light = !light;
-                pallette.SetLightDark(light);                
-            });
+
 
             ClearLog = new ReactiveCommand();
             ClearLog.Subscribe(() => Log.Clear());
 
-            Swatches = new SwatchesProvider().Swatches;
-            ApplyPrimaryCommand = new ReactiveCommand<Swatch>();
-            ApplyPrimaryCommand.Subscribe(Observer.Create<Swatch>(s =>
-            {
-                new PaletteHelper().ReplacePrimaryColor(s);
-            }));
+
         }
 
         public ReactiveCommand ClearLog { get; set; }
@@ -55,14 +43,34 @@ namespace FakeIMC
         /// </summary>
         public ReactiveCollection<LogItem> Log { get; set; }
 
+        public SkinViewModel Skin { get; } = new SkinViewModel();
+
+    }
+
+    public class SkinViewModel
+    {
+        public SkinViewModel()
+        {
+            Swatches = new SwatchesProvider().Swatches;
+            ApplyPrimaryCommand = new ReactiveCommand<Swatch>();
+            ApplyPrimaryCommand.Subscribe(Observer.Create<Swatch>(s =>
+            {
+                new PaletteHelper().ReplacePrimaryColor(s);
+            }));
+
+            var light = false;
+            var pallette = new PaletteHelper();
+            LightDarkSwitch = new ReactiveCommand();
+            LightDarkSwitch.Subscribe(() =>
+            {
+                light = !light;
+                pallette.SetLightDark(light);
+            });
+        }
+
         public ReactiveCommand LightDarkSwitch { get; set; }
-
-
         public IEnumerable<Swatch> Swatches { get; set; }
-
-        public ReactiveCommand<Swatch> ApplyPrimaryCommand { get; } 
-
-
+        public ReactiveCommand<Swatch> ApplyPrimaryCommand { get; }
     }
 
     public class LogItem

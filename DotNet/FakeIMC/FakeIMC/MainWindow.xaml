@@ -170,38 +170,46 @@
             Grid.RowSpan="4"
             Grid.ColumnSpan="5"
             HorizontalAlignment="Stretch"
+            Background="{DynamicResource MaterialDesignPaper}"
             VerticalAlignment="Stretch">
 
             <materialDesign:DialogHost.DialogContent>
 
-                <StackPanel Margin="16">
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
                     <ScrollViewer
                         Margin="0,12,0,0"
                         HorizontalScrollBarVisibility="Disabled"
                         VerticalScrollBarVisibility="Auto">
-
                         <ItemsControl
                             MaxWidth="600"
                             ItemTemplate="{DynamicResource DataTemplate.Swatch}"
-                            ItemsSource="{Binding Swatches, Mode=OneTime}">
-
+                            ItemsSource="{Binding Skin.Swatches, Mode=OneTime}">
                             <ItemsControl.ItemsPanel>
-
                                 <ItemsPanelTemplate>
-
                                     <WrapPanel />
-
                                 </ItemsPanelTemplate>
-
                             </ItemsControl.ItemsPanel>
-
                         </ItemsControl>
-
                     </ScrollViewer>
 
-                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 
+                    <StackPanel
+                        Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Orientation="Horizontal">
+                        <Label Content="Switch Dark/Light: " />
+                        <ToggleButton Margin="0,0,0,4" Command="{Binding Skin.LightDarkSwitch}" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="1"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
                         <Button
                             Margin="0,8,8,0"
                             Command="materialDesign:DialogHost.CloseDialogCommand"
@@ -211,7 +219,6 @@
                             <Button.CommandParameter>
 
                                 <system:Boolean>True</system:Boolean>
-
                             </Button.CommandParameter>
                             ACCEPT
                         </Button>
@@ -221,25 +228,16 @@
                             Command="materialDesign:DialogHost.CloseDialogCommand"
                             IsCancel="True"
                             Style="{StaticResource MaterialDesignFlatButton}">
-
                             <Button.CommandParameter>
-
                                 <system:Boolean>False</system:Boolean>
-
                             </Button.CommandParameter>
                             CANCEL
                         </Button>
-
                     </StackPanel>
-
-                </StackPanel>
-
+                </Grid>
             </materialDesign:DialogHost.DialogContent>
-
             <Border ClipToBounds="True">
-
                 <Grid>
-
                     <Button
                         Grid.Row="0"
                         Margin="0,0,16,16"
