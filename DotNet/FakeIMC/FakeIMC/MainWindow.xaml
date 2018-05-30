@@ -109,21 +109,43 @@
             </ScrollViewer>
         </GroupBox>
 
-        <Button
+        <StackPanel
             Grid.Column="2"
-            Width="24"
-            Height="24"
-            Margin="0,20,24,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
-            Command="{Binding ClearLog}"
-            Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-            ToolTip="Clear log">
-            <materialDesign:PackIcon
-                Width="16"
-                Height="16"
-                Kind="PlaylistRemove" />
-        </Button>
+            Orientation="Horizontal">
+            <ToggleButton
+                Width="24"
+                Height="24"
+                Margin="0,20,8,0"
+                IsChecked="True"
+                Style="{StaticResource MaterialDesignActionAccentToggleButton}"
+                ToolTip="MaterialDesignActionAccentToggleButton">
+                <materialDesign:PackIcon
+                    Width="16"
+                    Height="16"
+                    Kind="PlaylistRemove" />
+                <materialDesign:ToggleButtonAssist.OnContent>
+                    <materialDesign:PackIcon
+                        Width="16"
+                        Height="16"
+                        Kind="PlaylistCheck" />
+                </materialDesign:ToggleButtonAssist.OnContent>
+            </ToggleButton>
+            <Button
+                Width="24"
+                Height="24"
+                Margin="0,20,24,0"
+                Command="{Binding ClearLog}"
+                Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                ToolTip="Clear log">
+                <materialDesign:PackIcon
+                    Width="16"
+                    Height="16"
+                    Kind="DeleteForever" />
+            </Button>
+        </StackPanel>
+
 
 
         <ToggleButton Style="{StaticResource MaterialDesignActionToggleButton}" ToolTip="Hear beat on/off">
