@@ -78,7 +78,11 @@
             Style="{DynamicResource MaterialDesignGroupBox}">
             <ScrollViewer>
                 <Grid Background="#FF012456">
-                    <ItemsControl Margin="8" ItemsSource="{Binding Log}">
+                    <ItemsControl
+                        Margin="8"
+                        ItemsSource="{Binding Log}"
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        VirtualizingStackPanel.VirtualizationMode="Recycling">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel />
@@ -92,7 +96,8 @@
                                     FontFamily="Lucida Console"
                                     FontSize="14"
                                     Foreground="White"
-                                    Text="{Binding Text}" />
+                                    Text="{Binding Text}"
+                                    TextWrapping="Wrap" />
 
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding Severity}" Value="Error">

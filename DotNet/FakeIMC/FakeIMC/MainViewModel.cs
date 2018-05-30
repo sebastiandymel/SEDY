@@ -2,6 +2,7 @@
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using Reactive.Bindings;
+using System;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -21,11 +22,13 @@ namespace FakeIMC
 
 
 
-            this.model.DataChanged.ObserveOn(UIDispatcherScheduler.Default).ForEachAsync<LogItem>(
-                c =>
+            this.model.DataChanged
+                .Buffer(System.TimeSpan.FromMilliseconds(500))
+                .ObserveOn(UIDispatcherScheduler.Default)
+                .Subscribe(Observer.Create<IList<LogItem>>(c =>
                 {
-                    Log.Add(c);
-                });
+                    Log.AddRangeOnScheduler(c);
+                }));
 
 
 
