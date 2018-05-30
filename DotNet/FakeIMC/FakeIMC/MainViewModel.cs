@@ -38,7 +38,6 @@ namespace FakeIMC
             {
                 Log.Clear();
 
-                throw new InvalidOperationException("SOme exception details sadsad ds ads ads dsa dsa das a sad sa");
                 });
 
 
