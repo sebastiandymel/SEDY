@@ -279,5 +279,12 @@
                 </Grid>
             </Border>
         </materialDesign:DialogHost>
+
+        <materialDesign:DialogHost
+            Grid.RowSpan="4"
+            Grid.ColumnSpan="5"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Identifier="RootDialog" />
     </Grid>
 </Window>

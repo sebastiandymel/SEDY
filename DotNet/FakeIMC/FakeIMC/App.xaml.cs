@@ -25,7 +25,7 @@ namespace FakeIMC
             mw.Show();
 
 
-            UpdaterServiceFacade.Run();
+            UpdaterServiceFacade.Run(new UpdaterNorification());
         }
     }
 }
