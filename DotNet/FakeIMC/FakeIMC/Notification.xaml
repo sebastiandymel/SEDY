@@ -21,6 +21,12 @@
                 Margin="8,24,0,8"
                 Style="{DynamicResource MaterialDesignSubheadingTextBlock}"
                 Text="{Binding Message}" />
+            <TextBlock
+                Margin="8,8,0,8"
+                FontStyle="Italic"
+                IsEnabled="False"
+                Style="{DynamicResource MaterialDesignBody1TextBlock}"
+                Text="{Binding Message2}" />
         </StackPanel>
         <StackPanel
             Grid.Row="1"

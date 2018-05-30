@@ -9,26 +9,46 @@ namespace FakeIMC
     {
         public async Task NotifyUpdateFailed(string details, Exception ex)
         {
-            await Show("UPDATE FAILED", details + Environment.NewLine + ex?.Message);
+            await NotificationHelper.Show(
+                "UPDATE FAILED", 
+                details,
+                ex?.Message);
         }
         public async Task<bool> ShouldDownloadUpdate(Version newVersion)
         {
-            return await Show("NEW UPDATE AVAILABLE", $"New version of the software is available: [{newVersion}]. Click OK to download.");
+            return await NotificationHelper.Show(
+                $"NEW UPDATE AVAILABLE [{newVersion}]", 
+                $"New version of the software is available. Click OK to download.",
+                "Note: Installer will be downloaded to temporary location and then you will be prompted to proceed.");
         }
         public async Task<bool> ShouldPerformUpdate(Version newVersion)
         {
-            return await Show("NEW VERSION READY TO INSTALL", $"New version of the software: [{newVersion}] is downloaded and ready to install. Click OK to proceed.");
+            return await NotificationHelper.Show(
+                $"NEW VERSION [{newVersion}] READY TO INSTALL", 
+                $"New version of the software is downloaded and ready to install. Click OK to proceed.",
+                "Note: Application will close and installer will run!");
         }
+    }
 
-        private Task<bool> Show(string title, string msg)
+    public class NotificationViewModel
+    {
+        public string Title { get; set; }
+        public string Message { get; set; }
+        public string Message2 { get; set; }
+    }
+
+    internal static class NotificationHelper
+    {
+        internal static Task<bool> Show(string title, string msg, string msg2 = null)
         {
-            TaskCompletionSource<bool> result = new TaskCompletionSource<bool>(); 
+            TaskCompletionSource<bool> result = new TaskCompletionSource<bool>();
             Application.Current.Dispatcher.InvokeAsync(async () =>
             {
                 var vm = new NotificationViewModel
                 {
-                   Title = title,
-                   Message= msg
+                    Title = title,
+                    Message = msg,
+                    Message2 = msg2
 
                 };
                 var view = new Notification()
@@ -41,12 +61,4 @@ namespace FakeIMC
             return result.Task;
         }
     }
-
-    public class NotificationViewModel
-    {
-        public string Title { get; set; }
-        public string Message { get; set; }
-    }
-
-    
 }

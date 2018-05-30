@@ -145,7 +145,7 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
             StaysOpen="True"
-            ToolTip="Choose desired log level:">
+            ToolTip="Choose desired log verbosity">
 
             <StackPanel Background="Transparent" Orientation="Vertical">
                 <CheckBox

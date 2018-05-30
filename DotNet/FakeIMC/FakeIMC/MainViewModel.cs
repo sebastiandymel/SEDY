@@ -34,7 +34,12 @@ namespace FakeIMC
 
 
             ClearLog = new ReactiveCommand();
-            ClearLog.Subscribe(() => Log.Clear());
+            ClearLog.Subscribe(() => 
+            {
+                Log.Clear();
+
+                throw new InvalidOperationException("SOme exception details sadsad ds ads ads dsa dsa das a sad sa");
+                });
 
 
         }
