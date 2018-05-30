@@ -78,11 +78,7 @@
             Style="{DynamicResource MaterialDesignGroupBox}">
             <ScrollViewer>
                 <Grid Background="#FF012456">
-                    <ItemsControl
-                        Margin="8"
-                        ItemsSource="{Binding Log}"
-                        VirtualizingStackPanel.IsVirtualizing="True"
-                        VirtualizingStackPanel.VirtualizationMode="Recycling">
+                    <ItemsControl Margin="8" ItemsSource="{Binding Log}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel />
@@ -106,6 +102,35 @@
                                     <DataTrigger Binding="{Binding Severity}" Value="Warning">
                                         <Setter TargetName="item" Property="Foreground" Value="Yellow" />
                                     </DataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Severity}" Value="Normal" />
+                                            <Condition Binding="{Binding ElementName=InfoCheck, Path=IsChecked}" Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Severity}" Value="Warning" />
+                                            <Condition Binding="{Binding ElementName=WarningCheck, Path=IsChecked}" Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Severity}" Value="Error" />
+                                            <Condition Binding="{Binding ElementName=ErrorCheck, Path=IsChecked}" Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
                                 </DataTemplate.Triggers>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -113,6 +138,41 @@
                 </Grid>
             </ScrollViewer>
         </GroupBox>
+
+        <materialDesign:PopupBox
+            Grid.Column="2"
+            Margin="0,20,90,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            StaysOpen="True"
+            ToolTip="Choose desired log level:">
+
+            <StackPanel Background="Transparent" Orientation="Vertical">
+                <CheckBox
+                    x:Name="InfoCheck"
+                    Margin="8,0,16,0"
+                    IsChecked="True"
+                    Style="{StaticResource MaterialDesignCheckBox}">
+                    <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Text="Info" />
+                </CheckBox>
+                <CheckBox
+                    x:Name="WarningCheck"
+                    Margin="8,8,16,0"
+                    IsChecked="True"
+                    Style="{StaticResource MaterialDesignCheckBox}">
+                    <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Text="Warning" />
+                </CheckBox>
+                <CheckBox
+                    x:Name="ErrorCheck"
+                    Margin="8,8,16,0"
+                    IsChecked="True"
+                    Style="{StaticResource MaterialDesignCheckBox}">
+                    <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Text="Error" />
+                </CheckBox>
+            </StackPanel>
+
+        </materialDesign:PopupBox>
+
 
         <StackPanel
             Grid.Column="2"
