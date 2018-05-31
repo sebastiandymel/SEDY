@@ -9,6 +9,14 @@ FAKE IMC IMPROVEMENTS:
 
 - Performance improvement (buffering all the log data events)
 
+- Save skin/color settings to APP-CONFIG
+
+
+============================================================================================
+
+NEW NEW NEW NEW NEW NEW ::::::
+
+============================================================================================
 
 - Button to randomize curves
 
@@ -20,4 +28,3 @@ FAKE IMC IMPROVEMENTS:
 
 - Send audiogram
 
-- Save skin/color settings to APP-CONFIG
