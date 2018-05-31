@@ -1,0 +1,21 @@
+﻿
+FAKE IMC IMPROVEMENTS:
+
+- Updater confirmation dialog
+
+- Unhandled exception dialog (allows to cancel/handle exception)
+
+- Verbosity level of the log (configured from drop down menu)
+
+- Performance improvement (buffering all the data changed events)
+
+- Button to randomize curves
+
+- Improve logging/error/warnings in the system log
+
+
+- Editable SII values
+
+- Percentiles!!
+
+- Send audiogram

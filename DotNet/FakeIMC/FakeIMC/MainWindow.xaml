@@ -247,7 +247,6 @@
             </StackPanel>
         </Grid>
 
-
         <materialDesign:DialogHost
             Grid.RowSpan="4"
             Grid.ColumnSpan="5"

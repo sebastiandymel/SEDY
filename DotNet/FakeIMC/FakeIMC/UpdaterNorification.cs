@@ -49,7 +49,6 @@ namespace FakeIMC
                     Title = title,
                     Message = msg,
                     Message2 = msg2
-
                 };
                 var view = new Notification()
                 {
