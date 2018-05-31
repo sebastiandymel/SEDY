@@ -7,7 +7,8 @@ FAKE IMC IMPROVEMENTS:
 
 - Verbosity level of the log (configured from drop down menu)
 
-- Performance improvement (buffering all the data changed events)
+- Performance improvement (buffering all the log data events)
+
 
 - Button to randomize curves
 

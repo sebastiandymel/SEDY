@@ -18,12 +18,16 @@ namespace FakeIMC
                 int i = 0;
                 while (true)
                 {
-                    await Task.Delay(10);
-                    DataChanged.OnNext(new LogItem
+                    await Task.Delay(200);
+                    for (int j = 0; j < 30; j++)
                     {
-                        Text= "Some value " + i++ + " ----------- ++++++++++++++ ===========",
-                        Severity = i % 4 == 0 ? Severity.Error : (i % 7 == 0 ? Severity.Warning : Severity.Normal)
-                    });
+                        DataChanged.OnNext(new LogItem
+                        {
+                            Text = "Some value " + i++ + " ----------- ++++++++++++++ ===========",
+                            Severity = i % 4 == 0 ? Severity.Error : (i % 7 == 0 ? Severity.Warning : Severity.Normal)
+                        });
+                    }
+
                 }
             });
         }

@@ -247,6 +247,24 @@
             </StackPanel>
         </Grid>
 
+        <!--
+            ===============================
+            CURVE GRID
+            ===============================
+        -->
+        <materialDesign:Card
+            Grid.Row="2"
+            Grid.Column="2"
+            Width="200"
+            Height="200"
+            Padding="8">
+            <StackPanel Orientation="Vertical">
+                <Label Content="LOW" />
+                <Label Content="MEDIUM" />
+                <Label Content="HIGH" />
+            </StackPanel>
+        </materialDesign:Card>
+
         <materialDesign:DialogHost
             Grid.RowSpan="4"
             Grid.ColumnSpan="5"
