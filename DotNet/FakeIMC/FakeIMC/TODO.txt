@@ -14,9 +14,10 @@ FAKE IMC IMPROVEMENTS:
 
 - Improve logging/error/warnings in the system log
 
-
 - Editable SII values
 
 - Percentiles!!
 
 - Send audiogram
+
+- Save skin/color settings to APP-CONFIG
