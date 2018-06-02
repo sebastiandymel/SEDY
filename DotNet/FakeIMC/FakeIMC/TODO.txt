@@ -11,6 +11,7 @@ FAKE IMC IMPROVEMENTS:
 
 - Save skin/color settings to APP-CONFIG
 
+- Edit curves panel style
 
 ============================================================================================
 

@@ -82,16 +82,17 @@ namespace FakeIMC
             }
             
 
-            var light = false;
+            var isDark = storage.GetStoredIsDarkTheme();
             var pallette = new PaletteHelper();
+            
             LightDarkSwitch = new ReactiveCommand();
             LightDarkSwitch.Subscribe(() =>
             {
-                light = !light;
-                storage.Save(light);
-                pallette.SetLightDark(light);
+                isDark = !isDark;
+                storage.Save(isDark);
+                pallette.SetLightDark(isDark);
             });
-            pallette.SetLightDark(storage.GetStoredIsDarkTheme());
+            pallette.SetLightDark(isDark);
         }
 
         public IEnumerable<Swatch> Swatches { get; set; }

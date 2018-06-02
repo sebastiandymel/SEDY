@@ -24,6 +24,9 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
+        
+
+
         <StackPanel
             Grid.RowSpan="3"
             Grid.Column="1"
@@ -368,5 +371,9 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Identifier="RootDialog" />
+
+
+
+        <Control Grid.RowSpan="3" Grid.ColumnSpan="3"  Style="{StaticResource Style.SplashScreen}"/>
     </Grid>
 </Window>

@@ -16,10 +16,11 @@ namespace FakeIMC
             Task.Factory.StartNew(async () => 
             {
                 int i = 0;
+                int loopLen = 1000;
                 while (true)
                 {
                     await Task.Delay(200);
-                    for (int j = 0; j < 30; j++)
+                    for (int j = 0; j < loopLen; j++)
                     {
                         DataChanged.OnNext(new LogItem
                         {
@@ -27,7 +28,7 @@ namespace FakeIMC
                             Severity = i % 4 == 0 ? Severity.Error : (i % 7 == 0 ? Severity.Warning : Severity.Normal)
                         });
                     }
-
+                    loopLen = 10;
                 }
             });
         }
