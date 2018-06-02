@@ -139,9 +139,9 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ContentControl}">
                             <Grid>
-                                <ContentPresenter Name="Presenter" >
+                                <ContentPresenter Name="Presenter">
                                     <ContentPresenter.RenderTransform>
-                                        <TranslateTransform x:Name="ContentTranslate" X="-1000" />
+                                        <TranslateTransform x:Name="ContentTranslate" X="-1900" />
                                     </ContentPresenter.RenderTransform>
                                 </ContentPresenter>
                                 <Grid
@@ -187,7 +187,7 @@
                                             <DoubleAnimation
                                                 Storyboard.TargetName="Presenter"
                                                 Storyboard.TargetProperty="Opacity"
-                                                From="0"
+                                                From="0.1"
                                                 To="1"
                                                 Duration="0:0:4">
                                                 <DoubleAnimation.EasingFunction>
@@ -195,16 +195,16 @@
                                                 </DoubleAnimation.EasingFunction>
                                             </DoubleAnimation>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RootTranslate" Storyboard.TargetProperty="X">
-                                                <EasingDoubleKeyFrame KeyTime="00:00:1" Value="0" />
-                                                <EasingDoubleKeyFrame KeyTime="00:00:4" Value="1000">
+                                                <EasingDoubleKeyFrame KeyTime="00:00:2.3" Value="0" />
+                                                <EasingDoubleKeyFrame KeyTime="00:00:6" Value="2000">
                                                     <EasingDoubleKeyFrame.EasingFunction>
                                                         <ExponentialEase EasingMode="EaseOut" />
                                                     </EasingDoubleKeyFrame.EasingFunction>
                                                 </EasingDoubleKeyFrame>
                                             </DoubleAnimationUsingKeyFrames>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentTranslate" Storyboard.TargetProperty="X">
-                                                <EasingDoubleKeyFrame KeyTime="00:00:1" Value="-900" />
-                                                <EasingDoubleKeyFrame KeyTime="00:00:4" Value="0">
+                                                <EasingDoubleKeyFrame KeyTime="00:00:2" Value="-1900" />
+                                                <EasingDoubleKeyFrame KeyTime="00:00:3.4" Value="0">
                                                     <EasingDoubleKeyFrame.EasingFunction>
                                                         <ExponentialEase EasingMode="EaseOut" />
                                                     </EasingDoubleKeyFrame.EasingFunction>
@@ -213,7 +213,7 @@
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Root" Storyboard.TargetProperty="(UIElement.Visibility)">
 
                                                 <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}" />
-                                                <DiscreteObjectKeyFrame KeyTime="00:00:5" Value="{x:Static Visibility.Collapsed}" />
+                                                <DiscreteObjectKeyFrame KeyTime="00:00:6" Value="{x:Static Visibility.Collapsed}" />
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </BeginStoryboard>
