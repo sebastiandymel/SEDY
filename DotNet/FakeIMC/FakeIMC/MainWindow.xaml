@@ -186,6 +186,18 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Orientation="Horizontal">
+                <Button
+                    Width="24"
+                    Height="24"
+                    Margin="0,20,24,0"
+                    Command="{Binding ExportLog}"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    ToolTip="Clear log">
+                    <materialDesign:PackIcon
+                        Width="16"
+                        Height="16"
+                        Kind="FileExport" />
+                </Button>
                 <ToggleButton
                     Width="24"
                     Height="24"

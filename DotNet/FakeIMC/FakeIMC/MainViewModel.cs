@@ -1,10 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -41,13 +43,29 @@ namespace FakeIMC
             ClearLog.Subscribe(() => 
             {
                 Log.Clear();
-
+                
                 });
 
 
+            ExportLog = new ReactiveCommand();
+            ExportLog.Subscribe(() =>
+            {
+                var sfd = new SaveFileDialog();
+                sfd.AddExtension = true;
+                sfd.FileName = "FakeImcLog";
+                sfd.Filter = "Text file (*.txt)|*.txt";
+                sfd.ShowDialog();
+
+                if (!string.IsNullOrEmpty(sfd.FileName))
+                {
+                    File.WriteAllLines(sfd.FileName, Log.Select(c => c.Text));
+                }
+            });
         }
 
         public ReactiveCommand ClearLog { get; set; }
+
+        public ReactiveCommand ExportLog { get; set; }
 
         /// <summary>
         /// System log
