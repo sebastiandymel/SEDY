@@ -13,6 +13,10 @@ FAKE IMC IMPROVEMENTS:
 
 - Edit curves panel style
 
+- Slash screen when loading application window
+
+- Export log to txt file
+
 ============================================================================================
 
 NEW NEW NEW NEW NEW NEW ::::::

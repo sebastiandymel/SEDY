@@ -16,7 +16,7 @@ namespace FakeIMC
             Task.Factory.StartNew(async () => 
             {
                 int i = 0;
-                int loopLen = 1000;
+                int loopLen = 3000;
                 while (true)
                 {
                     await Task.Delay(200);
