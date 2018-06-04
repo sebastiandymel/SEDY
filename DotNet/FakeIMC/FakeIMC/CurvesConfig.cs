@@ -1,4 +1,6 @@
-﻿namespace FakeIMC
+﻿using System;
+
+namespace FakeIMC
 {
     public class CurvesConfig
     {

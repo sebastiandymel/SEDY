@@ -5,6 +5,7 @@ using Microsoft.Win32;
 using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -40,11 +41,11 @@ namespace FakeIMC
 
 
             ClearLog = new ReactiveCommand();
-            ClearLog.Subscribe(() => 
+            ClearLog.Subscribe(() =>
             {
                 Log.Clear();
-                
-                });
+
+            });
 
 
             ExportLog = new ReactiveCommand();
@@ -63,14 +64,78 @@ namespace FakeIMC
             });
         }
 
-        public ReactiveCommand ClearLog { get; set; }
+        public ReactiveCommand ClearLog
+        {
+            get; set;
+        }
 
-        public ReactiveCommand ExportLog { get; set; }
+        public ReactiveCommand ExportLog
+        {
+            get; set;
+        }
 
+        public ObservableCollection<Cell> Cells1
+        {
+            get;
+        } 
+            = new ObservableCollection<Cell>()
+        {
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+        };
+
+        public ObservableCollection<Cell> Cells2
+        {
+            get;
+        }
+    = new ObservableCollection<Cell>()
+{
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+};
+        public ObservableCollection<Cell> Cells3
+        {
+            get;
+        }
+= new ObservableCollection<Cell>()
+{
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+            new Cell(),
+};
         /// <summary>
         /// System log
         /// </summary>
-        public ReactiveCollection<LogItem> Log { get; set; }
+        public ReactiveCollection<LogItem> Log
+        {
+            get; set;
+        }
 
         public SkinViewModel Skin { get; } = new SkinViewModel();
 
@@ -84,7 +149,7 @@ namespace FakeIMC
 
             var storage = new SkinConfigurationStorage(Swatches);
 
-            
+
             ApplyPrimaryCommand = new ReactiveCommand<Swatch>();
             ApplyPrimaryCommand.Subscribe(Observer.Create<Swatch>(s =>
             {
@@ -98,11 +163,11 @@ namespace FakeIMC
             {
                 new PaletteHelper().ReplacePrimaryColor(sw);
             }
-            
+
 
             var isDark = storage.GetStoredIsDarkTheme();
             var pallette = new PaletteHelper();
-            
+
             LightDarkSwitch = new ReactiveCommand();
             LightDarkSwitch.Subscribe(() =>
             {
@@ -113,9 +178,18 @@ namespace FakeIMC
             pallette.SetLightDark(isDark);
         }
 
-        public IEnumerable<Swatch> Swatches { get; set; }
-        public ReactiveCommand LightDarkSwitch { get; set; }        
-        public ReactiveCommand<Swatch> ApplyPrimaryCommand { get; }
+        public IEnumerable<Swatch> Swatches
+        {
+            get; set;
+        }
+        public ReactiveCommand LightDarkSwitch
+        {
+            get; set;
+        }
+        public ReactiveCommand<Swatch> ApplyPrimaryCommand
+        {
+            get;
+        }
     }
 
     internal class SkinConfigurationStorage
@@ -174,8 +248,14 @@ namespace FakeIMC
 
     public class LogItem
     {
-        public string Text { get; set; }
-        public Severity Severity { get; set; }
+        public string Text
+        {
+            get; set;
+        }
+        public Severity Severity
+        {
+            get; set;
+        }
 
 
     }
@@ -185,5 +265,36 @@ namespace FakeIMC
         Normal,
         Warning,
         Error
+    }
+
+    public class Cell : ViewModelBase
+    {
+        private bool _isSelected;
+        private int _value;
+
+        public bool IsSelected
+        {
+            get
+            {
+                return _isSelected;
+            }
+            set
+            {
+
+                _isSelected = value;
+                RaisePropertyChanged();
+            }
+
+        }
+
+        public int Value
+        {
+            get => _value;
+            set
+            {
+                _value = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }
