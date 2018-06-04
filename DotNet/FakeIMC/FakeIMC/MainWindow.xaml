@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:FakeIMC"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -275,105 +274,53 @@
             <materialDesign:Card
                 Grid.Row="2"
                 Grid.Column="2"
-                Width="300"
+                Width="600"
                 Height="200"
                 Padding="8">
                 <StackPanel Orientation="Vertical">
                     <HeaderedItemsControl
+                        Template="{StaticResource LabeledItems}"
                         local:GridExtensions.GridRow="0"
-                        Header="LOW"
+                        Header="LOW"                        
+                        ItemTemplate="{StaticResource CellItem}"
                         ItemsSource="{Binding Cells1}">
                         <HeaderedItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal" />
                             </ItemsPanelTemplate>
                         </HeaderedItemsControl.ItemsPanel>
-                        <HeaderedItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type local:Cell}">
-                                <Grid
-                                    Name="root"
-                                    Width="10"
-                                    Height="10"
-                                    Margin="2"
-                                    Background="Green">
-                                    <TextBlock Text="{Binding Value}"/>
-                                    <i:Interaction.Behaviors>
-                                        <local:MouseSelectBehavior />
-                                    </i:Interaction.Behaviors>
-
-                                </Grid>
-                                <DataTemplate.Triggers>
-                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                        <Setter TargetName="root" Property="Background" Value="Red" />
-                                    </DataTrigger>
-                                </DataTemplate.Triggers>
-                            </DataTemplate>
-                        </HeaderedItemsControl.ItemTemplate>
                     </HeaderedItemsControl>
 
+                    
+                    
+                    
+                    
+                    
                     <HeaderedItemsControl
                         local:GridExtensions.GridRow="1"
                         Header="MEDIUM"
+                        Template="{StaticResource LabeledItems}"
+                        ItemTemplate="{StaticResource CellItem}"
                         ItemsSource="{Binding Cells2}">
                         <HeaderedItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal" />
                             </ItemsPanelTemplate>
                         </HeaderedItemsControl.ItemsPanel>
-                        <HeaderedItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type local:Cell}">
-                                <Grid
-                                    Name="root"
-                                    Width="10"
-                                    Height="10"
-                                    Margin="2"
-                                    local:GridExtensions.GridRow="{Binding Path=(local:GridExtensions.GridRow), RelativeSource={RelativeSource AncestorType=HeaderedItemsControl}}"
-                                    Background="Green">
-                                    <TextBlock Text="{Binding Value}"/>
-                                    <i:Interaction.Behaviors>
-                                        <local:MouseSelectBehavior />
-                                    </i:Interaction.Behaviors>
-                                </Grid>
-                                <DataTemplate.Triggers>
-                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                        <Setter TargetName="root" Property="Background" Value="Red" />
-                                    </DataTrigger>
-                                </DataTemplate.Triggers>
-                            </DataTemplate>
-                        </HeaderedItemsControl.ItemTemplate>
-                        
+
+
                     </HeaderedItemsControl>
                     <HeaderedItemsControl
                         local:GridExtensions.GridRow="2"
                         Header="MEDIUM"
+                        Template="{StaticResource LabeledItems}"
+                        ItemTemplate="{StaticResource CellItem}"
                         ItemsSource="{Binding Cells3}">
                         <HeaderedItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal" />
                             </ItemsPanelTemplate>
                         </HeaderedItemsControl.ItemsPanel>
-                        <HeaderedItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type local:Cell}">
-                                <Grid
-                                    Name="root"
-                                    Width="10"
-                                    Height="10"
-                                    Margin="2"
-                                    local:GridExtensions.GridRow="{Binding Path=(local:GridExtensions.GridRow), RelativeSource={RelativeSource AncestorType=HeaderedItemsControl}}"
-                                    Background="Green">
-                                    <TextBlock Text="{Binding Value}"/>
-                                    <i:Interaction.Behaviors>
-                                        <local:MouseSelectBehavior />
-                                    </i:Interaction.Behaviors>
-                                </Grid>
-                                <DataTemplate.Triggers>
-                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                        <Setter TargetName="root" Property="Background" Value="Red" />
-                                    </DataTrigger>
-                                </DataTemplate.Triggers>
-                            </DataTemplate>
-                        </HeaderedItemsControl.ItemTemplate>
-
                     </HeaderedItemsControl>
                 </StackPanel>
             </materialDesign:Card>

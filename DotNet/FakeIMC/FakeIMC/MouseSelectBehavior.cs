@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
@@ -17,7 +19,7 @@ namespace FakeIMC
             base.OnAttached();
 
             AssociatedObject.Loaded += OnLoaded;
-            AssociatedObject.MouseLeftButtonDown += OnLeftDown;
+            AssociatedObject.PreviewMouseLeftButtonDown += OnLeftDown;
             AssociatedObject.MouseEnter += OnMouseEnter;
         }
 
@@ -123,5 +125,116 @@ namespace FakeIMC
 
     }
 
-    
+    public static class BorderExtensions
+    {
+
+
+        public static Thickness GetBorderThickness(DependencyObject obj)
+        {
+            return (Thickness)obj.GetValue(BorderThicknessProperty);
+        }
+
+        public static void SetBorderThickness(DependencyObject obj, Thickness value)
+        {
+            obj.SetValue(BorderThicknessProperty, value);
+        }
+
+        public static readonly DependencyProperty BorderThicknessProperty =
+            DependencyProperty.RegisterAttached("BorderThickness", typeof(Thickness), typeof(BorderExtensions), new PropertyMetadata(new Thickness()));
+
+
+    }
+
+    public static class HoverExtensions
+    {
+
+
+        public static bool GetIsHovered(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsHoveredProperty);
+        }
+
+        public static void SetIsHovered(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsHoveredProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for IsHovered.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsHoveredProperty =
+            DependencyProperty.RegisterAttached("IsHovered", typeof(bool), typeof(HoverExtensions), new PropertyMetadata(false));
+
+
+    }
+
+    public class HoverBehavior : Behavior<FrameworkElement>
+    {
+        protected override void OnAttached()
+        {
+            base.OnAttached();
+            AssociatedObject.MouseEnter += OnEnter;
+            AssociatedObject.MouseLeave += OnLeave;
+            AssociatedObject.MouseLeftButtonDown += OnLeftDown;
+        }
+
+        protected override void OnDetaching()
+        {
+            base.OnDetaching();
+            AssociatedObject.MouseEnter -= OnEnter;
+            AssociatedObject.MouseLeave -= OnLeave;
+            AssociatedObject.MouseLeftButtonDown -= OnLeftDown;
+        }
+
+        private void OnLeftDown(object sender, MouseButtonEventArgs e)
+        {
+            foreach (var item in Target.Items.OfType<Cell>())
+            {
+                item.IsSelected = !item.IsSelected;
+            }
+        }
+
+        public ItemsControl Target
+        {
+            get
+            {
+                return (ItemsControl)GetValue(TargetProperty);
+            }
+            set
+            {
+                SetValue(TargetProperty, value);
+            }
+        }
+        public static readonly DependencyProperty TargetProperty = DependencyProperty.Register("Target", typeof(ItemsControl), typeof(HoverBehavior), new PropertyMetadata(null));
+
+
+
+        private void OnLeave(object sender, MouseEventArgs e)
+        {
+            var empty = new Thickness();
+            ForEachContainer(c => BorderExtensions.SetBorderThickness(c, empty));
+            ForEachContainer(c => HoverExtensions.SetIsHovered(c, false));
+        }
+
+        private void OnEnter(object sender, MouseEventArgs e)
+        {
+            var first = new Thickness(2, 2, 2, 2);
+            ForEachContainer(c => BorderExtensions.SetBorderThickness(c, first));
+            ForEachContainer(c => HoverExtensions.SetIsHovered(c, true));
+        }
+
+        private void ForEachContainer(Action<DependencyObject> invoke)
+        {
+            if (Target == null)
+            {
+                return;
+            }
+            foreach (var item in Target.Items)
+            {
+                var container = Target.ItemContainerGenerator.ContainerFromItem(item);
+                if (container != null)
+                {
+                    invoke(container);
+                }
+            }
+        }
+    }
 }
