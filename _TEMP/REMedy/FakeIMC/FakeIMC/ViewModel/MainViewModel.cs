@@ -42,17 +42,20 @@ namespace FakeIMC.UI
 
         public GridViewModel Grid { get; }
 
+        public SpeechMapGridViewModel SpeechGrid { get; }
+
         public SkinViewModel Skin { get; }
 
         public ReactiveCommand ExportLog { get; set; }
 
         #endregion Public properties used by VIEW
 
-        public MainViewModel(IImcModel model, GridViewModel grid, SkinViewModel skinViewModel)
+        public MainViewModel(IImcModel model, GridViewModel grid, SpeechMapGridViewModel speechGrid, SkinViewModel skinViewModel)
         {
             this.model = model;
             this.model.Start();
             Grid = grid;
+            SpeechGrid = speechGrid;
             Skin = skinViewModel;
 
             Log = new ReactiveCollection<LogItem>();

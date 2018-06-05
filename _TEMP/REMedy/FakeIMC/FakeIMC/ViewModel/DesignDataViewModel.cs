@@ -8,7 +8,11 @@ namespace FakeIMC.UI
     public class DesignDataViewModel: MainViewModel
     {
         public DesignDataViewModel() 
-            : base(new ModelStub(), new GridViewModel(new ModelStub()), null)
+            : base(
+                  new ModelStub(), 
+                  new GridViewModel(new ModelStub()), 
+                  new SpeechMapGridViewModel(new ModelStub()), 
+                  null)
         {
         }
 
