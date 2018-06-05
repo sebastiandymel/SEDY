@@ -242,11 +242,15 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="200" />
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 <i:Interaction.Behaviors>
                     <ui:SingleExpanderExpandedBahavior/>
                 </i:Interaction.Behaviors>
 
-                <ToolBarTray VerticalAlignment="Top" Grid.RowSpan="2">
+                <ToolBarTray VerticalAlignment="Top" HorizontalAlignment="Stretch"  Grid.ColumnSpan="2">
                     <ToolBar ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
                         <CheckBox
                             Content="Add random values"
@@ -374,7 +378,7 @@
                 <Expander
                     Grid.Row="2" 
                     Grid.Column="1"
-                    HorizontalAlignment="Right"
+                    HorizontalAlignment="Left"
                     ExpandDirection="Right"
                     ToolTip="Register and unregister FakeIMC">
                     <Expander.Header>
