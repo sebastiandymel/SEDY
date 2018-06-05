@@ -64,7 +64,7 @@ namespace FakeIMC.UI
 
         private void OnMouseEnter(object sender, MouseEventArgs e)
         {
-            if (Mouse.LeftButton == MouseButtonState.Pressed && CurrentIndex != startIndex)
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
                 ClearAllSelection();
                 var diff = CurrentIndex - startIndex;

@@ -20,12 +20,10 @@ namespace FakeIMC.UI
             await Handle(e.Exception);
         }
 
-
         private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             await Handle(e.ExceptionObject as Exception);
         }
-
 
         private static async Task Handle(Exception ex)
         {
