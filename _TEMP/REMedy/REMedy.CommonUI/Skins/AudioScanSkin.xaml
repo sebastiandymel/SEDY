@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    >
+    <Color x:Key="Color.Primary">#66C6FF</Color>
+    <Color x:Key="Color.Secondary">#007ac3</Color>
+    <Color x:Key="Color.Background.Expander.MouseOver">#89CCFF</Color>
+    <SolidColorBrush x:Key="Brush.Background.ExpanderButton" Color="{DynamicResource Color.Primary}" />
+    <SolidColorBrush x:Key="Brush.Background.Button.Pressed" Color="{DynamicResource Color.Background.Expander.MouseOver}" />
+    <SolidColorBrush x:Key="Brush.BorderBrush.Button" Color="{DynamicResource Color.Secondary}" />
+
+    <BitmapImage x:Key="Image.Logo" UriSource="pack://application:,,,/Remedy.CommonUI;component/Skins/fake_audioscan.png" />
+    <system:String x:Key="String.WindowTitle">fakescan</system:String>
+</ResourceDictionary>
