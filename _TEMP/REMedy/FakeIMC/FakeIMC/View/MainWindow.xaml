@@ -246,7 +246,7 @@
                 <ToolBarTray VerticalAlignment="Top">
                     <ToolBar ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
                         <CheckBox
-                            Content="Add random values to curves"
+                            Content="Add random values"
                             IsChecked="{Binding RandomCurves.Value}"
                             ToolTip="Add random values to the curves" />
                         <CheckBox
@@ -287,6 +287,7 @@
                                 <materialDesign:PackIcon Kind="Heart" />
                             </materialDesign:ToggleButtonAssist.OnContent>
                         </ToggleButton>
+
                     </ToolBar>
                 </ToolBarTray>
 

@@ -45,6 +45,9 @@ namespace FakeIMC
             LowInputChanged  = new ReplaySubject<Spectrum>();
             MediumInputChanged = new ReplaySubject<Spectrum>();
             ReugChanged = new ReplaySubject<Spectrum>();
+            LtassChanged = new ReplaySubject<Spectrum>();
+            Percentiles30Changed = new ReplaySubject<Spectrum>();
+            Percentiles99Changed = new ReplaySubject<Spectrum>();
 
             this.core.CurvesChanged += (s, e) =>
             {
@@ -52,6 +55,9 @@ namespace FakeIMC
                 ((ReplaySubject<Spectrum>)LowInputChanged).OnNext(e.Low);
                 ((ReplaySubject<Spectrum>)MediumInputChanged).OnNext(e.Medium);
                 ((ReplaySubject<Spectrum>)ReugChanged).OnNext(e.Reug);
+                ((ReplaySubject<Spectrum>)Percentiles30Changed).OnNext(e.Perc30);
+                ((ReplaySubject<Spectrum>)Percentiles99Changed).OnNext(e.Perc99);
+                ((ReplaySubject<Spectrum>)LtassChanged).OnNext(e.Ltass);
             };
         }
 
@@ -122,6 +128,15 @@ namespace FakeIMC
                 case CurveType.Reug:
                     this.core.SetReugCurveValue(freq, val);
                     break;
+                case CurveType.Percentiles30:
+                    this.core.SetPercentiles30Value(freq, val);
+                    break;
+                case CurveType.Percentiles99:
+                    this.core.SetPercentiles99Value(freq, val);
+                    break;
+                case CurveType.Ltass:
+                    this.core.SetLtassValue(freq, val);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -143,5 +158,20 @@ namespace FakeIMC
         public IObservable<Spectrum> MediumInputChanged { get; }
 
         public IObservable<Spectrum> ReugChanged { get; }
+
+        public IObservable<Spectrum> Percentiles30Changed
+        {
+            get;
+        }
+
+        public IObservable<Spectrum> Percentiles99Changed
+        {
+            get;
+        }
+
+        public IObservable<Spectrum> LtassChanged
+        {
+            get;
+        }
     }
 }

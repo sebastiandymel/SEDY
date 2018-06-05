@@ -68,6 +68,12 @@ namespace FakeIMC.UI
             public IObservable<Spectrum> LowInputChanged { get; } = new ReplaySubject<Spectrum>();
             public IObservable<Spectrum> MediumInputChanged { get; } = new ReplaySubject<Spectrum>();
             public IObservable<Spectrum> ReugChanged { get; } = new ReplaySubject<Spectrum>();
+
+            public IObservable<Spectrum> Percentiles30Changed { get; } = new ReplaySubject<Spectrum>();
+
+            public IObservable<Spectrum> Percentiles99Changed { get; } = new ReplaySubject<Spectrum>();
+
+            public IObservable<Spectrum> LtassChanged { get; } = new ReplaySubject<Spectrum>();
         }
     }
 }

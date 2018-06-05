@@ -129,6 +129,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\SpeechMapGridViewModel.cs" />
     <Compile Include="View\GridExtensions.cs" />
     <Compile Include="View\CellBehavior.cs" />
     <Compile Include="View\CellExtensions.cs" />

@@ -5,6 +5,9 @@
         Low,
         Medium,
         High,
-        Reug
+        Reug,
+        Percentiles30,
+        Percentiles99,
+        Ltass
     }
 }

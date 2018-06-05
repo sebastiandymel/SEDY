@@ -28,5 +28,17 @@ namespace FakeIMC
         IObservable<Spectrum> LowInputChanged { get; }
         IObservable<Spectrum> MediumInputChanged { get; }
         IObservable<Spectrum> ReugChanged { get; }
+        IObservable<Spectrum> Percentiles30Changed 
+        {
+            get;
+        }
+        IObservable<Spectrum> Percentiles99Changed
+        {
+            get;
+        }
+        IObservable<Spectrum> LtassChanged
+        {
+            get;
+        }
     }
 }

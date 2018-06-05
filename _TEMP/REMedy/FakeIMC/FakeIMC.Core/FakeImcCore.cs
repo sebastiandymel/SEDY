@@ -149,6 +149,25 @@ namespace FakeIMC.Core
             this.Imc2Server.ShowOnlyLastStep = false;
             LoadCurvesIntoServer();
         }
+
+        public void SetLtassValue(double freq, double val)
+        {
+            this.container.Ltass.SetValue(freq, val);
+            LoadCurvesIntoServer();
+        }
+
+        public void SetPercentiles99Value(double freq, double val)
+        {
+            this.container.Percentiles99.SetValue(freq, val);
+            LoadCurvesIntoServer();
+        }
+
+        public void SetPercentiles30Value(double freq, double val)
+        {
+            this.container.Percentiles30.SetValue(freq, val);
+            LoadCurvesIntoServer();
+        }
+
         public void InitLocalImcServerSide()
         {
             var binaryClient = new BinaryClientFormatterSinkProvider();
@@ -493,6 +512,9 @@ namespace FakeIMC.Core
                 Medium = container.CurveMediumInput?.Clone() as Spectrum,
                 High = container.CurveHightInput?.Clone() as Spectrum,
                 Reug = container.CurveREUG?.Clone() as Spectrum,
+                Ltass = container.Ltass?.Clone() as Spectrum,
+                Perc30 = container.Percentiles30?.Clone() as Spectrum,
+                Perc99 = container.Percentiles99?.Clone() as Spectrum,
             });
         }
 

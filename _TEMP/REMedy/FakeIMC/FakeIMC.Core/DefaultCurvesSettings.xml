@@ -36,6 +36,42 @@
     <Value Frequency="6000">80</Value>
     <Value Frequency="8000">80</Value>
   </CurveHightInput>
+    <Ltass>
+    <Value Frequency="250">55</Value>
+    <Value Frequency="500">55</Value>
+    <Value Frequency="750">55</Value>
+    <Value Frequency="1000">55</Value>
+    <Value Frequency="1500">55</Value>
+    <Value Frequency="2000">55</Value>
+    <Value Frequency="3000">55</Value>
+    <Value Frequency="4000">65</Value>
+    <Value Frequency="6000">65</Value>
+    <Value Frequency="8000">65</Value>
+  </Ltass>
+  <Percentiles30>
+    <Value Frequency="250">65</Value>
+    <Value Frequency="500">65</Value>
+    <Value Frequency="750">65</Value>
+    <Value Frequency="1000">65</Value>
+    <Value Frequency="1500">65</Value>
+    <Value Frequency="2000">65</Value>
+    <Value Frequency="3000">65</Value>
+    <Value Frequency="4000">65</Value>
+    <Value Frequency="6000">65</Value>
+    <Value Frequency="8000">65</Value>
+  </Percentiles30>
+  <Percentiles99>
+    <Value Frequency="250">80</Value>
+    <Value Frequency="500">80</Value>
+    <Value Frequency="750">80</Value>
+    <Value Frequency="1000">80</Value>
+    <Value Frequency="1500">80</Value>
+    <Value Frequency="2000">80</Value>
+    <Value Frequency="3000">80</Value>
+    <Value Frequency="4000">80</Value>
+    <Value Frequency="6000">80</Value>
+    <Value Frequency="8000">80</Value>
+  </Percentiles99>
   <CurveREUG>
     <Value Frequency="250">0</Value>
     <Value Frequency="500">1</Value>

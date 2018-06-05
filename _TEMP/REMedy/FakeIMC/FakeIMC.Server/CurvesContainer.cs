@@ -9,7 +9,9 @@ namespace FakeIMC.Server
         public Spectrum CurveMediumInput;
         public Spectrum CurveHightInput;
         public Spectrum CurveREUG;
-
+        public Spectrum Percentiles30;
+        public Spectrum Percentiles99;
+        public Spectrum Ltass;
         public bool AddRandomValues;
         public bool AddReug;
     }
