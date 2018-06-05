@@ -1,24 +1,24 @@
-﻿<commonUi:MyWindow x:Class="FakeIMC.UI.MainWindow"
-                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-                   xmlns:system="clr-namespace:System;assembly=mscorlib"
-                   xmlns:commonUi="clr-namespace:Remedy.CommonUI;assembly=Remedy.CommonUI"
-                   xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-                   xmlns:local="clr-namespace:FakeIMC"
-                   xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                   xmlns:ui="clr-namespace:FakeIMC.UI"
-                   mc:Ignorable="d"
-                   Title="FAKE IMC MODULE"
-                   d:DataContext="{d:DesignInstance Type=ui:DesignDataViewModel,
-                                                    IsDesignTimeCreatable=True}"
-                   Height="680"
-                   Width="880"
-                   Background="{DynamicResource MaterialDesignPaper}"
-                   TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-                   >
+﻿<commonUi:MyWindow
+    x:Class="FakeIMC.UI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:commonUi="clr-namespace:Remedy.CommonUI;assembly=Remedy.CommonUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:FakeIMC"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:ui="clr-namespace:FakeIMC.UI"
+    Title="FAKE IMC MODULE"
+    Width="880"
+    Height="680"
+    d:DataContext="{d:DesignInstance Type=ui:DesignDataViewModel,
+                                     IsDesignTimeCreatable=True}"
+    Background="{DynamicResource MaterialDesignPaper}"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    mc:Ignorable="d">
     <ContentControl Style="{StaticResource Style.Root}">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -34,40 +34,40 @@
             <StackPanel Margin="16" Orientation="Vertical">
                 <Expander ExpandDirection="Right" ToolTip="Register and unregister FakeIMC">
                     <Expander.Header>
-                        <TextBlock FontSize="16"
-                                   RenderTransformOrigin=".5,.5"
-                                   Text="Registration"
-                                   >
+                        <TextBlock
+                            FontSize="16"
+                            RenderTransformOrigin=".5,.5"
+                            Text="Registration">
                             <TextBlock.LayoutTransform>
                                 <RotateTransform Angle="90" />
                             </TextBlock.LayoutTransform>
                         </TextBlock>
                     </Expander.Header>
-                    <StackPanel Margin="8,24,16,24"
-                                Orientation="Vertical"
-                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                                >
-                        <Button Command="{Binding RegisterNoah}"
-                                Content="Register under NOAH"
-                                Margin="0,16,0,0"
-                                />
-                        <Button Command="{Binding UnRegisterNoah}"
-                                Content="Unregister under NOAH"
-                                Margin="0,16,0,0"
-                                />
-                        <Button Command="{Binding ConnectToNoah}"
-                                Content="Connect to NOAH"
-                                Margin="0,16,0,0"
-                                />
+                    <StackPanel
+                        Margin="8,24,16,24"
+                        Orientation="Vertical"
+                        TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                        <Button
+                            Margin="0,16,0,0"
+                            Command="{Binding RegisterNoah}"
+                            Content="Register under NOAH" />
+                        <Button
+                            Margin="0,16,0,0"
+                            Command="{Binding UnRegisterNoah}"
+                            Content="Unregister under NOAH" />
+                        <Button
+                            Margin="0,16,0,0"
+                            Command="{Binding ConnectToNoah}"
+                            Content="Connect to NOAH" />
 
-                        <Button Command="{Binding RegisterLocal}"
-                                Content="Register local"
-                                Margin="0,16,0,0"
-                                />
-                        <Button Command="{Binding UnRegisterLocal}"
-                                Content="Unregister local"
-                                Margin="0,16,0,0"
-                                />
+                        <Button
+                            Margin="0,16,0,0"
+                            Command="{Binding RegisterLocal}"
+                            Content="Register local" />
+                        <Button
+                            Margin="0,16,0,0"
+                            Command="{Binding UnRegisterLocal}"
+                            Content="Unregister local" />
                     </StackPanel>
                 </Expander>
 
@@ -79,23 +79,21 @@
                 SYSTEM LOG
             -->
 
-            <GroupBox x:Name="SystemLog"
-                      Grid.Column="1"
-                      Grid.Row="0"
-                      MaxHeight="{Binding ElementName=leftPanel,
-                                          Path=ActualHeight}"
-                      BorderThickness="2"
-                      Header="System log"
-                      Margin="16"
-                      Style="{DynamicResource MaterialDesignGroupBox}"
-                      materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                      />
-            <ScrollViewer Grid.Column="1"
-                          Grid.Row="0"
-                          MaxHeight="{Binding ElementName=leftPanel,
-                                              Path=ActualHeight}"
-                          Margin="24,60,24,24"
-                          >
+            <GroupBox
+                x:Name="SystemLog"
+                Grid.Row="0"
+                Grid.Column="1"
+                MaxHeight="{Binding ElementName=leftPanel, Path=ActualHeight}"
+                Margin="16"
+                materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                BorderThickness="2"
+                Header="System log"
+                Style="{DynamicResource MaterialDesignGroupBox}" />
+            <ScrollViewer
+                Grid.Row="0"
+                Grid.Column="1"
+                MaxHeight="{Binding ElementName=leftPanel, Path=ActualHeight}"
+                Margin="24,60,24,24">
                 <i:Interaction.Triggers>
                     <commonUi:WindowResizingTrigger Change="Started">
                         <ei:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
@@ -108,7 +106,7 @@
                     <commonUi:AutoScrollOnItemsChange />
                 </i:Interaction.Behaviors>
                 <Grid Background="#FF012456">
-                    <ItemsControl ItemsSource="{Binding Log}" Margin="8">
+                    <ItemsControl Margin="8" ItemsSource="{Binding Log}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel />
@@ -116,13 +114,13 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type local:LogItem}">
-                                <TextBlock x:Name="item"
-                                           FontFamily="Lucida Console"
-                                           FontSize="14"
-                                           Foreground="White"
-                                           Text="{Binding Text}"
-                                           TextWrapping="Wrap"
-                                           />
+                                <TextBlock
+                                    x:Name="item"
+                                    FontFamily="Lucida Console"
+                                    FontSize="14"
+                                    Foreground="White"
+                                    Text="{Binding Text}"
+                                    TextWrapping="Wrap" />
 
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding Severity}" Value="Error">
@@ -167,78 +165,78 @@
                 </Grid>
             </ScrollViewer>
 
-            <materialDesign:PopupBox Grid.Column="1"
-                                     Grid.Row="0"
-                                     HorizontalAlignment="Right"
-                                     VerticalAlignment="Top"
-                                     Margin="0,20,90,0"
-                                     StaysOpen="True"
-                                     ToolTip="Choose desired log verbosity"
-                                     >
+            <materialDesign:PopupBox
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0,20,90,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                StaysOpen="True"
+                ToolTip="Choose desired log verbosity">
 
                 <StackPanel Background="Transparent" Orientation="Vertical">
-                    <CheckBox x:Name="InfoCheck"
-                              IsChecked="True"
-                              Margin="8,0,16,0"
-                              Style="{StaticResource MaterialDesignCheckBox}"
-                              >
+                    <CheckBox
+                        x:Name="InfoCheck"
+                        Margin="8,0,16,0"
+                        IsChecked="True"
+                        Style="{StaticResource MaterialDesignCheckBox}">
                         <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Text="Info" />
                     </CheckBox>
-                    <CheckBox x:Name="WarningCheck"
-                              IsChecked="True"
-                              Margin="8,8,16,0"
-                              Style="{StaticResource MaterialDesignCheckBox}"
-                              >
+                    <CheckBox
+                        x:Name="WarningCheck"
+                        Margin="8,8,16,0"
+                        IsChecked="True"
+                        Style="{StaticResource MaterialDesignCheckBox}">
                         <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Text="Warning" />
                     </CheckBox>
-                    <CheckBox x:Name="ErrorCheck"
-                              IsChecked="True"
-                              Margin="8,8,16,0"
-                              Style="{StaticResource MaterialDesignCheckBox}"
-                              >
+                    <CheckBox
+                        x:Name="ErrorCheck"
+                        Margin="8,8,16,0"
+                        IsChecked="True"
+                        Style="{StaticResource MaterialDesignCheckBox}">
                         <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Text="Error" />
                     </CheckBox>
                 </StackPanel>
             </materialDesign:PopupBox>
 
-            <StackPanel Grid.Column="1"
-                        Grid.Row="0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Orientation="Horizontal"
-                        >
-                <Button Height="24"
-                        Width="24"
-                        Command="{Binding ExportLog}"
-                        Margin="0,20,8,0"
-                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                        ToolTip="Export system log to file"
-                        >
-                    <materialDesign:PackIcon Height="16"
-                                             Width="16"
-                                             Kind="FileExport"
-                                             />
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Orientation="Horizontal">
+                <Button
+                    Width="24"
+                    Height="24"
+                    Margin="0,20,8,0"
+                    Command="{Binding ExportLog}"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    ToolTip="Export system log to file">
+                    <materialDesign:PackIcon
+                        Width="16"
+                        Height="16"
+                        Kind="FileExport" />
                 </Button>
-                <Button Height="24"
-                        Width="24"
-                        Command="{Binding ClearLog}"
-                        Margin="0,20,24,0"
-                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                        ToolTip="Clear log"
-                        >
-                    <materialDesign:PackIcon Height="16"
-                                             Width="16"
-                                             Kind="DeleteForever"
-                                             />
+                <Button
+                    Width="24"
+                    Height="24"
+                    Margin="0,20,24,0"
+                    Command="{Binding ClearLog}"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    ToolTip="Clear log">
+                    <materialDesign:PackIcon
+                        Width="16"
+                        Height="16"
+                        Kind="DeleteForever" />
                 </Button>
             </StackPanel>
 
             <!--  TOOLBOX  -->
 
-            <Grid Grid.Column="1"
-                  Grid.Row="1"
-                  Margin="16,0,16,0"
-                  >
+            <Grid
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="16,0,16,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
@@ -247,21 +245,21 @@
 
                 <ToolBarTray VerticalAlignment="Top">
                     <ToolBar ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
-                        <CheckBox Content="Add random values to curves"
-                                  IsChecked="{Binding RandomCurves.Value}"
-                                  ToolTip="Add random values to the curves"
-                                  />
-                        <CheckBox Content="Add REUG to REAG"
-                                  IsChecked="{Binding AddReugToReag.Value}"
-                                  ToolTip="Add REUG to REAG"
-                                  />
+                        <CheckBox
+                            Content="Add random values to curves"
+                            IsChecked="{Binding RandomCurves.Value}"
+                            ToolTip="Add random values to the curves" />
+                        <CheckBox
+                            Content="Add REUG to REAG"
+                            IsChecked="{Binding AddReugToReag.Value}"
+                            ToolTip="Add REUG to REAG" />
                         <Separator />
-                        <ComboBox Width="110"
-                                  ItemsSource="{Binding PossibleErrors}"
-                                  Margin="8"
-                                  ToolTip="Send error"
-                                  materialDesign:HintAssist.Hint="Choose IMC error"
-                                  >
+                        <ComboBox
+                            Width="110"
+                            Margin="8"
+                            materialDesign:HintAssist.Hint="Choose IMC error"
+                            ItemsSource="{Binding PossibleErrors}"
+                            ToolTip="Send error">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type ui:UiCommand}">
                                     <Grid>
@@ -269,19 +267,19 @@
                                             <commonUi:CommandBehavior Command="{Binding}" />
                                         </i:Interaction.Behaviors>
 
-                                        <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}"
-                                                   Text="{Binding Label}"
-                                                   ToolTip="{Binding Label}"
-                                                   />
+                                        <TextBlock
+                                            Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                            Text="{Binding Label}"
+                                            ToolTip="{Binding Label}" />
                                     </Grid>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ToggleButton IsChecked="{Binding HeartBeat.Value}"
-                                      Margin="8"
-                                      Style="{StaticResource MaterialDesignActionToggleButton}"
-                                      ToolTip="Hear beat on/off"
-                                      >
+                        <ToggleButton
+                            Margin="8"
+                            IsChecked="{Binding HeartBeat.Value}"
+                            Style="{StaticResource MaterialDesignActionToggleButton}"
+                            ToolTip="Hear beat on/off">
                             <ToggleButton.Content>
                                 <materialDesign:PackIcon Kind="HeartOutline" Opacity="0.5" />
                             </ToggleButton.Content>
@@ -297,54 +295,54 @@
                     CURVE GRID
                     ===============================
                 -->
-                <materialDesign:Card Grid.Row="2"
-                                     Height="200"
-                                     HorizontalAlignment="Stretch"
-                                     Background="{DynamicResource MaterialDesignBackground}"
-                                     Padding="8"
-                                     >
+                <materialDesign:Card
+                    Grid.Row="2"
+                    Height="200"
+                    Padding="8"
+                    HorizontalAlignment="Stretch"
+                    Background="{DynamicResource MaterialDesignBackground}">
                     <Grid>
-                        <Separator HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Top"
-                                   Margin="0,51,0,0"
-                                   />
-                        <Separator HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Top"
-                                   Margin="0,85.5,0,0"
-                                   />
-                        <Separator HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Top"
-                                   Margin="0,120,0,0"
-                                   />
-                        <Separator HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Top"
-                                   Margin="0,154.5,0,0"
-                                   />
+                        <Separator
+                            Margin="0,51,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top" />
+                        <Separator
+                            Margin="0,85.5,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top" />
+                        <Separator
+                            Margin="0,120,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top" />
+                        <Separator
+                            Margin="0,154.5,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top" />
                         <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
-                            <HeaderedItemsControl Header="Low:"
-                                                  ui:GridExtensions.GridRow="0"
-                                                  ItemsSource="{Binding Grid.Low}"
-                                                  Margin="0,0,0,4"
-                                                  Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor.ColumnHeader}"
-                                                  />
-                            <HeaderedItemsControl Header="Medium:"
-                                                  ItemsSource="{Binding Grid.Medium}"
-                                                  Margin="0,0,0,4"
-                                                  ui:GridExtensions.GridRow="1"
-                                                  Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}"
-                                                  />
-                            <HeaderedItemsControl Header="High:"
-                                                  ItemsSource="{Binding Grid.High}"
-                                                  Margin="0,0,0,4"
-                                                  ui:GridExtensions.GridRow="2"
-                                                  Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}"
-                                                  />
-                            <HeaderedItemsControl Header="REUG: "
-                                                  ItemsSource="{Binding Grid.REUG}"
-                                                  Margin="0,0,0,4"
-                                                  ui:GridExtensions.GridRow="3"
-                                                  Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}"
-                                                  />
+                            <HeaderedItemsControl
+                                Margin="0,0,0,4"
+                                ui:GridExtensions.GridRow="0"
+                                Header="Low:"
+                                ItemsSource="{Binding Grid.Low}"
+                                Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor.ColumnHeader}" />
+                            <HeaderedItemsControl
+                                Margin="0,0,0,4"
+                                ui:GridExtensions.GridRow="1"
+                                Header="Medium:"
+                                ItemsSource="{Binding Grid.Medium}"
+                                Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}" />
+                            <HeaderedItemsControl
+                                Margin="0,0,0,4"
+                                ui:GridExtensions.GridRow="2"
+                                Header="High:"
+                                ItemsSource="{Binding Grid.High}"
+                                Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}" />
+                            <HeaderedItemsControl
+                                Margin="0,0,0,4"
+                                ui:GridExtensions.GridRow="3"
+                                Header="REUG: "
+                                ItemsSource="{Binding Grid.REUG}"
+                                Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}" />
                         </StackPanel>
                     </Grid>
 
@@ -353,44 +351,44 @@
             </Grid>
 
 
-            <StackPanel Grid.Column="0"
-                        Grid.Row="1"
-                        Margin="0,80,0,0"
-                        >
-                <Button HorizontalAlignment="Left"
-                        Command="{Binding Grid.ExportToXml}"
-                        Margin="16"
-                        Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
-                        ToolTip="Export to XML"
-                        >
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,80,0,0">
+                <Button
+                    Margin="16"
+                    HorizontalAlignment="Left"
+                    Command="{Binding Grid.ExportToXml}"
+                    Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+                    ToolTip="Export to XML">
 
-                    <materialDesign:PackIcon Height="32"
-                                             Width="32"
-                                             Kind="Export"
-                                             />
+                    <materialDesign:PackIcon
+                        Width="32"
+                        Height="32"
+                        Kind="Export" />
                 </Button>
-                <Button HorizontalAlignment="Left"
-                        Command="{Binding Grid.ImportFromXml}"
-                        Margin="16,0,0,0"
-                        Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
-                        ToolTip="Import from XML"
-                        >
-                    <materialDesign:PackIcon Height="32"
-                                             Width="32"
-                                             Kind="Import"
-                                             />
+                <Button
+                    Margin="16,0,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding Grid.ImportFromXml}"
+                    Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+                    ToolTip="Import from XML">
+                    <materialDesign:PackIcon
+                        Width="32"
+                        Height="32"
+                        Kind="Import" />
                 </Button>
             </StackPanel>
 
 
-            <materialDesign:DialogHost Grid.Column="0"
-                                       Grid.ColumnSpan="2"
-                                       Grid.Row="0"
-                                       Grid.RowSpan="3"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       Background="{DynamicResource MaterialDesignPaper}"
-                                       >
+            <materialDesign:DialogHost
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="{DynamicResource MaterialDesignPaper}">
                 <materialDesign:DialogHost.DialogContent>
 
                     <Grid Margin="16">
@@ -399,15 +397,14 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                                      Margin="0,12,0,0"
-                                      VerticalScrollBarVisibility="Auto"
-                                      >
-                            <ItemsControl MaxWidth="600"
-                                          ItemTemplate="{DynamicResource DataTemplate.Swatch}"
-                                          ItemsSource="{Binding Skin.Swatches,
-                                                                Mode=OneTime}"
-                                          >
+                        <ScrollViewer
+                            Margin="0,12,0,0"
+                            HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Auto">
+                            <ItemsControl
+                                MaxWidth="600"
+                                ItemTemplate="{DynamicResource DataTemplate.Swatch}"
+                                ItemsSource="{Binding Skin.Swatches, Mode=OneTime}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel />
@@ -416,29 +413,29 @@
                             </ItemsControl>
                         </ScrollViewer>
 
-                        <materialDesign:Card Grid.Row="1"
-                                             Margin="0,16,0,0"
-                                             Padding="16"
-                                             materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                             >
-                            <StackPanel HorizontalAlignment="Left"
-                                        VerticalAlignment="Bottom"
-                                        Orientation="Horizontal"
-                                        >
+                        <materialDesign:Card
+                            Grid.Row="1"
+                            Margin="0,16,0,0"
+                            Padding="16"
+                            materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                            <StackPanel
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom"
+                                Orientation="Horizontal">
                                 <Label Content="Switch Dark/Light: " />
                                 <ToggleButton Command="{Binding Skin.LightDarkSwitch}" />
                             </StackPanel>
                         </materialDesign:Card>
-                        <StackPanel Grid.Row="1"
-                                    HorizontalAlignment="Right"
-                                    Margin="0,22,0,0"
-                                    Orientation="Horizontal"
-                                    >
-                            <Button Command="materialDesign:DialogHost.CloseDialogCommand"
-                                    IsDefault="True"
-                                    Margin="0,8,8,0"
-                                    Style="{StaticResource MaterialDesignFlatButton}"
-                                    >
+                        <StackPanel
+                            Grid.Row="1"
+                            Margin="0,22,0,0"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                            <Button
+                                Margin="0,8,8,0"
+                                Command="materialDesign:DialogHost.CloseDialogCommand"
+                                IsDefault="True"
+                                Style="{StaticResource MaterialDesignFlatButton}">
 
                                 <Button.CommandParameter>
 
@@ -447,11 +444,11 @@
                                 ACCEPT
                             </Button>
 
-                            <Button Command="materialDesign:DialogHost.CloseDialogCommand"
-                                    IsCancel="True"
-                                    Margin="0,8,8,0"
-                                    Style="{StaticResource MaterialDesignFlatButton}"
-                                    >
+                            <Button
+                                Margin="0,8,8,0"
+                                Command="materialDesign:DialogHost.CloseDialogCommand"
+                                IsCancel="True"
+                                Style="{StaticResource MaterialDesignFlatButton}">
                                 <Button.CommandParameter>
                                     <system:Boolean>False</system:Boolean>
                                 </Button.CommandParameter>
@@ -462,33 +459,33 @@
                 </materialDesign:DialogHost.DialogContent>
                 <Border ClipToBounds="True">
                     <Grid>
-                        <Button Grid.Row="0"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom"
-                                Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
-                                Margin="0,0,16,16"
-                                Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                                ToolTip="Change skin"
-                                >
+                        <Button
+                            Grid.Row="0"
+                            Margin="0,0,16,16"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="Change skin">
 
 
-                            <materialDesign:PackIcon Height="25"
-                                                     Width="25"
-                                                     Kind="Palette"
-                                                     />
+                            <materialDesign:PackIcon
+                                Width="25"
+                                Height="25"
+                                Kind="Palette" />
                         </Button>
                     </Grid>
                 </Border>
             </materialDesign:DialogHost>
 
-            <materialDesign:DialogHost Grid.Column="0"
-                                       Grid.ColumnSpan="2"
-                                       Grid.Row="0"
-                                       Grid.RowSpan="3"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       Identifier="RootDialog"
-                                       />
+            <materialDesign:DialogHost
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Identifier="RootDialog" />
         </Grid>
     </ContentControl>
 </commonUi:MyWindow>

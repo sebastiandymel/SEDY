@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,6 +21,18 @@ namespace FakeIMC.UI
             AssociatedObject.Loaded += OnLoaded;
             AssociatedObject.PreviewMouseLeftButtonDown += OnLeftDown;
             AssociatedObject.MouseEnter += OnMouseEnter;
+            AssociatedObject.LostFocus += OnFocusLost;
+            AssociatedObject.LostKeyboardFocus += OnKeyboardFocusLost;
+        }
+
+        private void OnKeyboardFocusLost(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            ThisCell.IsEditMode = false;
+        }
+
+        private void OnFocusLost(object sender, RoutedEventArgs e)
+        {
+            ThisCell.IsEditMode = false;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -27,7 +41,11 @@ namespace FakeIMC.UI
             {
                 allAttached[CurrentRow] = new List<FreqValCell>();
             }
-            allAttached[CurrentRow].Add(AssociatedObject.DataContext as FreqValCell);
+            var item = AssociatedObject.DataContext as FreqValCell;
+            if (!allAttached[CurrentRow].Contains(item))
+            {
+                allAttached[CurrentRow].Add(item);
+            }
 
             if (AssociatedObject is TextBox txtBox)
             {
@@ -100,17 +118,30 @@ namespace FakeIMC.UI
         private void OnLeftDown(object sender, MouseButtonEventArgs e)
         {
             ClearAllSelection();
-            var thisCell = AssociatedObject.DataContext as FreqValCell;
-            thisCell.IsSelected = true;
+            ThisCell.IsSelected = true;
             startIndex = CurrentIndex;
             startRow = CurrentRow;
+
+            if (e.ButtonState == MouseButtonState.Pressed && e.ClickCount == 2)
+            {
+                ThisCell.IsEditMode = true;
+            }
         }
 
-        private static void ClearAllSelection()
+        private FreqValCell ThisCell => AssociatedObject.DataContext as FreqValCell;
+
+        private void ClearAllSelection()
         {
             foreach (var item in allAttached)
             {
-                item.Value.ForEach(c => c.IsSelected = false);
+                item.Value.ForEach(c => 
+                {
+                    if (c != ThisCell)
+                    {
+                        c.IsSelected = false;
+                        c.IsEditMode = false;
+                    }
+                });
             }
         }
     }

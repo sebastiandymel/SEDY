@@ -130,7 +130,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="View\GridExtensions.cs" />
-    <Compile Include="View\HoverBehavior.cs" />
+    <Compile Include="View\CellBehavior.cs" />
     <Compile Include="View\CellExtensions.cs" />
     <Compile Include="ViewModel\FreqValCell.cs" />
     <Compile Include="Model\CurvesConfiguration.cs" />

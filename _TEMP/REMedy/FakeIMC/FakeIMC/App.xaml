@@ -24,7 +24,6 @@
                 BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}"
                 TargetType="{x:Type TextBox}">
                 <Setter Property="Width" Value="30" />
-
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
             </Style>
 
@@ -36,17 +35,25 @@
                 <Setter Property="Opacity" Value="0" />
                 <Setter Property="VerticalAlignment" Value="Bottom" />
                 <Setter Property="RenderTransformOrigin" Value="0.5, 0.5" />
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect
+                            BlurRadius="3"
+                            Opacity="0.7"
+                            ShadowDepth="1" />
+                    </Setter.Value>
+                </Setter>
             </Style>
 
             <Style x:Key="SelectionBorder" TargetType="{x:Type Border}">
-                <Setter Property="Background" Value="Red" />
+                <Setter Property="Background" Value="#A0ff1c7a" />
                 <Setter Property="Opacity" Value="0" />
                 <Setter Property="CornerRadius" Value="2" />
                 <Setter Property="RenderTransformOrigin" Value="0.5, 0.5" />
                 <Setter Property="Effect">
                     <Setter.Value>
                         <DropShadowEffect
-                            BlurRadius="1"
+                            BlurRadius="0"
                             Opacity="0.7"
                             ShadowDepth="2" />
                     </Setter.Value>
@@ -55,21 +62,13 @@
 
             <Storyboard x:Key="HoverEffect" x:Shared="False">
                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="hoverBorder" Storyboard.TargetProperty="Opacity">
-                    <EasingDoubleKeyFrame KeyTime="00:00:1" Value="1" />
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="scale" Storyboard.TargetProperty="ScaleY">
-                    <EasingDoubleKeyFrame KeyTime="00:00:0.1" Value="2.0">
-                        <EasingDoubleKeyFrame.EasingFunction>
-                            <BackEase Amplitude="0.8" />
-                        </EasingDoubleKeyFrame.EasingFunction>
-                    </EasingDoubleKeyFrame>
-                    <EasingDoubleKeyFrame KeyTime="00:00:0.2" Value="1" />
+                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1" />
                 </DoubleAnimationUsingKeyFrames>
             </Storyboard>
 
             <Storyboard x:Key="SelectionEffect" x:Shared="False">
                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="selectionBorder" Storyboard.TargetProperty="Opacity">
-                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="0.3" />
+                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1" />
                 </DoubleAnimationUsingKeyFrames>
                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Rotate" Storyboard.TargetProperty="Angle">
                     <EasingDoubleKeyFrame KeyTime="00:00:0.1" Value="10">
@@ -83,7 +82,10 @@
 
 
             <DataTemplate x:Key="Private.DataTemplate.Cell" DataType="{x:Type ui:FreqValCell}">
-                <Grid Height="30" Width="30" Margin="4,0,4,0">
+                <Grid
+                    Width="30"
+                    Height="30"
+                    Margin="4,0,4,0">
                     <i:Interaction.Behaviors>
                         <ui:MouseSelectBehavior />
                     </i:Interaction.Behaviors>
@@ -104,23 +106,45 @@
                         </Border.RenderTransform>
                     </Border>
 
-                    <!-- READ ONLY MODE -->
-                    <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Value}"/>
-                    <!-- EDIT MODE -->
-                    <TextBox Visibility="Collapsed" Margin="0,-12,0,0"  Style="{StaticResource Style.TextBox.FreqItem}" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <!--  READ ONLY MODE  -->
+                    <TextBlock
+                        Name="ValueBox"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="{Binding Value}" />
+                    <!--  EDIT MODE  -->
+                    <TextBox
+                        Name="EditBox"
+                        Margin="0,-12,0,0"
+                        Style="{StaticResource Style.TextBox.FreqItem}"
+                        Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Visibility="Collapsed">
                         <i:Interaction.Behaviors>
-                            <commonUi:SelectAllTextOnFocusBehavior />
+                            <commonUi:SelectAllTextOnFocusBehavior SelectAllWhenMadeVisible="true" />
                             <ui:MouseSelectBehavior />
                         </i:Interaction.Behaviors>
                     </TextBox>
                 </Grid>
                 <DataTemplate.Triggers>
-                    <Trigger Property="ui:CellExtensions.IsHovered" Value="True">
+                    <Trigger Property="IsMouseOver" Value="True">
                         <Trigger.EnterActions>
                             <BeginStoryboard Name="h" Storyboard="{StaticResource HoverEffect}" />
                         </Trigger.EnterActions>
                         <Trigger.ExitActions>
                             <RemoveStoryboard BeginStoryboardName="h" />
+                        </Trigger.ExitActions>
+                    </Trigger>
+                    <DataTrigger Binding="{Binding IsEditMode}" Value="True">
+                        <Setter TargetName="ValueBox" Property="Visibility" Value="Collapsed" />
+                        <Setter TargetName="EditBox" Property="Visibility" Value="Visible" />
+                        <Setter TargetName="selectionBorder" Property="Visibility" Value="Hidden" />
+                    </DataTrigger>
+                    <Trigger Property="ui:CellExtensions.IsHovered" Value="True">
+                        <Trigger.EnterActions>
+                            <BeginStoryboard Name="h1" Storyboard="{StaticResource HoverEffect}" />
+                        </Trigger.EnterActions>
+                        <Trigger.ExitActions>
+                            <RemoveStoryboard BeginStoryboardName="h1" />
                         </Trigger.ExitActions>
                     </Trigger>
                     <DataTrigger Binding="{Binding Path=(ui:CellExtensions.IsHovered), RelativeSource={RelativeSource AncestorType=ContentPresenter}}" Value="True">
@@ -149,10 +173,10 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock
+                        Margin="0,0,0,4"
                         HorizontalAlignment="Center"
                         FontWeight="DemiBold"
                         Foreground="{DynamicResource Brush.TextBlock.Header}"
-                        Margin="0,0,0,4"
                         Style="{DynamicResource MaterialDesignBody2TextBlock}"
                         Text="{Binding Frequency, Converter={StaticResource Converter.Frequency}}" />
 
@@ -188,7 +212,7 @@
                                     Content="{TemplateBinding Header}"
                                     ContentTemplate="{TemplateBinding HeaderTemplate}">
                                     <i:Interaction.Behaviors>
-                                        <ui:HoverBehavior ParentContainer="{Binding RelativeSource={RelativeSource AncestorType=materialDesign:Card}}" Target="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <ui:CellBehavior ParentContainer="{Binding RelativeSource={RelativeSource AncestorType=materialDesign:Card}}" Target="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
                                     </i:Interaction.Behaviors>
                                 </ContentControl>
                                 <ItemsPresenter

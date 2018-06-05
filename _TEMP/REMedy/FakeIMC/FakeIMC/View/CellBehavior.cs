@@ -7,20 +7,18 @@ using System.Windows.Interactivity;
 
 namespace FakeIMC.UI
 {
-    public class HoverBehavior : Behavior<FrameworkElement>
+    public class CellBehavior : Behavior<FrameworkElement>
     {
         /// <summary>
         /// Target elements to attach hover effect
         /// </summary>
         public ItemsControl Target
         {
-            get => (ItemsControl)GetValue(HoverBehavior.TargetProperty);
-            set => SetValue(HoverBehavior.TargetProperty, value);
+            get => (ItemsControl)GetValue(CellBehavior.TargetProperty);
+            set => SetValue(CellBehavior.TargetProperty, value);
         }
-        public static readonly DependencyProperty TargetProperty = DependencyProperty.Register("Target", typeof(ItemsControl), typeof(HoverBehavior), new PropertyMetadata(null));
-
-
-
+        public static readonly DependencyProperty TargetProperty = DependencyProperty.Register("Target", typeof(ItemsControl), typeof(CellBehavior), new PropertyMetadata(null));
+        
         public FrameworkElement ParentContainer
         {
             get
@@ -32,20 +30,15 @@ namespace FakeIMC.UI
                 SetValue(ParentContainerProperty, value);
             }
         }
-
-        // Using a DependencyProperty as the backing store for ParentContainer.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ParentContainerProperty =
-            DependencyProperty.Register("ParentContainer", typeof(FrameworkElement), typeof(HoverBehavior), new PropertyMetadata(null));
-
-
-
+        public static readonly DependencyProperty ParentContainerProperty = DependencyProperty.Register("ParentContainer", typeof(FrameworkElement), typeof(CellBehavior), new PropertyMetadata(null));
+        
         protected override void OnAttached()
         {
             base.OnAttached();
             AssociatedObject.Loaded += OnLoaded;
             AssociatedObject.MouseEnter += OnEnter;
             AssociatedObject.MouseLeave += OnLeave;
-            AssociatedObject.MouseLeftButtonDown += OnLeftDown;
+            AssociatedObject.MouseLeftButtonDown += OnLeftDown;            
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

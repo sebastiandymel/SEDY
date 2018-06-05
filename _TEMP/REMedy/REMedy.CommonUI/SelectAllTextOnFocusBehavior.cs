@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
@@ -10,11 +11,35 @@ namespace Remedy.CommonUI
     {
         bool isKeyboardUsed = true;
 
+        public bool SelectAllWhenMadeVisible
+        {
+            get;set;
+        }
+
         protected override void OnAttached()
         {
             base.OnAttached();
             AssociatedObject.GotKeyboardFocus += AssociatedObject_GotKeyboardFocus;
             AssociatedObject.PreviewMouseLeftButtonUp += OnMouseLeftUp;
+            AssociatedObject.IsVisibleChanged += OnIsVisibleChanged;
+        }
+
+        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!SelectAllWhenMadeVisible)
+            {
+                return;
+            }
+            if (AssociatedObject.Visibility == Visibility.Visible)
+            {
+                AssociatedObject.Focus();
+                AssociatedObject.SelectAll();
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    AssociatedObject.Focus();
+                    AssociatedObject.SelectAll();
+                }), DispatcherPriority.Background);
+            }
         }
 
         private void OnMouseLeftUp(object sender, MouseButtonEventArgs e)
