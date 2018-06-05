@@ -349,8 +349,75 @@
 
 
                 </materialDesign:Card>
-                
-                
+
+
+                <Expander
+                    Grid.Row="0"
+                    Grid.RowSpan="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right"
+                    ExpandDirection="Right"
+                    ToolTip="Register and unregister FakeIMC">
+                    <Expander.Header>
+                        <TextBlock
+                            FontSize="16"
+                            RenderTransformOrigin=".5,.5"
+                            Text="SPEECH VIEW">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="90" />
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </Expander.Header>
+
+                    <materialDesign:Card
+                        Grid.Row="2"
+                        Height="200"
+                        Padding="8"
+                        HorizontalAlignment="Stretch"
+                        Background="{DynamicResource MaterialDesignBackground}">
+                        <Grid>
+                            <Separator
+                                Margin="0,51,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top" />
+                            <Separator
+                                Margin="0,85.5,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top" />
+                            <Separator
+                                Margin="0,120,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top" />
+                            <Separator
+                                Margin="0,154.5,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top" />
+                            <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
+                                <HeaderedItemsControl
+                                    Margin="0,0,0,4"
+                                    ui:GridExtensions.GridRow="0"
+                                    Header="Perc30:"
+                                    ItemsSource="{Binding SpeechGrid.Percentiles30}"
+                                    Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor.ColumnHeader}" />
+                                <HeaderedItemsControl
+                                    Margin="0,0,0,4"
+                                    ui:GridExtensions.GridRow="1"
+                                    Header="Ltass:"
+                                    ItemsSource="{Binding SpeechGrid.Ltass}"
+                                    Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}" />
+                                <HeaderedItemsControl
+                                    Margin="0,0,0,4"
+                                    ui:GridExtensions.GridRow="2"
+                                    Header="Perc99:"
+                                    ItemsSource="{Binding SpeechGrid.Percentiles99}"
+                                    Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}" />
+                            </StackPanel>
+                        </Grid>
+
+
+                    </materialDesign:Card>
+                </Expander>
             </Grid>
 
 
@@ -382,6 +449,7 @@
                         Kind="Import" />
                 </Button>
             </StackPanel>
+
 
 
             <materialDesign:DialogHost
