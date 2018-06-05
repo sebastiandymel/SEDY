@@ -131,7 +131,7 @@
     </ApplicationDefinition>
     <Compile Include="View\GridExtensions.cs" />
     <Compile Include="View\HoverBehavior.cs" />
-    <Compile Include="View\HoverExtensions.cs" />
+    <Compile Include="View\CellExtensions.cs" />
     <Compile Include="ViewModel\FreqValCell.cs" />
     <Compile Include="Model\CurvesConfiguration.cs" />
     <Compile Include="Model\CurveType.cs" />

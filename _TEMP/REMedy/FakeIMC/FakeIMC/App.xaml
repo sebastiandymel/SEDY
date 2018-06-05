@@ -23,8 +23,8 @@
                 x:Key="Style.TextBox.FreqItem"
                 BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}"
                 TargetType="{x:Type TextBox}">
-                <Setter Property="Width" Value="40" />
-                
+                <Setter Property="Width" Value="30" />
+
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
             </Style>
 
@@ -41,10 +41,14 @@
             <Style x:Key="SelectionBorder" TargetType="{x:Type Border}">
                 <Setter Property="Background" Value="Red" />
                 <Setter Property="Opacity" Value="0" />
+                <Setter Property="CornerRadius" Value="2" />
                 <Setter Property="RenderTransformOrigin" Value="0.5, 0.5" />
                 <Setter Property="Effect">
                     <Setter.Value>
-                        <DropShadowEffect Opacity="0.3" BlurRadius="1" ShadowDepth="2" />
+                        <DropShadowEffect
+                            BlurRadius="1"
+                            Opacity="0.7"
+                            ShadowDepth="2" />
                     </Setter.Value>
                 </Setter>
             </Style>
@@ -77,59 +81,56 @@
                 </DoubleAnimationUsingKeyFrames>
             </Storyboard>
 
-            <DataTemplate x:Key="Private.DataTemplate.FreqVal" DataType="{x:Type ui:FreqValCell}">
-                <Grid Margin="4,0,4,0">                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" SharedSizeGroup="FreqColumn" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        FontWeight="DemiBold"
-                        Foreground="{DynamicResource Brush.TextBlock.Header}"
-                        Style="{DynamicResource MaterialDesignBody2TextBlock}"
-                        Text="{Binding Frequency, Converter={StaticResource Converter.Frequency}}" />
-                    <Border
-                        Name="hoverBorder"
-                        Grid.Row="1"
-                        Style="{StaticResource HoverBorder}">
+
+            <DataTemplate x:Key="Private.DataTemplate.Cell" DataType="{x:Type ui:FreqValCell}">
+                <Grid Height="30" Width="30" Margin="4,0,4,0">
+                    <i:Interaction.Behaviors>
+                        <ui:MouseSelectBehavior />
+                    </i:Interaction.Behaviors>
+                    <Border Name="hoverBorder" Style="{StaticResource HoverBorder}">
                         <Border.RenderTransform>
                             <ScaleTransform x:Name="scale" />
                         </Border.RenderTransform>
                     </Border>
-
                     <Border
                         Name="selectionBorder"
                         Grid.Row="1"
-                        Style="{StaticResource SelectionBorder}" >
+                        Style="{StaticResource SelectionBorder}">
                         <i:Interaction.Behaviors>
-                            <ui:MouseSelectBehavior/>
+                            <ui:MouseSelectBehavior />
                         </i:Interaction.Behaviors>
                         <Border.RenderTransform>
-                            <RotateTransform x:Name="Rotate"/>
+                            <RotateTransform x:Name="Rotate" />
                         </Border.RenderTransform>
                     </Border>
 
-                    <TextBox
-                        Grid.Row="1"
-                        Style="{DynamicResource Style.TextBox.FreqItem}"
-                        Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <!-- READ ONLY MODE -->
+                    <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Value}"/>
+                    <!-- EDIT MODE -->
+                    <TextBox Visibility="Collapsed" Margin="0,-12,0,0"  Style="{StaticResource Style.TextBox.FreqItem}" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Behaviors>
                             <commonUi:SelectAllTextOnFocusBehavior />
-                            <ui:MouseSelectBehavior/>
+                            <ui:MouseSelectBehavior />
                         </i:Interaction.Behaviors>
                     </TextBox>
-
                 </Grid>
                 <DataTemplate.Triggers>
-                    <Trigger Property="ui:HoverExtensions.IsHovered" Value="True">
+                    <Trigger Property="ui:CellExtensions.IsHovered" Value="True">
                         <Trigger.EnterActions>
-                            <BeginStoryboard Name="hoverAnimation" Storyboard="{StaticResource HoverEffect}" />
+                            <BeginStoryboard Name="h" Storyboard="{StaticResource HoverEffect}" />
                         </Trigger.EnterActions>
                         <Trigger.ExitActions>
-                            <RemoveStoryboard BeginStoryboardName="hoverAnimation" />
+                            <RemoveStoryboard BeginStoryboardName="h" />
                         </Trigger.ExitActions>
                     </Trigger>
+                    <DataTrigger Binding="{Binding Path=(ui:CellExtensions.IsHovered), RelativeSource={RelativeSource AncestorType=ContentPresenter}}" Value="True">
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard Name="hoverAnimation" Storyboard="{StaticResource HoverEffect}" />
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <RemoveStoryboard BeginStoryboardName="hoverAnimation" />
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
                     <DataTrigger Binding="{Binding IsSelected}" Value="True">
                         <DataTrigger.EnterActions>
                             <BeginStoryboard Name="selectionAnimation" Storyboard="{StaticResource SelectionEffect}" />
@@ -141,10 +142,32 @@
                 </DataTemplate.Triggers>
             </DataTemplate>
 
+            <DataTemplate x:Key="Private.DataTemplate.CellWithHeader" DataType="{x:Type ui:FreqValCell}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" SharedSizeGroup="FreqColumn" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontWeight="DemiBold"
+                        Foreground="{DynamicResource Brush.TextBlock.Header}"
+                        Margin="0,0,0,4"
+                        Style="{DynamicResource MaterialDesignBody2TextBlock}"
+                        Text="{Binding Frequency, Converter={StaticResource Converter.Frequency}}" />
+
+                    <ContentControl
+                        Grid.Row="1"
+                        ui:CellExtensions.IsHovered="{Binding Path=(ui:CellExtensions.IsHovered), RelativeSource={RelativeSource AncestorType=ContentPresenter}}"
+                        Content="{Binding}"
+                        ContentTemplate="{StaticResource Private.DataTemplate.Cell}" />
+                </Grid>
+
+            </DataTemplate>
 
             <Style x:Key="Style.HeaderedItemsControl.FrequencyValueEditor.ColumnHeader" TargetType="{x:Type HeaderedItemsControl}">
                 <Setter Property="Margin" Value="0,2,0,2" />
-                <Setter Property="ItemTemplate" Value="{DynamicResource Private.DataTemplate.FreqVal}" />
+                <Setter Property="ItemTemplate" Value="{DynamicResource Private.DataTemplate.CellWithHeader}" />
                 <Setter Property="HeaderTemplate">
                     <Setter.Value>
                         <DataTemplate DataType="{x:Type system:String}">
@@ -189,56 +212,8 @@
                 x:Key="Style.HeaderedItemsControl.FrequencyValueEditor"
                 BasedOn="{StaticResource Style.HeaderedItemsControl.FrequencyValueEditor.ColumnHeader}"
                 TargetType="{x:Type HeaderedItemsControl}">
-                <Setter Property="ItemTemplate">
-                    <Setter.Value>
-                        <DataTemplate DataType="{x:Type ui:FreqValCell}">
-                            <Grid Margin="4,0,4,0">
-                                <Border Name="hoverBorder" Style="{StaticResource HoverBorder}">
-                                    <Border.RenderTransform>
-                                        <ScaleTransform x:Name="scale" />
-                                    </Border.RenderTransform>
-                                </Border>
-                                <Border
-                                    Name="selectionBorder"
-                                    Grid.Row="1"
-                                    Style="{StaticResource SelectionBorder}" >
-                                    <i:Interaction.Behaviors>
-                                        <ui:MouseSelectBehavior/>
-                                    </i:Interaction.Behaviors>
-                                    <Border.RenderTransform>
-                                        <RotateTransform x:Name="Rotate"/>
-                                    </Border.RenderTransform>
-                                </Border>
-                                <TextBox Style="{StaticResource Style.TextBox.FreqItem}" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                    <i:Interaction.Behaviors>
-                                        <commonUi:SelectAllTextOnFocusBehavior />
-                                        <ui:MouseSelectBehavior/>
-                                    </i:Interaction.Behaviors>
-                                </TextBox>
-                            </Grid>
-                            <DataTemplate.Triggers>
-                                <Trigger Property="ui:HoverExtensions.IsHovered" Value="True">
-                                    <Trigger.EnterActions>
-                                        <BeginStoryboard Name="hoverAnimation" Storyboard="{StaticResource HoverEffect}" />
-                                    </Trigger.EnterActions>
-                                    <Trigger.ExitActions>
-                                        <RemoveStoryboard BeginStoryboardName="hoverAnimation" />
-                                    </Trigger.ExitActions>
-                                </Trigger>
-                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                    <DataTrigger.EnterActions>
-                                        <BeginStoryboard Name="selectionAnimation" Storyboard="{StaticResource SelectionEffect}" />
-                                    </DataTrigger.EnterActions>
-                                    <DataTrigger.ExitActions>
-                                        <RemoveStoryboard BeginStoryboardName="selectionAnimation" />
-                                    </DataTrigger.ExitActions>
-                                </DataTrigger>
-                            </DataTemplate.Triggers>
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="ItemTemplate" Value="{StaticResource Private.DataTemplate.Cell}" />
             </Style>
-
 
             <Style
                 x:Key="Style.PalleteButton"

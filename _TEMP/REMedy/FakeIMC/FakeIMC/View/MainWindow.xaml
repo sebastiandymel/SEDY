@@ -306,19 +306,19 @@
                     <Grid>
                         <Separator HorizontalAlignment="Stretch"
                                    VerticalAlignment="Top"
-                                   Margin="0,53,0,0"
+                                   Margin="0,51,0,0"
                                    />
                         <Separator HorizontalAlignment="Stretch"
                                    VerticalAlignment="Top"
-                                   Margin="0,94,0,0"
+                                   Margin="0,85.5,0,0"
                                    />
                         <Separator HorizontalAlignment="Stretch"
                                    VerticalAlignment="Top"
-                                   Margin="0,135,0,0"
+                                   Margin="0,120,0,0"
                                    />
                         <Separator HorizontalAlignment="Stretch"
                                    VerticalAlignment="Top"
-                                   Margin="0,176,0,0"
+                                   Margin="0,154.5,0,0"
                                    />
                         <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
                             <HeaderedItemsControl Header="Low:"

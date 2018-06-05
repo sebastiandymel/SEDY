@@ -92,12 +92,12 @@ namespace FakeIMC.UI
 
         private void OnLeave(object sender, MouseEventArgs e)
         {
-            ForEachContainer(c => HoverExtensions.SetIsHovered(c, false));
+            ForEachContainer(c => CellExtensions.SetIsHovered(c, false));
         }
 
         private void OnEnter(object sender, MouseEventArgs e)
         {
-            ForEachContainer(c => HoverExtensions.SetIsHovered(c, true));
+            ForEachContainer(c => CellExtensions.SetIsHovered(c, true));
         }
 
         private void ForEachContainer(Action<DependencyObject> invoke)

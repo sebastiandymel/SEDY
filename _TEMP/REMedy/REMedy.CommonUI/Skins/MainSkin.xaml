@@ -574,7 +574,7 @@
         </Border>
     </DataTemplate>
 
-    <DataTemplate x:Key="Private.DataTemplate.FreqVal" DataType="{x:Type commonUi:FreqVal}">
+    <DataTemplate x:Key="Private.DataTemplate.CellWithHeader" DataType="{x:Type commonUi:FreqVal}">
         <Grid Margin="3,0,3,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" SharedSizeGroup="FreqColumn" />
@@ -788,7 +788,7 @@
 
     <Style x:Key="Style.HeaderedItemsControl.FrequencyValueEditor.ColumnHeader" TargetType="{x:Type HeaderedItemsControl}">
         <Setter Property="Margin" Value="0,2,0,2" />
-        <Setter Property="ItemTemplate" Value="{DynamicResource Private.DataTemplate.FreqVal}" />
+        <Setter Property="ItemTemplate" Value="{DynamicResource Private.DataTemplate.CellWithHeader}" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate DataType="{x:Type system:String}">
