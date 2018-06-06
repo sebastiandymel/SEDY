@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="TaxiSkin.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <Color x:Key="Color.Primary">#F988FF</Color>
+    <Color x:Key="Color.Secondary">#781D7D</Color>
+    <Color x:Key="Color.Background.Expander.MouseOver">#F99CFF</Color>
+
+    <BitmapImage x:Key="Image.Logo" UriSource="pack://application:,,,/Remedy.CommonUI;component/Skins/fakefit.png" />
+
+    <system:String x:Key="String.WindowTitle">Fakefit</system:String>
+</ResourceDictionary>

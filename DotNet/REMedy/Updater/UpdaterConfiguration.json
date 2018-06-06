@@ -1,0 +1,10 @@
+﻿{
+
+  "RemoteLocations": [ "\\\\demant.com\\data\\KBN\\RnD\\FS_Programs\\Support_Tools\\FakeVerifit\\_currentVersion" ],
+
+  "FilePattern": "*FakeVerifit.Installer*.exe",
+
+  "UpdateCheckInterval": 3000.0
+}
+
+

@@ -1,0 +1,12 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeEditing/Intellisense/CodeCompletion/IntellisenseGloballyEnabled/IntellisenseEnabled/@EntryValue">Disabled</s:String>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=4844A4797E19BD40BCC3DC33099B7B43/AbsolutePath/@EntryValue">C:\Users\PWSO\Documents\Visual Studio 2015\Projects\FakeVerifit\FakeVerifit\FakeVerifit.csproj.DotSettings</s:String>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=4844A4797E19BD40BCC3DC33099B7B43/RelativePath/@EntryValue">..\FakeVerifit\FakeVerifit.csproj.DotSettings</s:String>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=4844A4797E19BD40BCC3DC33099B7B43/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=FEEE93CF39625349B71791C34EEE767D/AbsolutePath/@EntryValue">C:\Users\PWSO\Documents\Visual Studio 2015\Projects\FakeVerifit\FakeVerifitTests\FakeVerifitTests.csproj.DotSettings</s:String>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=FEEE93CF39625349B71791C34EEE767D/RelativePath/@EntryValue">..\FakeVerifitTests\FakeVerifitTests.csproj.DotSettings</s:String>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=FEEE93CF39625349B71791C34EEE767D/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File4844A4797E19BD40BCC3DC33099B7B43/@KeyIndexDefined">True</s:Boolean>
+	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File4844A4797E19BD40BCC3DC33099B7B43/RelativePriority/@EntryValue">1</s:Double>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileFEEE93CF39625349B71791C34EEE767D/@KeyIndexDefined">True</s:Boolean>
+	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileFEEE93CF39625349B71791C34EEE767D/RelativePriority/@EntryValue">2</s:Double></wpf:ResourceDictionary>

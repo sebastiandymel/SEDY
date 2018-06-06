@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<AudioscanServer model="vf2" serial="C0905" version="4.10.2">
+  <Service symbol="clfs" name="Audioscan Closed-Loop Fitting System" port="8040" avail="1" enabled="1"></Service>
+</AudioscanServer>
