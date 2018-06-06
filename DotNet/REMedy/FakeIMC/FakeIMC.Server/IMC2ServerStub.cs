@@ -86,6 +86,17 @@ namespace FakeIMC.Server
             ClearTargetCurves();
 
             this.addPercentiles = container.AddPercentiles;
+            if (this.addPercentiles)
+            {
+                if (container.Percentiles30 != null)
+                {
+                    LoadCurve(container.Percentiles30, 30);                   
+                }
+                if (container.Percentiles30 != null)
+                {
+                    LoadCurve(container.Percentiles99, 99);
+                }
+            }
 
 
             if (container.CurveLowInput != null)
@@ -185,6 +196,13 @@ namespace FakeIMC.Server
         private bool addPercentiles;
 
         private Dictionary<int, TargetCurve> TargetCurves { get; set; }
+
+        /// <summary>
+        /// This dictionary contains general set of interpolated curves used for varius purpose.
+        /// Each curve is identified by index. For example REUG is given by index 100.
+        /// Each supported level is given by level value (50, 65, 80)
+        /// Percentiles are given by index 30 and 99 (corresponds to percentile level)
+        /// </summary>
         private Dictionary<int, ISpectrum> TargetInterpolatedCurves { get; set; }
         #endregion
 
@@ -344,11 +362,14 @@ namespace FakeIMC.Server
         }
         private List<MeasurementPoint> MeasurementPointsForStep(List<decimal> target, decimal step)
         {
+            List<decimal> percentiles30 = this.addPercentiles ? GetValuesFromTargetCurve(TargetInterpolatedCurves[30]) : null;
+            List<decimal> percentiles99 = this.addPercentiles ? GetValuesFromTargetCurve(TargetInterpolatedCurves[99]) : null;
+
             var points = new List<MeasurementPoint>();
             for (int i = 0; i < Constants.SweepFrequencies.Count; i++)
             {
                 Thread.Sleep(1);
-                var value = (Constants.AmountOfSteps - step) + (step / Constants.AmountOfSteps * target[i]);
+                var value = GetValue(target, step, i);
 
                 if (this.addReugtoReag
                     && this.measurementConditions.MeasurementIdentification != TMeasurementIdentification.UnaidedResponse
@@ -373,13 +394,39 @@ namespace FakeIMC.Server
 
                 if (this.addPercentiles)
                 {
+                    //
+                    // PERCENTILES 30
+                    //
+                    var p30 = GetValue(percentiles30, step, i);
+                    if (this.addRandomValuesToCurves)
+                    {
+                        p30 = p30 + new Random().Next(4);
+                    }
+                    point.Percentile1 = p30;
                     
+                    //
+                    // PERCENTILES 99
+                    //
+                    var p99 = GetValue(percentiles99, step, i);
+                    if (this.addRandomValuesToCurves)
+                    {
+                        p99 = p99 + new Random().Next(4);
+                    }
+                    point.Percentile2 = p99;
+
+                    point.Percentile3 = 0;
                 }
 
                 points.Add(point);
-                if (ImmediatelyStopMeasurements) break;
+                if (ImmediatelyStopMeasurements)
+                    break;
             }
             return points;
+        }
+
+        private static decimal GetValue(List<decimal> target, decimal step, int i)
+        {
+            return (Constants.AmountOfSteps - step) + (step / Constants.AmountOfSteps * target[i]);
         }
         #endregion
 
@@ -393,7 +440,7 @@ namespace FakeIMC.Server
             DataReady rem = new DataReady
             {
                 Status = DataReadyType.MeasurementEnded,
-                StatusText = "Data"
+                StatusText = "Data" // TODO: SII VALUES HERE? <-----------------------------------
             };
             Send(rem, "End of Measurement");
         }
@@ -503,11 +550,6 @@ namespace FakeIMC.Server
         #region IMC methods
         private int SetProtoCol(object pvData)
         {
-            if (ShowDetails)
-            {
-
-            }
-
             //Not Implemented
             return (int)IMC2RetParam.OcerOk;
         }

@@ -243,14 +243,17 @@
                     <RowDefinition Height="200" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <i:Interaction.Behaviors>
-                    <ui:SingleExpanderExpandedBahavior/>
+                    <ui:SingleExpanderExpandedBahavior />
                 </i:Interaction.Behaviors>
 
-                <ToolBarTray VerticalAlignment="Top" HorizontalAlignment="Stretch"  Grid.ColumnSpan="2">
+                <ToolBarTray
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top">
                     <ToolBar ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
                         <CheckBox
                             Content="Add random values"
@@ -305,11 +308,10 @@
                 -->
 
                 <Expander
-                    Grid.Row="2"                    
+                    Grid.Row="2"
                     HorizontalAlignment="Left"
                     ExpandDirection="Right"
-                    IsExpanded="True"
-                    >
+                    IsExpanded="True">
                     <Expander.Header>
                         <TextBlock
                             FontSize="16"
@@ -322,61 +324,61 @@
                     </Expander.Header>
 
                     <materialDesign:Card
-                    Grid.Row="2"
-                    Height="200"
-                    Padding="8"
-                    HorizontalAlignment="Stretch"
-                    Background="{DynamicResource MaterialDesignBackground}">
-                    <Grid>
-                        <Separator
-                            Margin="0,51,0,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Top" />
-                        <Separator
-                            Margin="0,85.5,0,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Top" />
-                        <Separator
-                            Margin="0,120,0,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Top" />
-                        <Separator
-                            Margin="0,154.5,0,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Top" />
-                        <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
-                            <HeaderedItemsControl
-                                Margin="0,0,0,4"
-                                ui:GridExtensions.GridRow="0"
-                                Header="Low:"
-                                ItemsSource="{Binding Grid.Low}"
-                                Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor.ColumnHeader}" />
-                            <HeaderedItemsControl
-                                Margin="0,0,0,4"
-                                ui:GridExtensions.GridRow="1"
-                                Header="Medium:"
-                                ItemsSource="{Binding Grid.Medium}"
-                                Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}" />
-                            <HeaderedItemsControl
-                                Margin="0,0,0,4"
-                                ui:GridExtensions.GridRow="2"
-                                Header="High:"
-                                ItemsSource="{Binding Grid.High}"
-                                Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}" />
-                            <HeaderedItemsControl
-                                Margin="0,0,0,4"
-                                ui:GridExtensions.GridRow="3"
-                                Header="REUG: "
-                                ItemsSource="{Binding Grid.REUG}"
-                                Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}" />
-                        </StackPanel>
-                    </Grid>
+                        Grid.Row="2"
+                        Height="200"
+                        Padding="8"
+                        HorizontalAlignment="Stretch"
+                        Background="{DynamicResource MaterialDesignBackground}">
+                        <Grid>
+                            <Separator
+                                Margin="0,51,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top" />
+                            <Separator
+                                Margin="0,85.5,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top" />
+                            <Separator
+                                Margin="0,120,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top" />
+                            <Separator
+                                Margin="0,154.5,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top" />
+                            <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
+                                <HeaderedItemsControl
+                                    Margin="0,0,0,4"
+                                    ui:GridExtensions.GridRow="0"
+                                    Header="Low:"
+                                    ItemsSource="{Binding Grid.Low}"
+                                    Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor.ColumnHeader}" />
+                                <HeaderedItemsControl
+                                    Margin="0,0,0,4"
+                                    ui:GridExtensions.GridRow="1"
+                                    Header="Medium:"
+                                    ItemsSource="{Binding Grid.Medium}"
+                                    Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}" />
+                                <HeaderedItemsControl
+                                    Margin="0,0,0,4"
+                                    ui:GridExtensions.GridRow="2"
+                                    Header="High:"
+                                    ItemsSource="{Binding Grid.High}"
+                                    Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}" />
+                                <HeaderedItemsControl
+                                    Margin="0,0,0,4"
+                                    ui:GridExtensions.GridRow="3"
+                                    Header="REUG: "
+                                    ItemsSource="{Binding Grid.REUG}"
+                                    Style="{DynamicResource Style.HeaderedItemsControl.FrequencyValueEditor}" />
+                            </StackPanel>
+                        </Grid>
 
 
-                </materialDesign:Card>
-</Expander>
+                    </materialDesign:Card>
+                </Expander>
                 <Expander
-                    Grid.Row="2" 
+                    Grid.Row="2"
                     Grid.Column="1"
                     HorizontalAlignment="Left"
                     ExpandDirection="Right"
