@@ -1,9 +1,0 @@
-﻿{
-  "jsonrpc": "2.0",
-  "result": {
-    "model": "vf2",
-    "serial": "PSSD1",
-    "version": "3.0.1"
-  },
-  "id": "serverInfo"
-}

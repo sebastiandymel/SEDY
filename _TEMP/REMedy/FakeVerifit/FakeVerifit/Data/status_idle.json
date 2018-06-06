@@ -1,9 +1,0 @@
-﻿{
-  "jsonrpc": "2.0",
-  "result": {
-    "status": "idle",
-    "id": "null",
-    "data": "null"
-  },
-  "id": "status"
-}
