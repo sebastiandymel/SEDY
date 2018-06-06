@@ -75,13 +75,10 @@ namespace FakeIMC.Core
                 var serializer = new XmlSerializer(typeof(CurvesContainer));
                 this.container = (CurvesContainer)serializer.Deserialize(stream);
                 NotifyCurvesChanged(this.container);
-                
-                //AddREUGCurve.Checked = container.AddREUG;
-                //AddRandomValues.Checked = container.AddRandomValues;
             }
-            catch
+            catch(Exception ex)
             {
-                WarningOut("Couldn't deserialize file.");
+                FailedOut("Couldn't deserialize file. " + ex.Message);
             }
         }
 
@@ -226,7 +223,7 @@ namespace FakeIMC.Core
             }
             catch (Exception e)
             {
-                TextOut(e.Message);
+                FailedOut("Could not connecte to NOAH: " + e.Message);
             }
             return moduleAPI;
         }
@@ -462,7 +459,7 @@ namespace FakeIMC.Core
         {
             if (this.Imc2Server == null)
             {
-                TextOut("Missing Client and server is not yet initialized.");
+                FailedOut("Missing Client and server is not yet initialized.");
                 return;
             }
 

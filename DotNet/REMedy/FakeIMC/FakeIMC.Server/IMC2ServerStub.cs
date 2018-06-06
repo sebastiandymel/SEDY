@@ -503,6 +503,11 @@ namespace FakeIMC.Server
         #region IMC methods
         private int SetProtoCol(object pvData)
         {
+            if (ShowDetails)
+            {
+
+            }
+
             //Not Implemented
             return (int)IMC2RetParam.OcerOk;
         }
