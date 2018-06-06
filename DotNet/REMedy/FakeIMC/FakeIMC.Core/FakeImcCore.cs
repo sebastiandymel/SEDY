@@ -188,7 +188,7 @@ namespace FakeIMC.Core
 
             if (this.imcClient == null) throw new NullReferenceException("ImcClient is null !");
 
-            this.Imc2Server = new Imc2ServerStub(this.imcClient, TextOut);
+            this.Imc2Server = new Imc2ServerStub(this.imcClient, TextOut, WarningOut);
 
             var newThread = new Thread(() =>
             {
@@ -249,7 +249,7 @@ namespace FakeIMC.Core
             if (this.imcClient == null) return;
             if (this.Imc2Server != null) return;
 
-            this.Imc2Server = new Imc2ServerStub(this.imcClient, TextOut);
+            this.Imc2Server = new Imc2ServerStub(this.imcClient, TextOut, WarningOut);
 
             var newThread = new Thread(() =>
             {

@@ -28,10 +28,11 @@ namespace FakeIMC.Server
             });
             newThread.Start();
         }
-        public Imc2ServerStub(IIMCClient imcClient, Action<string> output)
+        public Imc2ServerStub(IIMCClient imcClient, Action<string> output, Action<string> warnOut)
         {
             this.imcClient = imcClient;
             this.txtOut = output;
+            this.txtWarningOut = warnOut;
             TargetCurves = new Dictionary<int, TargetCurve>();
             TargetInterpolatedCurves = new Dictionary<int, ISpectrum>();
 
@@ -167,6 +168,7 @@ namespace FakeIMC.Server
         #region Private Variables
         private IIMCClient imcClient;
         private Action<string> txtOut;
+        private Action<string> txtWarningOut;
         private MeasurementConditions measurementConditions;
         private bool showDetails = true;
         private bool showHeartbeat = true;
@@ -201,6 +203,10 @@ namespace FakeIMC.Server
         private void TextOut(string text)
         {
             this.txtOut?.Invoke(text + Environment.NewLine);
+        }
+        private void WarnOut(string text)
+        {
+            this.txtWarningOut?.Invoke(text + Environment.NewLine);
         }
         private bool NotRunning(ref int result)
         {
@@ -357,13 +363,20 @@ namespace FakeIMC.Server
                     value = value + new Random().Next(4);
                 }
 
-                points.Add(new MeasurementPoint
+                var point = new MeasurementPoint
                 {
                     Frequency = Convert.ToInt32(System.Math.Round(Constants.SweepFrequencies[i])),
                     Input = 0,
                     Output = value,
                     Status = TPointStatus.Normal
-                });
+                };
+
+                if (this.addPercentiles)
+                {
+                    
+                }
+
+                points.Add(point);
                 if (ImmediatelyStopMeasurements) break;
             }
             return points;
@@ -555,6 +568,20 @@ namespace FakeIMC.Server
         private int SetMeasurementCond(ref object pvData)
         {
             this.measurementConditions = (MeasurementConditions)pvData;
+
+            // Log what was requested from fSW:
+            TextOut(this.measurementConditions.Log());
+
+            if (!this.addPercentiles)
+            {
+                // NO PERCENTILES
+                // If module does not support percentiles, it will return empty array:
+                this.measurementConditions.Percentiles = new int[0];
+                if (this.measurementConditions.Percentiles != null && this.measurementConditions.Percentiles.Length > 0)
+                {
+                    WarnOut("Fitting Software requested Percentiles. FakeIMC has percentiles disabled.");
+                }
+            }
 
             pvData = this.measurementConditions;
             return (int)IMC2RetParam.OcerOk;
