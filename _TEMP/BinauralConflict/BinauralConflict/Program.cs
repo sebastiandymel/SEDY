@@ -60,6 +60,7 @@ namespace BinauralConflict
 
     public enum SettingsType
     {
-        ProgramMismatch
+        ProgramMismatch,
+        Trimmer
     }
 }
