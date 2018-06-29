@@ -1,0 +1,2 @@
+Introduced base command that encapsulates all the information needed to present test result.
+Changed view to have an ItemsSouce with ItemTemplate to model each command.
