@@ -1,0 +1,10 @@
+﻿{
+
+  "RemoteLocations": [ "\\\\demant.com\\data\\KBN\\RnD\\FS_Programs\\Support_Tools\\Remedy\\_currentVersion" ],
+
+  "FilePattern": "*REMedy.Installer*.exe",
+
+  "UpdateCheckInterval": 3000.0
+}
+
+

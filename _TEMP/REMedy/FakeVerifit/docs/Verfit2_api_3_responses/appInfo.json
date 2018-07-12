@@ -1,0 +1,53 @@
+{
+    "jsonrpc": "2.0",
+    "result": {
+        "modes": {
+            "title": "modes",
+            "data": {
+                "rem": {
+                    "title": "On-ear"
+                },
+                "srem": {
+                    "title": "Test box"
+                }
+            }
+        },
+        "presentations": {
+            "title": "presentations",
+            "data": {
+                "single": {
+                    "title": "Single view"
+                }
+            }
+        },
+        "sides": {
+            "title": "sides",
+            "data": {
+                "left": {
+                    "title": "Left"
+                },
+                "right": {
+                    "title": "Right"
+                }
+            }
+        },
+        "tests": {
+            "title": "Tests",
+            "data": {
+                "1": {
+                    "title": "1"
+                },
+                "2": {
+                    "title": "2"
+                },
+                "3": {
+                    "title": "3"
+                },
+                "4": {
+                    "title": "4"
+                }
+            }
+        }
+    },
+    "id": "appInfo"
+}

@@ -1,0 +1,8 @@
+{
+    "jsonrpc": "2.0",
+    "error": {
+        "code": 4101,
+        "message": "No reference microphone detected"
+    },
+    "id": "status"
+}

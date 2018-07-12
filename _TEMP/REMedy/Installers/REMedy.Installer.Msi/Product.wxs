@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?define REMedy.Launcher_TargetDir=$(var.REMedy.Launcher.TargetDir)?>
+  <?define FakeVerifit.UI_TargetDir=$(var.FakeVerifit.UI.TargetDir)?>
+  <?define FakeIMC.UI_TargetDir=$(var.FakeIMC.UI.TargetDir)?>
+  <Product Id="*" Name="FakeVerifit" Language="1033" Version="1.1.0.0" Manufacturer="WDH" UpgradeCode="28bfd66b-d839-450c-87b5-c188e6121e79">
+    <Package InstallerVersion="405" Compressed="yes" InstallScope="perMachine" />
+    <Icon Id="fakeverifit.ico" SourceFile="fakeverifit.ico" />
+    <Icon Id="fakeimc_icon.ico" SourceFile="fakeimc_icon.ico" />
+    <Icon Id="remedy_icon.ico" SourceFile="remedy_icon.ico" />
+    <MediaTemplate />
+
+    <Feature Id="ProductFeature" Title="REMedy.Installer.Msi" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="InstallDirDataPermissions" />
+      <ComponentGroupRef Id="FakeVerifitComponents" />
+      <ComponentGroupRef Id="FakeIMCComponents" />
+    </Feature>
+
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="REMedy">
+          <Directory Id="FakeVerifitDir" Name="FakeVerifit" />
+          <Directory Id="FakeIMCDir" Name="FakeIMC" />
+          <Component Id="InstallDirDataPermissions" Guid="cfd4e967-6f96-4ff9-9b92-f115e4cac547" KeyPath="yes">
+            <CreateFolder>
+              <util:PermissionEx User="Everyone" GenericAll="yes" />
+            </CreateFolder>
+            <RemoveFile Id="removefiles" Name="*.*" Directory="INSTALLFOLDER" On="uninstall" />
+          </Component>
+          <!--<Directory Id="Skins" Name="Skins" />-->
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="REMedy" />
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="646c54b0-0a07-4fe2-aa4f-f3348af91723">
+        <Shortcut Id="RemedyShortcut" Name="REMedy Launcher" Description="REMedy Application" Target="[#REMedy.Launcher.REMedy.Launcher.exe]" WorkingDirectory="INSTALLFOLDER" Icon="remedy_icon.ico" />
+        <Shortcut Id="FakeVerifitShortcut" Name="FakeVerifit" Description="FakeVerifit Application" Target="[#FakeVerifit.FakeVerifit.UI.exe]" WorkingDirectory="FakeVerifitDir" Icon="fakeverifit.ico" />
+        <Shortcut Id="FakeIMCShortcut" Name="FakeIMC" Description="FakeIMC Application" Target="[#FakeIMC.FakeIMC.exe]" WorkingDirectory="FakeIMCDir" Icon="fakeimc_icon.ico" />
+        <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\REMedy" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+  <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+    <Component Id="REMedy.Launcher" Guid="93631e18-d2b0-488d-b402-be48743fc857">
+      <File Id="REMedy.Launcher.REMedy.Launcher.exe" Name="REMedy.Launcher.exe" Source="$(var.REMedy.Launcher_TargetDir)REMedy.Launcher.exe" />
+      <File Id="REMedy.Launcher.Autofac.dll" Name="Autofac.dll" Source="$(var.REMedy.Launcher_TargetDir)Autofac.dll" />
+      <File Id="REMedy.Launcher.Remedy.CommonUI.dll" Name="Remedy.CommonUI.dll" Source="$(var.REMedy.Launcher_TargetDir)Remedy.CommonUI.dll" />
+      <File Id="REMedy.Launcher.REMedy.Launcher.exe.config" Name="REMedy.Launcher.exe.config" Source="$(var.REMedy.Launcher_TargetDir)REMedy.Launcher.exe.config" />
+      <File Id="REMedy.Launcher.System.Windows.Interactivity.dll" Name="System.Windows.Interactivity.dll" Source="$(var.REMedy.Launcher_TargetDir)System.Windows.Interactivity.dll" />
+      <File Id="REMedy.Launcher.Remedy.Core.dll" Name="Remedy.Core.dll" Source="$(var.REMedy.Launcher_TargetDir)Remedy.Core.dll" />
+      <File Id="REMedy.Launcher.GalaSoft.MvvmLight.dll" Name="GalaSoft.MvvmLight.dll" Source="$(var.REMedy.Launcher_TargetDir)GalaSoft.MvvmLight.dll" />
+    </Component>
+
+
+  </ComponentGroup>
+
+    <ComponentGroup Id="FakeVerifitComponents" Directory="FakeVerifitDir">
+      <Component Id="FakeVerifit.UI.exe" Guid="6a152f96-403f-42e2-a237-6333831973e5">
+        <File Id="FakeVerifit.FakeVerifit.UI.exe" Name="FakeVerifit.UI.exe" Source="$(var.FakeVerifit.UI_TargetDir)FakeVerifit.UI.exe" />
+        <File Id="FakeVerifit.FakeVerifit.UI.exe.config" Name="FakeVerifit.UI.exe.config" Source="$(var.FakeVerifit.UI_TargetDir)FakeVerifit.UI.exe.config" />
+        <File Id="FakeVerifit.FakeVerifit.dll" Name="FakeVerifit.dll" Source="$(var.FakeVerifit.UI_TargetDir)FakeVerifit.dll" />
+        <File Id="FakeVerifit.FakeVerifit.Core.dll" Name="Remedy.Core.dll" Source="$(var.FakeVerifit.UI_TargetDir)Remedy.Core.dll" />
+        <File Id="FakeVerifit.FakeVerifit.CommonUI.dll" Name="Remedy.CommonUI.dll" Source="$(var.FakeVerifit.UI_TargetDir)Remedy.CommonUI.dll" />
+        <File Id="FakeVerifit.Autofac.dll" Name="Autofac.dll" Source="$(var.FakeVerifit.UI_TargetDir)Autofac.dll" />
+        <File Id="FakeVerifit.GalaSoft.MvvmLight.dll" Name="GalaSoft.MvvmLight.dll" Source="$(var.FakeVerifit.UI_TargetDir)GalaSoft.MvvmLight.dll" />
+        <File Id="FakeVerifit.GalaSoft.MvvmLight.Extras.dll" Name="GalaSoft.MvvmLight.Extras.dll" Source="$(var.FakeVerifit.UI_TargetDir)GalaSoft.MvvmLight.Extras.dll" />
+        <File Id="FakeVerifit.GalaSoft.MvvmLight.Platform.dll" Name="GalaSoft.MvvmLight.Platform.dll" Source="$(var.FakeVerifit.UI_TargetDir)GalaSoft.MvvmLight.Platform.dll" />
+        <File Id="FakeVerifit.log4net.dll" Name="log4net.dll" Source="$(var.FakeVerifit.UI_TargetDir)log4net.dll" />
+        <File Id="FakeVerifit.CommonServiceLocator.dll" Name="CommonServiceLocator.dll" Source="$(var.FakeVerifit.UI_TargetDir)CommonServiceLocator.dll" />
+        <File Id="FakeVerifit.Soltys.ChangeCase.dll" Name="Soltys.ChangeCase.dll" Source="$(var.FakeVerifit.UI_TargetDir)Soltys.ChangeCase.dll" />
+        <File Id="FakeVerifit.SuperSocket.Common.dll" Name="SuperSocket.Common.dll" Source="$(var.FakeVerifit.UI_TargetDir)SuperSocket.Common.dll" />
+        <File Id="FakeVerifit.SuperSocket.Facility.dll" Name="SuperSocket.Facility.dll" Source="$(var.FakeVerifit.UI_TargetDir)SuperSocket.Facility.dll" />
+        <File Id="FakeVerifit.SuperSocket.SocketBase.dll" Name="SuperSocket.SocketBase.dll" Source="$(var.FakeVerifit.UI_TargetDir)SuperSocket.SocketBase.dll" />
+        <File Id="FakeVerifit.SuperSocket.SocketEngine.dll" Name="SuperSocket.SocketEngine.dll" Source="$(var.FakeVerifit.UI_TargetDir)SuperSocket.SocketEngine.dll" />
+        <File Id="FakeVerifit.SuperSocket.SocketService.exe" Name="SuperSocket.SocketService.exe" Source="$(var.FakeVerifit.UI_TargetDir)SuperSocket.SocketService.exe" />
+        <File Id="FakeVerifit.System.Windows.Interactivity.dll" Name="System.Windows.Interactivity.dll" Source="$(var.FakeVerifit.UI_TargetDir)System.Windows.Interactivity.dll" />
+        <File Id="FakeVerifit.Nancy.dll" Name="Nancy.dll" Source="$(var.FakeVerifit.UI_TargetDir)Nancy.dll" />
+        <File Id="FakeVerifit.Nancy.Hosting.Self.dll" Name="Nancy.Hosting.Self.dll" Source="$(var.FakeVerifit.UI_TargetDir)Nancy.Hosting.Self.dll" />
+        <File Id="FakeVerifit.Autofac.log4net.dll" Name="Autofac.log4net.dll" Source="$(var.FakeVerifit.UI_TargetDir)Autofac.log4net.dll" />
+        <File Id="FakeVerifit.Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.FakeVerifit.UI_TargetDir)Newtonsoft.Json.dll" />
+        <File Id="FakeVerifit.Microsoft.Expression.Interactions.dll" Name="Microsoft.Expression.Interactions.dll" Source="$(var.FakeVerifit.UI_TargetDir)Microsoft.Expression.Interactions.dll" />
+        <File Id="FakeVerifit.Updater.dll" Name="REMedy.Updater.dll" Source="$(var.FakeVerifit.UI_TargetDir)REMedy.Updater.dll" />
+        <File Id="FakeVerifit.UpdaterConfiguration.json" Name="UpdaterConfiguration.json" Source="$(var.REMedy.Updater.TargetDir)UpdaterConfiguration.json"/>
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="FakeIMCComponents" Directory="FakeIMCDir">
+      <Component Id="FakeIMC" Guid="7f944bf0-c93c-46ca-bacf-4c7320e6e3be">
+        <File Id="FakeIMC.FakeIMC.exe" Name="FakeIMC.exe" Source="$(var.FakeIMC.UI_TargetDir)FakeIMC.exe" />
+        <File Id="FakeIMC.FakeIMC.exe.config" Name="FakeIMC.exe.config" Source="$(var.FakeIMC.UI_TargetDir)FakeIMC.exe.config" />
+        <File Id="FakeIMC.CommonServiceLocator.dll" Name="CommonServiceLocator.dll" Source="$(var.FakeIMC.UI_TargetDir)CommonServiceLocator.dll" />
+        <File Id="FakeIMC.MaterialDesignColors.dll" Name="MaterialDesignColors.dll" Source="$(var.FakeIMC.UI_TargetDir)MaterialDesignColors.dll" />
+        <File Id="FakeIMC.MaterialDesignThemes.Wpf.dll" Name="MaterialDesignThemes.Wpf.dll" Source="$(var.FakeIMC.UI_TargetDir)MaterialDesignThemes.Wpf.dll" />
+        <File Id="FakeIMC.ReactiveProperty.dll" Name="ReactiveProperty.dll" Source="$(var.FakeIMC.UI_TargetDir)ReactiveProperty.dll" />
+        <File Id="FakeIMC.ReactiveProperty.NET46.dll" Name="ReactiveProperty.NET46.dll" Source="$(var.FakeIMC.UI_TargetDir)ReactiveProperty.NET46.dll" />
+        <File Id="FakeIMC.Splat.dll" Name="Splat.dll" Source="$(var.FakeIMC.UI_TargetDir)Splat.dll" />
+        <File Id="FakeIMC.System.Reactive.Core.dll" Name="System.Reactive.Core.dll" Source="$(var.FakeIMC.UI_TargetDir)System.Reactive.Core.dll" />
+        <File Id="FakeIMC.System.Reactive.Interfaces.dll" Name="System.Reactive.Interfaces.dll" Source="$(var.FakeIMC.UI_TargetDir)System.Reactive.Interfaces.dll" />
+        <File Id="FakeIMC.System.Reactive.Linq.dll" Name="System.Reactive.Linq.dll" Source="$(var.FakeIMC.UI_TargetDir)System.Reactive.Linq.dll" />
+        <File Id="FakeIMC.System.Reactive.PlatformServices.dll" Name="System.Reactive.PlatformServices.dll" Source="$(var.FakeIMC.UI_TargetDir)System.Reactive.PlatformServices.dll" />
+        <File Id="FakeIMC.System.Reactive.Windows.Threading.dll" Name="System.Reactive.Windows.Threading.dll" Source="$(var.FakeIMC.UI_TargetDir)System.Reactive.Windows.Threading.dll" />
+        <File Id="FakeIMC.Unity.Abstractions.dll" Name="Unity.Abstractions.dll" Source="$(var.FakeIMC.UI_TargetDir)Unity.Abstractions.dll" />
+        <File Id="FakeIMC.Unity.Configuration.dll" Name="Unity.Configuration.dll" Source="$(var.FakeIMC.UI_TargetDir)Unity.Configuration.dll" />
+        <File Id="FakeIMC.Unity.Container.dll" Name="Unity.Container.dll" Source="$(var.FakeIMC.UI_TargetDir)Unity.Container.dll" />
+        <File Id="FakeIMC.Unity.Interception.dll" Name="Unity.Interception.dll" Source="$(var.FakeIMC.UI_TargetDir)Unity.Interception.dll" />
+        <File Id="FakeIMC.Unity.Interception.Configuration.dll" Name="Unity.Interception.Configuration.dll" Source="$(var.FakeIMC.UI_TargetDir)Unity.Interception.Configuration.dll" />
+        <File Id="FakeIMC.Unity.RegistrationByConvention.dll" Name="Unity.RegistrationByConvention.dll" Source="$(var.FakeIMC.UI_TargetDir)Unity.RegistrationByConvention.dll" />
+        <File Id="FakeIMC.Unity.ServiceLocation.dll" Name="Unity.ServiceLocation.dll" Source="$(var.FakeIMC.UI_TargetDir)Unity.ServiceLocation.dll" />
+        <File Id="FakeIMC.FakeIMC.Server.dll" Name="FakeIMC.Server.dll" Source="$(var.FakeIMC.UI_TargetDir)FakeIMC.Server.dll" />
+        <File Id="FakeIMC.FakeIMC.Math.Framework.dll" Name="FakeIMC.Math.Framework.dll" Source="$(var.FakeIMC.UI_TargetDir)FakeIMC.Math.Framework.dll" />
+        <File Id="FakeIMC.Updater.dll" Name="REMedy.Updater.dll" Source="$(var.FakeIMC.UI_TargetDir)REMedy.Updater.dll" />
+        <File Id="FakeIMC.DefaultCurvesSettings.xml" Name="DefaultCurvesSettings.xml" Source="$(var.FakeIMC.UI_TargetDir)DefaultCurvesSettings.xml" />
+        <File Id="FakeIMC.FakeIMC.Core.dll" Name="FakeIMC.Core.dll" Source="$(var.FakeIMC.UI_TargetDir)FakeIMC.Core.dll" />
+        <File Id="FakeIMC.System.Windows.Interactivity.dll" Name="System.Windows.Interactivity.dll" Source="$(var.FakeIMC.UI_TargetDir)System.Windows.Interactivity.dll" />
+        <File Id="FakeIMC.Remedy.CommonUI.dll" Name="Remedy.CommonUI.dll" Source="$(var.FakeIMC.UI_TargetDir)Remedy.CommonUI.dll" />
+        <File Id="FakeIMC.Autofac.dll" Name="Autofac.dll" Source="$(var.FakeIMC.UI_TargetDir)Autofac.dll" />
+        <File Id="FakeIMC.GalaSoft.MvvmLight.dll" Name="GalaSoft.MvvmLight.dll" Source="$(var.FakeIMC.UI_TargetDir)GalaSoft.MvvmLight.dll" />
+        <File Id="FakeIMC.GalaSoft.MvvmLight.Extras.dll" Name="GalaSoft.MvvmLight.Extras.dll" Source="$(var.FakeIMC.UI_TargetDir)GalaSoft.MvvmLight.Extras.dll" />
+        <File Id="FakeIMC.GalaSoft.MvvmLight.Platform.dll" Name="GalaSoft.MvvmLight.Platform.dll" Source="$(var.FakeIMC.UI_TargetDir)GalaSoft.MvvmLight.Platform.dll" />
+        <File Id="FakeIMC.Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.FakeIMC.UI_TargetDir)Newtonsoft.Json.dll" />
+        <File Id="FakeIMC.Remedy.Core.dll" Name="Remedy.Core.dll" Source="$(var.FakeIMC.UI_TargetDir)Remedy.Core.dll" />
+        <File Id="FakeIMC.Microsoft.Expression.Interactions.dll" Name="Microsoft.Expression.Interactions.dll" Source="$(var.FakeIMC.UI_TargetDir)Microsoft.Expression.Interactions.dll" />
+        <File Id="FakeIMC.UpdaterConfiguration.json" Name="UpdaterConfiguration.json" Source="$(var.REMedy.Updater.TargetDir)UpdaterConfiguration.json" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
