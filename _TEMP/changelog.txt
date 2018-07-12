@@ -1,0 +1,2 @@
+- Close application when starting another instance with elevated permissions
+- Allow to run single application instance at the same time
