@@ -1,0 +1,10 @@
+IMC TestClient:
+	- Await task execution to correctly propagate exception thrown when process start fails. Add async timeout
+	- Add warning message when start standalone module fails
+	- Add warning when rem module is closed manually (watch for process exit event)
+	- Add error when connecting to NOAH fails
+	
+Fake IMC:
+	- Send correct SII data respecting measurement condition side
+	- Performance improvement in console log (ListBox is way faster than ItemsControl, especially when resizing)
+	- Possibility to copy log entry to clipboard by double-click
