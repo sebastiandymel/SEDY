@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncPlayground", "AsyncPlayground\AsyncPlayground.csproj", "{2E5BFD15-7274-41FF-89EC-1F8342150E18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadPool", "ThreadPool\ThreadPool.csproj", "{31E6E93F-B9C7-4EB2-978D-E756DAADDE09}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E5BFD15-7274-41FF-89EC-1F8342150E18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E5BFD15-7274-41FF-89EC-1F8342150E18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E5BFD15-7274-41FF-89EC-1F8342150E18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E5BFD15-7274-41FF-89EC-1F8342150E18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31E6E93F-B9C7-4EB2-978D-E756DAADDE09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31E6E93F-B9C7-4EB2-978D-E756DAADDE09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31E6E93F-B9C7-4EB2-978D-E756DAADDE09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31E6E93F-B9C7-4EB2-978D-E756DAADDE09}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54C7CD1E-9AC9-4396-9659-199DA0EA2F29}
+	EndGlobalSection
+EndGlobal
