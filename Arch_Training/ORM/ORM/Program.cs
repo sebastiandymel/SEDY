@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using ORM.Inheritence;
 using ORM.Pluming;
 using ORM.Versioning;
@@ -16,8 +17,12 @@ namespace ORM
 
             var sessionFactory = config.BuildSessionFactory();
             var sesson = sessionFactory.OpenSession();
-            //InheriteneDemo.Run(sesson);
-            VersionedDemo.Run(sessionFactory);
+
+            InheriteneDemo.Run(sesson);
+
+            //VersionedDemo.Run(sessionFactory);
+
+            Console.ReadLine();
         }
     }
 }

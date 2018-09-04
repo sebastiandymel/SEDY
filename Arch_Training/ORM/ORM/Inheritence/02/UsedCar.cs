@@ -2,6 +2,7 @@
 
 namespace ORM.Inheritence._02
 {
+    [DiscriminatedWith("UsedCar")]
     public class UsedCar : Car
     {
         public virtual bool IsFirstOwner { get; set; }

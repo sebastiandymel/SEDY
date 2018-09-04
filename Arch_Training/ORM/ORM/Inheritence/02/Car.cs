@@ -4,6 +4,7 @@ using ORM.Pluming.Attributes;
 
 namespace ORM.Inheritence._02
 {
+    [DiscriminatedWith("Car")]
     public class Car : IEntity
     {
         public virtual int Id { get; set; }

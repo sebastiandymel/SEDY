@@ -3,7 +3,7 @@ using ORM.Pluming;
 
 namespace ORM.Inheritence._01
 {
-    public class Audited : IEntity
+    public abstract class Audited : IEntity
     {
         public virtual int Id { get; set; }
         public virtual DateTime UpdateDate { get; set; }

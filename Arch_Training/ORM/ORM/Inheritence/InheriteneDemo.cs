@@ -13,6 +13,21 @@ namespace ORM.Inheritence
             Generate01Inserts(session);
             Generate02Inserts(session);
             Generate03Inserts(session);
+
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+
+            Console.WriteLine("===============01===============");
+            var auditedResult = session.QueryOver<Audited>()
+                .List();
+
+            Console.WriteLine("===============02===============");
+            var carResult = session.QueryOver<Car>()
+                .List();
+
+            Console.WriteLine("===============03===============");
+            var employeeResult = session.QueryOver<Employee>()
+                .List();
         }
 
         private static void Generate01Inserts(ISession session)
