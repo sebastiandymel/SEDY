@@ -5,6 +5,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Castle.Windsor;
 using StackExchange.Profiling;
+using StackExchange.Profiling.EntityFramework6;
 
 namespace MvcMusicStore
 {
@@ -14,15 +15,18 @@ namespace MvcMusicStore
 
         protected void Application_Start()
         {
+            MiniProfilerEF6.Initialize();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             _container = new WindsorContainer();
+            
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
+            
             if (Request.IsLocal)
             {
                 MiniProfiler.Start();
