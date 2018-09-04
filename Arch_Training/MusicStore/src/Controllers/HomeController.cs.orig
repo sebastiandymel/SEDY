@@ -1,0 +1,34 @@
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using MvcMusicStore.Models;
+using MvcMusicStore.NH;
+
+namespace MvcMusicStore.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly MusicStoreEntities _storeContext = new MusicStoreEntities();
+
+        // GET: /Home/
+        public async Task<ActionResult> Index()
+        {
+<<<<<<< HEAD
+            return View(await GetMostPopularAlbums());
+        }
+
+        private async Task<List<Album>> GetMostPopularAlbums()
+        {
+            return await _storeContext.Albums
+=======
+            new NhibernateSessionFactory().OpenSession();
+            return View(await _storeContext.Albums
+>>>>>>> nhibernate
+                .OrderByDescending(a => a.OrderDetails.Count())
+                .Take(6)
+                .ToListAsync();
+        }
+    }
+}

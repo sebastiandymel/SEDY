@@ -18,9 +18,9 @@ namespace ORM
             var sessionFactory = config.BuildSessionFactory();
             var sesson = sessionFactory.OpenSession();
 
-            InheriteneDemo.Run(sesson);
+            //InheriteneDemo.Run(sesson);
 
-            //VersionedDemo.Run(sessionFactory);
+            VersionedDemo.Run(sessionFactory);
 
             Console.ReadLine();
         }
