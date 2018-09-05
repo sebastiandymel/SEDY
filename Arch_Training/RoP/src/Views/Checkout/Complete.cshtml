@@ -1,0 +1,36 @@
+﻿@model MvcMusicStore.Models.CheckoutDetailsViewModel
+
+@{
+    ViewBag.Title = "Checkout Complete";
+}
+
+<h2>Checkout Complete</h2>
+
+<p>Thanks for your order! Your order number is: @Model.OrderId</p>
+
+<h2>Order details bellow:</h2>
+@Html.DisplayForModel()
+<table class="dataGrid">
+    <thead>
+    <tr class="headerRow">
+        <th>Album name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (var i = 0; i < Model.OrderDetails.Count; i++)
+    {
+        var i1 = i;
+        <tr>
+            <td>@Html.DisplayFor(m => m.OrderDetails[i].AlbumName)</td>
+            <td>@Html.DisplayFor(m => m.OrderDetails[i].UnitPrice)</td>
+            <td>@Html.DisplayFor(m => m.OrderDetails[i].Quantity)</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<p>
+    How about shopping for some more music in our
+    @Html.ActionLink("Store", "Index", "Home")
+</p>
