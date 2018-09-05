@@ -8,7 +8,7 @@ namespace BrodcastBlockDemo
     {
         static void Main(string[] args)
         {
-            var bufferBlock = new BufferBlock<int>(new DataflowBlockOptions() { BoundedCapacity = 1 });
+            var bufferBlock = new BroadcastBlock<int>(a => a);
 
             var a1 = new ActionBlock<int>(a => {
                     Console.WriteLine($"Message {a} was processed by Consumer 1");

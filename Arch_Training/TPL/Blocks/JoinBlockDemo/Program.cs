@@ -10,17 +10,33 @@ namespace JoinBlockDemo
         {
             var broadcastBlock = new BroadcastBlock<int>(a => a);
 
-            var a1 = new ActionBlock<int>(a => {
+            var a1 = new TransformBlock<int, int>(a => {
                     Console.WriteLine($"Message {a} was processed by Consumer 1");
-                    Task.Delay(300).Wait();
+                    return a;
+                },
+                new ExecutionDataflowBlockOptions
+                {
+                    MaxDegreeOfParallelism = 10
                 }
             );
 
-            var a2 = new ActionBlock<int>(a => {
+            var a2 = new TransformBlock<int, int>(a => {
                     Console.WriteLine($"Message {a} was processed by Consumer 2");
-                    Task.Delay(150).Wait();
+                    Task.Delay(1300).Wait();
+                return a;
                 }
             );
+
+            var joinBlock = new JoinBlock<int,int>();
+            a1.LinkTo(joinBlock.Target1);
+            a2.LinkTo(joinBlock.Target2);
+
+            var printBlock = new ActionBlock<Tuple<int,int>>(i => Console.WriteLine(i));
+
+            joinBlock.LinkTo(printBlock);
+
+
+
             broadcastBlock.LinkTo(a1);
             broadcastBlock.LinkTo(a2);
 

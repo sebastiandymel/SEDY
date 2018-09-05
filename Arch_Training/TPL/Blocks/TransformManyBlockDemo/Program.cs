@@ -11,6 +11,8 @@ namespace TransformManyBlockDemo
             var transformManyBlock = new TransformManyBlock<int, string>(a => FindEvenNumbers(a));
             var printBlock = new ActionBlock<string>(a => Console.WriteLine($"Received message: {a}"));
 
+            transformManyBlock.LinkTo(printBlock);
+
             for (var i = 0; i < 10; i++)
             {
                 transformManyBlock.Post(i);
