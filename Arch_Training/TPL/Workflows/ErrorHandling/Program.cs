@@ -6,16 +6,18 @@ namespace ErrorHandling
 {
     class Program
     {
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            var block = new ActionBlock<int>(n =>
+            var block = new TransformBlock<int, string>(n =>
                 {
                     if (n == 5)
                         throw new Exception("Something went wrong");
-                    Console.WriteLine($"Message {n} processed");
+                    return $"Message {n} processed";
                 }
             );
+            var printBlock = new ActionBlock<string>(x => Console.WriteLine(x));
 
+            block.LinkTo(printBlock, new DataflowLinkOptions{PropagateCompletion = true});
 
             for (var i = 0; i < 10; i++)
             {
@@ -24,6 +26,8 @@ namespace ErrorHandling
                     throw new ArgumentException();
                 }
             }
+
+            block.Completion.Wait();
 
             Console.WriteLine("Finished!");
             Console.ReadKey();

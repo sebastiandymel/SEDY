@@ -34,7 +34,18 @@ namespace CustomBlocksEncapsulate
         public static IPropagatorBlock<T, T> CreateIncreasingBlock<T>()
             where T : IComparable<T>, new()
         {
-            return null;
+            T lastMax = new T();
+            var outBlock = new BufferBlock<T>();
+            var inputBlock = new ActionBlock<T>(a =>
+            {
+                if (a.CompareTo(lastMax) > 0)
+                {
+                    lastMax = a;
+                    outBlock.Post(a);
+                }
+            });
+
+            return DataflowBlock.Encapsulate(inputBlock, outBlock);
         }
     }
 }
