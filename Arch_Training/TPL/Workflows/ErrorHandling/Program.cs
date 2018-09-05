@@ -19,7 +19,10 @@ namespace ErrorHandling
 
             for (var i = 0; i < 10; i++)
             {
-                block.Post(i);
+                if (!block.Post(i))
+                {
+                    throw new ArgumentException();
+                }
             }
 
             Console.WriteLine("Finished!");

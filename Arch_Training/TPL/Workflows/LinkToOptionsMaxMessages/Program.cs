@@ -19,8 +19,8 @@ namespace LinkToOptionsMaxMessages
                     Console.WriteLine($"Message {a} was processed by Consumer 2");
                 }
             );
-            bufferBlock.LinkTo(a1);
-            bufferBlock.LinkTo(a2);
+            bufferBlock.LinkTo(a1, new DataflowLinkOptions{ MaxMessages = 5});
+            bufferBlock.LinkTo(a2, a => a % 2 == 0);
 
             for (int i = 0; i < 10; i++)
             {

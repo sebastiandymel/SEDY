@@ -18,12 +18,27 @@ namespace SingleProducerContrained
                 {
                     if (i == ITERS)
                         are.Set();
+                },
+                new ExecutionDataflowBlockOptions
+                {
+                    SingleProducerConstrained = true
                 }
             );
 
             for (var j = 0; j < 10; j++)
             {
                 sw.Restart();
+                var tf = new TaskFactory();
+                
+                for (int a = 0; a < 6; a++)
+                {
+                    tf.StartNew(() =>
+                    {
+                        for (var i = 1; i <= ITERS/6; i++)
+                            ab.Post(i);
+                    });
+                }
+
                 for (var i = 1; i <= ITERS; i++)
                     ab.Post(i);
                 are.WaitOne();
@@ -32,6 +47,8 @@ namespace SingleProducerContrained
                 Console.WriteLine("Messages / sec: {0:N0}"
                     , ITERS / sw.Elapsed.TotalSeconds);
             }
+
+            Console.Read();
         }
     }
 }

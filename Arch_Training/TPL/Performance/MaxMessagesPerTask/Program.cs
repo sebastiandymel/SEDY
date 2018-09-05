@@ -38,7 +38,7 @@ namespace MaxMessagesPerTask
             _stopWatch.Stop();
 
             //code for displaying results
-            Console.BufferWidth = 1500;
+            Console.BufferWidth = 20000;
             Console.WindowWidth = 130;
             foreach (var thread in _timestampedList)
             {
@@ -47,6 +47,8 @@ namespace MaxMessagesPerTask
             }
 
             Console.WriteLine($"Elapsed tics:{_stopWatch.ElapsedTicks}");
+
+            Console.Read();
         }
 
         static ActionBlock<int> CreateConsumingBlock(int id)
@@ -60,6 +62,9 @@ namespace MaxMessagesPerTask
                         , new ConcurrentBag<Tuple<long, string>>()
                     );
                 bag.Add(blockLog);
+            }, new ExecutionDataflowBlockOptions
+            {
+                MaxMessagesPerTask = 5
             });
             return actionBlock;
         }
