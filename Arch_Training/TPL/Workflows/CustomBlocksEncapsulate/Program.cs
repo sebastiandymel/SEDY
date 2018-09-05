@@ -8,7 +8,14 @@ namespace CustomBlocksEncapsulate
     {
         private static async Task Main(string[] args)
         {
+            var t= new TransformBlock<int, int>(x =>
+            {
+                throw new Exception("aaaa");
+                return 0;
+            });
             var increasingBlock = CreateIncreasingBlock<int>();
+
+            t.LinkTo(increasingBlock, new DataflowLinkOptions{PropagateCompletion = true});
 
             var printBlock = new ActionBlock<int>(
                 a => Console.WriteLine($"Message {a} received")
@@ -22,6 +29,8 @@ namespace CustomBlocksEncapsulate
             await increasingBlock.SendAsync(3);
             await increasingBlock.SendAsync(4);
             await increasingBlock.SendAsync(2);
+
+            t.Complete();
 
             increasingBlock.Complete();
 
@@ -43,6 +52,21 @@ namespace CustomBlocksEncapsulate
                     lastMax = a;
                     outBlock.Post(a);
                 }
+            });
+
+            inputBlock.Completion.ContinueWith(t =>
+            {
+                if (t.IsFaulted)
+                {
+                    ((ITargetBlock<T>)outBlock).Fault(t.Exception);
+                }
+
+                if (t.IsCompleted)
+                {
+                    outBlock.Complete();
+                }
+
+   
             });
 
             return DataflowBlock.Encapsulate(inputBlock, outBlock);
