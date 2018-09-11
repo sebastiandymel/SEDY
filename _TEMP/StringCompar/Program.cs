@@ -39,7 +39,7 @@ namespace StringCompar
 
         private static bool Compare2(string input)
         {
-            var regExp = @"\{.*\}";
+            var regExp = @"{([^}]+)\}";
             var matches = Regex.Match(input, regExp);
             return matches.Success;
         }
