@@ -34,8 +34,6 @@ namespace StringCompar
                 Console.WriteLine($"{Compare2(item)} \t = {item}");
             }
 
-            string.Format("{0}", 1, 2);
-
             Console.Read();
         }
 
