@@ -20,16 +20,18 @@ namespace PhoenixStyleBrowser.Core.ResourcesPresenter
     /// </summary>
     public partial class ResourcesPresenter : UserControl, IView
     {
-        public ResourcesPresenter()
+        private readonly ResourcesPresenterViewModelAdapter adapter;
+
+        public ResourcesPresenter(ResourcesPresenterViewModelAdapter adapter)
         {
             InitializeComponent();
+            this.adapter = adapter;
         }
 
         public void Initialize(object data)
         {
             var payload = (ResourceDictionary)data;
-            var adapter = new ResourcesPresenterViewModelAdapter(payload);
-            DataContext = adapter.Adapt();
+            DataContext = adapter.Adapt(payload);
         }
     }
 }
