@@ -17,7 +17,7 @@ namespace PhoenixStyleBrowser
 
             Container.RegisterType<MainViewModel, MainViewModel>(new Unity.Lifetime.SingletonLifetimeManager());
 
-            //Container.RegisterType<ILogReceiver, MainViewModel>(new Unity.Lifetime.SingletonLifetimeManager());
+            Container.RegisterType<ILogReceiver, MainViewModel>(new Unity.Lifetime.SingletonLifetimeManager());
             Container.RegisterType<ILogReceiver, DefaultReceiver>();
 
             Container.RegisterType<ILog, Logger>(new Unity.Lifetime.SingletonLifetimeManager());
