@@ -6,7 +6,7 @@ namespace PhoenixStyleBrowser
     {
         public void OnLog(DateTime stamp, string msg, LogLevel level)
         {
-            Console.WriteLine($"{stamp.ToLongTimeString()}:[{level}]: msg");
+            Console.WriteLine($"{stamp.ToLongTimeString()}:[{level}]: {msg}");
         }
     }
 }

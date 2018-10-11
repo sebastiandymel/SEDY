@@ -10,6 +10,7 @@ namespace PhoenixStyleBrowser
         private string rootPath;
         private bool isSearching;
         private readonly Configuration config;
+        private readonly ILog log;
         private readonly object collectionLock = new object();
 
         public string Title => $"Phoenix Style Browser [{VersionInfo.Version}]";
@@ -31,18 +32,24 @@ namespace PhoenixStyleBrowser
             get { return isSearching; }
             set
             {
-                isSearching = value;
-                OnPropertyChanged();
-                System.Diagnostics.Debug.WriteLine($"----- {System.DateTime.Now.Ticks} ========== ISSEARCHING = {IsSearching}");
+                if (this.isSearching != value)
+                {
+                    isSearching = value;
+                    OnPropertyChanged();
+                    this.log.Log($"{nameof(IsSearching)} changed to {this.isSearching}");
+                }
+                
             }
         }
 
-        public MainViewModel(IStyleLibraryLookup styleLibraryLookup, Configuration config)
+        public MainViewModel(IStyleLibraryLookup styleLibraryLookup, Configuration config, ILog log)
         {
+            log.Register(this);
             LogEntries = new ObservableCollection<LogItem>();
             AllLibraries = new ObservableCollection<IStyleLibrary>();
             BindingOperations.EnableCollectionSynchronization(AllLibraries, this.collectionLock);
             this.config = config;
+            this.log = log;
             RootPath = config.GetRootPath();
             InitializeCommand = new AsyncCommand(async () =>
             {
