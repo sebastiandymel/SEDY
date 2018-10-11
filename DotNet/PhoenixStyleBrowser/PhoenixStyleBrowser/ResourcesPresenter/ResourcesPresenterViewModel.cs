@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Media;
 
-namespace PhoenixStyleBrowser.Core.ResourcesPresenter
+namespace PhoenixStyleBrowser
 {
     public class ResourcesPresenterViewModel
     {
@@ -16,6 +17,12 @@ namespace PhoenixStyleBrowser.Core.ResourcesPresenter
     public class BrushResource: Resource
     {
         public override string Type => "Brush";
+    }
+
+    public class ColorResource: Resource
+    {
+        public Color Color { get; set; }
+        public override string Type => "Color";
     }
 
     public class ResourceGroup

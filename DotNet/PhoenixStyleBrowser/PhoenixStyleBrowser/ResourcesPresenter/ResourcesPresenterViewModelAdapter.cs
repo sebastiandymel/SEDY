@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Media;
 
-namespace PhoenixStyleBrowser.Core.ResourcesPresenter
+namespace PhoenixStyleBrowser
 {
     public class ResourcesPresenterViewModelAdapter
     {
@@ -23,6 +24,8 @@ namespace PhoenixStyleBrowser.Core.ResourcesPresenter
             var allResource = new List<Tuple<object, object>>();
 
             FindResourcesRecursively(allResource, this.resources);
+
+            BuildModel(model, allResource);
 
             return model;
         }
@@ -50,6 +53,36 @@ namespace PhoenixStyleBrowser.Core.ResourcesPresenter
             {
                 FindResourcesRecursively(allResource, dic);
             }
+        }
+
+        private void BuildModel(ResourcesPresenterViewModel model, List<Tuple<object, object>> allResource)
+        {
+            var colorGroup = new ResourceGroup
+            {
+                GroupName = "Colors",
+                IsVisible = true,
+                Type = "Color"
+            };
+
+            foreach (var keyVal in allResource)
+            {
+                var type = keyVal.Item2.GetType();
+
+                if (type == typeof(Color))
+                {
+                    var item = (Color)keyVal.Item2;
+                    var resource = new ColorResource
+                    {
+                        Key = keyVal.Item1.ToString(),
+                        Color = item,
+                    };
+                    colorGroup.Resources.Add(resource);
+                }
+            }
+
+
+
+            model.Groups.Add(colorGroup);
         }
     }
 }

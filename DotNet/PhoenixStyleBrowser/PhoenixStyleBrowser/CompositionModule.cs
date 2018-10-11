@@ -4,7 +4,6 @@ using Unity;
 using Unity.RegistrationByConvention;
 using System.Linq;
 using PhoenixStyleBrowser.Core.ViewController;
-using PhoenixStyleBrowser.Core.ResourcesPresenter;
 using System;
 
 namespace PhoenixStyleBrowser

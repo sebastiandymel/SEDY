@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PhoenixStyleBrowser.Core.ResourcesPresenter
+namespace PhoenixStyleBrowser
 {
     /// <summary>
     /// Interaction logic for ResourcesPresenter.xaml
