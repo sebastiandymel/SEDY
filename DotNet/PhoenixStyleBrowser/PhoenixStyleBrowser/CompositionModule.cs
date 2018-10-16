@@ -12,7 +12,7 @@ namespace PhoenixStyleBrowser
     {
         protected override void Initialize()
         {
-            RegisterAll<IResourceLoaderStrategy>();
+            RegisterAll<IResourceLoaderStrategy>(typeof(DefaultLoader));
 
             Container.RegisterType<MainViewModel, MainViewModel>(new Unity.Lifetime.SingletonLifetimeManager());
 
@@ -32,10 +32,12 @@ namespace PhoenixStyleBrowser
             Container.RegisterType<Window, MainWindow>("Main");
         }
 
-        private void RegisterAll<T>()
+        private void RegisterAll<T>(params Type[] typesToExclude )
         {
             Container.RegisterTypes(
-                AllClasses.FromLoadedAssemblies().Where(type => (typeof(T)).IsAssignableFrom(type)),
+                AllClasses.FromLoadedAssemblies().Where(type => 
+                !typesToExclude.Contains(type) && 
+                (typeof(T)).IsAssignableFrom(type)),
                 WithMappings.FromAllInterfaces,
                 WithName.TypeName,
                 WithLifetime.PerResolve);
