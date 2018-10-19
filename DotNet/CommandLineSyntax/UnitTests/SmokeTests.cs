@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using CommandLineSyntax;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -52,6 +53,8 @@ namespace UnitTests
             var myType = CompileResultType();
             var myObject = Activator.CreateInstance(myType);
 
+
+
             return myObject;
         }
 
@@ -62,9 +65,10 @@ namespace UnitTests
 
             // NOTE: assuming your list contains Field objects with fields FieldName(string) and FieldType(Type)
             foreach (var field in allProps)
-                CreateProperty(tb, field.Name, field.PropType);
+                CreateProperty(tb, field);
 
-            Type objectType = tb.CreateType();
+            Type objectType = tb.CreateType();            
+
             return objectType;
         }
 
@@ -85,12 +89,12 @@ namespace UnitTests
             return tb;
         }
 
-        private static void CreateProperty(TypeBuilder tb, string propertyName, Type propertyType)
+        private static void CreateProperty(TypeBuilder tb, PropDef definition)
         {
-            FieldBuilder fieldBuilder = tb.DefineField("_" + propertyName, propertyType, FieldAttributes.Private);
+            FieldBuilder fieldBuilder = tb.DefineField("_" + definition.Name, definition.PropType, FieldAttributes.Private);
 
-            PropertyBuilder propertyBuilder = tb.DefineProperty(propertyName, PropertyAttributes.HasDefault, propertyType, null);
-            MethodBuilder getPropMthdBldr = tb.DefineMethod("get_" + propertyName, MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig, propertyType, Type.EmptyTypes);
+            PropertyBuilder propertyBuilder = tb.DefineProperty(definition.Name, PropertyAttributes.HasDefault, definition.PropType, null);
+            MethodBuilder getPropMthdBldr = tb.DefineMethod("get_" + definition.Name, MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig, definition.PropType, Type.EmptyTypes);
             ILGenerator getIl = getPropMthdBldr.GetILGenerator();
 
             getIl.Emit(OpCodes.Ldarg_0);
@@ -98,11 +102,11 @@ namespace UnitTests
             getIl.Emit(OpCodes.Ret);
 
             MethodBuilder setPropMthdBldr =
-                tb.DefineMethod("set_" + propertyName,
+                tb.DefineMethod("set_" + definition.Name,
                   MethodAttributes.Public |
                   MethodAttributes.SpecialName |
                   MethodAttributes.HideBySig,
-                  null, new[] { propertyType });
+                  null, new[] { definition.PropType });
 
             ILGenerator setIl = setPropMthdBldr.GetILGenerator();
             Label modifyProperty = setIl.DefineLabel();
@@ -119,6 +123,14 @@ namespace UnitTests
 
             propertyBuilder.SetGetMethod(getPropMthdBldr);
             propertyBuilder.SetSetMethod(setPropMthdBldr);
+
+            foreach (var alias in definition.Aliases)
+            {
+                var attrCtorParams = new Type[] { typeof(string), typeof(string) };
+                var attrCtorInfo = typeof(OptionAliasAttribute).GetConstructor(attrCtorParams);
+                var attrBuilder = new CustomAttributeBuilder(attrCtorInfo, new object[] { alias, definition.Splitter });
+                propertyBuilder.SetCustomAttribute(attrBuilder);
+            }
         }
     }
 }
