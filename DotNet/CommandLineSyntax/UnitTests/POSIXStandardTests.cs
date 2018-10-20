@@ -121,7 +121,10 @@ namespace UnitTests
         {
             var posixParser = new POSIXParser();
 
-            var result = posixParser.Parse<TestClass_MultipleOptions>("-a -b -c");
+            // command -a -b -c
+            // is the same as
+            // command -abc
+            var result = posixParser.Parse<TestClass_MultipleOptions>("-a","-b","-c");
 
             Assert.IsNotNull(result);
             Assert.IsTrue(result.OptionA);
@@ -141,8 +144,6 @@ namespace UnitTests
             Assert.IsFalse(result.OptionB);
             Assert.IsFalse(result.OptionC);
         }
-
-
 
         private class TestClass_MultipleOptions
         {
@@ -173,7 +174,7 @@ namespace UnitTests
             [POSIX_Alias('c')]
             public bool OptionC { get; set; }
 
-            [MainOption]
+            [MainInputAttribute]
             public string MainOption { get; set; }
         }
 

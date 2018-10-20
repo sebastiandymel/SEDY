@@ -250,6 +250,16 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void AttributeParser_InputOutput()
+        {
+            var parser = new AttributeParser();
+            var result = parser.Parse<TestClass_InputOutput>("50", "200");
+
+            Assert.AreEqual(50, result.Input);
+            Assert.AreEqual(200, result.Output);
+        }
+
+        [TestMethod]
         public void AttributeParser_MultipleStringProperties_ButNoArgumentsMatching()
         {
             var parser = new AttributeParser();
@@ -281,17 +291,17 @@ namespace UnitTests
         }
         private class TestClass_MainOption_String
         {
-            [MainOption]
+            [MainInputAttribute]
             public string Arg1 { get; set; }
         }
         private class TestClass_MainOption_Int
         {
-            [MainOption]
+            [MainInputAttribute]
             public int Arg1 { get; set; }
         }
         private class TestClass_MainOptionWithOtherProps
         {
-            [MainOption]
+            [MainInputAttribute]
             public int Arg1 { get; set; }
 
             [Option]
@@ -368,105 +378,19 @@ namespace UnitTests
             public CustomType MyProp { get; set; }
         }
 
+        private class TestClass_InputOutput
+        {
+            [MainInputAttribute]
+            public int Input { get; set; }
+
+            [MainOutputAttribute]
+            public int Output { get; set; }
+        }
+
         private class CustomType
         {
             public int SomeValue { get; set; }
         }       
-
-        #endregion Private test classes
-    }
-
-
-    [TestClass]
-    public class ArgumentExecuterTests
-    {
-        [TestMethod]
-        public void ArgumentExecuter_CanExecuteParameterlessMethods()
-        {
-            var executer = new ArgumentExecutor();
-            var result = executer.Execute<TestClass_ParameterlessMethods>("MyMethod1", "--someOtherMethod");
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Method1Executed);
-            Assert.IsTrue(result.Method2Executed);
-        }
-
-        [TestMethod]
-        public void ArgumentExecuter_CanExecuteMethodsWithInput()
-        {
-            var executer = new ArgumentExecutor();
-            var result = executer.Execute<TestClass_MethodsWithParameters>("--v:5");
-            Assert.IsNotNull(result);
-            Assert.AreEqual(50, result.Value);
-        }
-
-        [TestMethod]
-        public void ArgumentExecuter_CanExecuteMethodsWithInputAndConverter()
-        {
-            var executer = new ArgumentExecutor();
-            executer.RegisterCustomConverter<MyCustomType>(x => 
-            {
-                if (x == "magicValue")
-                {
-                    return new MyCustomType { Id = "Works!" };
-                }
-                return null;
-            });
-            var result = executer.Execute<TestClass_MethodsWithParameterAndCustomConversionNeeded>("--v=magicValue");
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Value);
-            Assert.AreEqual("Works!", result.Value.Id);
-        }
-
-        #region Private test classes
-
-        private class TestClass_ParameterlessMethods
-        {
-            public bool Method1Executed { get; set; }
-
-            [Option]
-            public void MyMethod1()
-            {
-                Method1Executed = true;
-            }
-
-            public bool Method2Executed { get; set; }
-
-            [Option]
-            [OptionAlias("--someOtherMethod")]
-            public void MyMethod2()
-            {
-                Method2Executed = true;
-            }
-        }
-
-        private class TestClass_MethodsWithParameters
-        {
-            public int Value { get; set; }
-
-            [Option]
-            [OptionAlias("--v")]
-            public void ChangeValue(int input)
-            {
-                Value = input * 10;
-            }
-        }
-
-        private class TestClass_MethodsWithParameterAndCustomConversionNeeded
-        {
-            public MyCustomType Value { get; set; }
-
-            [Option]
-            [OptionAlias("--v", "=")]
-            public void ChangeValue(MyCustomType input)
-            {
-                Value = input;
-            }
-        }
-
-        private class MyCustomType
-        {
-             public string Id { get; set; }
-        }
 
         #endregion Private test classes
     }

@@ -56,7 +56,7 @@ namespace CommandLineSyntax
 
             foreach (var property in allProps)
             {
-                var mainArg = property.GetCustomAttribute<MainOptionAttribute>();
+                var mainArg = property.GetCustomAttribute<MainInputAttributeAttribute>();
                 if (mainArg != null)
                 {
                     property.SetValue(result, ConvertToPropertyType(arguments[0], property.PropertyType));
@@ -88,6 +88,13 @@ namespace CommandLineSyntax
                     {
                         throw new MissingOptionException("Missing parameter", "!");
                     }
+                }
+
+                var outputArg = property.GetCustomAttribute<MainOutputAttributeAttribute>();
+                if (outputArg != null)
+                {
+                    property.SetValue(result, ConvertToPropertyType(arguments.Last(), property.PropertyType));
+                    continue;
                 }
             }
 
@@ -183,6 +190,39 @@ namespace CommandLineSyntax
 
             foreach (var method in allMethods)
             {
+                if (method.GetParameters().Any(p => 
+                p.GetCustomAttribute<MainInputAttributeAttribute>() != null ||
+                p.GetCustomAttribute<MainOutputAttributeAttribute>() != null))
+                {
+                    var methodParams = method.GetParameters();
+                    if (methodParams.Length == 2)
+                    {
+                        var methodArgs = new object[2];
+                        if (methodParams[0].GetCustomAttribute<MainInputAttributeAttribute>() != null)
+                        {
+                            methodArgs[0] = ConvertToPropertyType(arguments[0], method.GetParameters()[0].ParameterType);
+                        }
+                        if (methodParams[1].GetCustomAttribute<MainOutputAttributeAttribute>() != null)
+                        {
+                            methodArgs[1] = ConvertToPropertyType(arguments.Last(), method.GetParameters()[1].ParameterType);
+                        }
+                        pipeline.Add(() => method.Invoke(result, methodArgs));
+                    }
+                    if (methodParams.Length == 1)
+                    {
+                        var methodArgs = new object[1];
+                        if (methodParams[0].GetCustomAttribute<MainInputAttributeAttribute>() != null)
+                        {
+                            methodArgs[0] = ConvertToPropertyType(arguments[0], method.GetParameters()[0].ParameterType);
+                        }
+                        if (methodParams[0].GetCustomAttribute<MainOutputAttributeAttribute>() != null)
+                        {
+                            methodArgs[0] = ConvertToPropertyType(arguments.Last(), method.GetParameters()[0].ParameterType);
+                        }
+                        pipeline.Add(() => method.Invoke(result, methodArgs));
+                    }
+                    continue;
+                }
 
                 var optionAttribute = method.GetCustomAttribute<OptionAttribute>(true);
                 if (optionAttribute != null)
@@ -337,7 +377,7 @@ namespace CommandLineSyntax
         [OptionAlias("-v")]
         public bool ShowVersion { get; set; }
 
-        [MainOption]
+        [MainInputAttribute]
         public string ThisIsMainArgument { get; set; }
     }
 
@@ -352,11 +392,17 @@ namespace CommandLineSyntax
         public bool IsRequired { get; }
     }
 
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-    public class MainOptionAttribute: OptionAttribute
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter, AllowMultiple = false)]
+    public class MainInputAttributeAttribute: OptionAttribute
     {
 
     }
+
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter, AllowMultiple = false)]
+    public class MainOutputAttributeAttribute : OptionAttribute
+    {
+    }
+
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method, AllowMultiple = true)]
     public class OptionAliasAttribute : Attribute
