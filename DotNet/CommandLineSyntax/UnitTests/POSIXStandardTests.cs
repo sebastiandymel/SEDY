@@ -49,6 +49,7 @@ namespace UnitTests
         {
             var posixParser = new POSIXParser();
 
+            // c:\>program_name.exe -x 44.89
             var result = posixParser.Parse<TestClass_SingleDouble>("-x", "44.89");
 
             Assert.IsNotNull(result);
@@ -117,6 +118,36 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void Posix_MultiplePropertiesWithTypes()
+        {
+            var posixParser = new POSIXParser();
+
+            // C:\>program_name.exe -a 5 -b 100 -c someother
+
+            var result = posixParser.Parse<TestClass_MultipleOptionsWithTypes>("-a", "5", "-b", "100", "-c", "someother");
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(5, result.OptionA);
+            Assert.AreEqual(100, result.OptionB);
+            Assert.AreEqual("someother", result.OptionC);
+        }
+
+        [TestMethod]
+        public void Posix_MultiplePropertiesWithTypes_Alternative()
+        {
+            var posixParser = new POSIXParser();
+
+            // C:\>program_name.exe -a5 -b100 -csomeother
+
+            var result = posixParser.Parse<TestClass_MultipleOptionsWithTypes>("-a5", "-b100", "-csomeother");
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(5, result.OptionA);
+            Assert.AreEqual(100, result.OptionB);
+            Assert.AreEqual("someother", result.OptionC);
+        }
+
+        [TestMethod]
         public void Posix_MultipleProperties_AlternativeSyntax()
         {
             var posixParser = new POSIXParser();
@@ -159,6 +190,22 @@ namespace UnitTests
             [POSIX_Alias('c')]
             public bool OptionC { get; set; }
         }
+        
+        private class TestClass_MultipleOptionsWithTypes
+        {
+            [Option]
+            [POSIX_Alias('a')]
+            public int OptionA { get; set; }
+
+            [Option]
+            [POSIX_Alias('b')]
+            public double OptionB { get; set; }
+
+            [Option]
+            [POSIX_Alias('c')]
+            public string OptionC { get; set; }
+        }
+
 
         private class TestClass_MultipleOptionsWithMainArg
         {

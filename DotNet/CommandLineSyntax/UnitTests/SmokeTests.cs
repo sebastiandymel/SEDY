@@ -24,6 +24,7 @@ namespace UnitTests
 
     }
 
+    // https://stackoverflow.com/questions/3862226/how-to-dynamically-create-a-class-in-c
     public class DynamicTypeBuilder
     {
         private class PropDef

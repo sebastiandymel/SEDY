@@ -327,7 +327,7 @@ namespace CommandLineSyntax
         protected override bool ShouldTakeNextArg(Alias alias, string argument, PropertyInfo property, string[] arguments)
         {
             var i = Array.IndexOf<string>(arguments, argument);
-            if (arguments.Length > (i + 1) && property.PropertyType != typeof(bool))
+            if (arguments.Length > (i + 1) && property.PropertyType != typeof(bool) && argument.IndexOf(alias.Name[0]) == (argument.Length -1))
             {
                 return true;
             }
