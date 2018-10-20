@@ -14,6 +14,26 @@ namespace UnitTests
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Method1Executed);
             Assert.IsTrue(result.Method2Executed);
+        
+            var targetInstance = new TestClass_ParameterlessMethods();
+            executer.Execute(targetInstance, "MyMethod1", "--someOtherMethod");
+            Assert.IsTrue(targetInstance.Method1Executed);
+            Assert.IsTrue(targetInstance.Method2Executed);
+        }
+
+        [TestMethod]
+        public void ArgumentExecuter_CanExecuteParameterlessMethods2()
+        {
+            var executer = new ArgumentExecutor();
+            var result = executer.Execute<TestClass_ParameterlessMethods>("--someOtherMethod");
+            Assert.IsNotNull(result);
+            Assert.IsFalse(result.Method1Executed);
+            Assert.IsTrue(result.Method2Executed);
+
+            var targetInstance = new TestClass_ParameterlessMethods();
+            executer.Execute(targetInstance, "--someOtherMethod");
+            Assert.IsFalse(targetInstance.Method1Executed);
+            Assert.IsTrue(targetInstance.Method2Executed);
         }
 
         [TestMethod]
@@ -85,6 +105,11 @@ namespace UnitTests
             Assert.IsNotNull(result);
             Assert.AreEqual(55, result.SomeOutput);
             Assert.IsTrue(result.HelpExecuted);
+
+            var targetInstance = new TestClass_OutputWithAdditionalOptions();
+            executer.Execute(targetInstance, "-h", "55");
+            Assert.AreEqual(55, targetInstance.SomeOutput);
+            Assert.IsTrue(targetInstance.HelpExecuted);
         }
 
         #region Private test classes

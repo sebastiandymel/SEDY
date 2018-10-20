@@ -1,5 +1,6 @@
 ﻿using CommandLineSyntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace UnitTests
 {
@@ -43,6 +44,20 @@ namespace UnitTests
             Assert.IsNotNull(result);
             Assert.AreEqual(590, result.OptionA);
         }
+
+        [TestMethod]
+        public void Posix_InputAndParam()
+        {
+            var posixParser = new POSIXParser();
+
+            posixParser.RegisterCustomConverter<FileInfo>(f => new FileInfo(f));
+            var result = posixParser.Parse<TestClass_InputAndParam>(@"C:\SomePath\SomeOther Path\File.txt","-a5990");
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(5990, result.OptionA);
+            Assert.IsNotNull(result.Path);
+        }
+
 
         [TestMethod]
         public void Posix_SingleDouble()
@@ -148,6 +163,21 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void Posix_MultiplePropertiesWithTypes_Alternative2()
+        {
+            var posixParser = new POSIXParser();
+
+            // C:\>program_name.exe -a 5 -b100 -csomeother
+
+            var result = posixParser.Parse<TestClass_MultipleOptionsWithTypes>("-a", "5", "-b100", "-csomeother");
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(5, result.OptionA);
+            Assert.AreEqual(100, result.OptionB);
+            Assert.AreEqual("someother", result.OptionC);
+        }
+
+        [TestMethod]
         public void Posix_MultipleProperties_AlternativeSyntax()
         {
             var posixParser = new POSIXParser();
@@ -175,6 +205,8 @@ namespace UnitTests
             Assert.IsFalse(result.OptionB);
             Assert.IsFalse(result.OptionC);
         }
+
+        #region Test classes
 
         private class TestClass_MultipleOptions
         {
@@ -205,8 +237,7 @@ namespace UnitTests
             [POSIX_Alias('c')]
             public string OptionC { get; set; }
         }
-
-
+        
         private class TestClass_MultipleOptionsWithMainArg
         {
             [Option]
@@ -232,11 +263,23 @@ namespace UnitTests
             public int OptionA { get; set; }
         }
 
+        private class TestClass_InputAndParam
+        {
+            [Option]
+            [POSIX_Alias('a')]
+            public int OptionA { get; set; }
+
+            [MainInputAttribute]
+            public FileInfo Path { get; set; }
+        }
+        
         private class TestClass_SingleDouble
         {
             [Option]
             [POSIX_Alias('x')]
             public double ValueX { get; set; }
         }
+
+        #endregion Test classes
     }
 }

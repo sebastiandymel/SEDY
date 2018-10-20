@@ -51,37 +51,43 @@ namespace CommandLineSyntax
         public T Parse<T>(params string[] arguments) where T : new()
         {
             var result = new T();
+            Parse(result, arguments);
+            return result;
+        }
+
+        public void Parse(object target, params string[] arguments)
+        {
             var argumments = arguments.ToList();
-            var allProps = result.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var allProps = target.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var property in allProps)
             {
                 var mainArg = property.GetCustomAttribute<MainInputAttributeAttribute>();
                 if (mainArg != null)
                 {
-                    property.SetValue(result, ConvertToPropertyType(arguments[0], property.PropertyType));
+                    property.SetValue(target, ConvertToPropertyType(arguments[0], property.PropertyType));
                     continue;
                 }
                 var optionAttribute = property.GetCustomAttribute<OptionAttribute>(true);
                 if (optionAttribute != null)
                 {
-                    var alliases = ExtractAlliases(property);                    
+                    var alliases = ExtractAlliases(property);
                     if (TryMatch(arguments, alliases, out var alias, out var argument))
                     {
                         if (ShouldTakeNextArg(alias, argument, property, arguments))
                         {
                             var i = Array.IndexOf<string>(arguments, argument);
-                            property.SetValue(result, ConvertToPropertyType(arguments[i + 1], property.PropertyType));
+                            property.SetValue(target, ConvertToPropertyType(arguments[i + 1], property.PropertyType));
                         }
 
                         var split = Split(alias, argument, property.PropertyType);
                         if (split.Length == 2)
                         {
-                            property.SetValue(result, ConvertToPropertyType(split[1], property.PropertyType));
+                            property.SetValue(target, ConvertToPropertyType(split[1], property.PropertyType));
                         }
                         else if (property.PropertyType.IsAssignableFrom(typeof(bool)))
                         {
-                            property.SetValue(result, true);
+                            property.SetValue(target, true);
                         }
                     }
                     else if (optionAttribute.IsRequired)
@@ -93,12 +99,10 @@ namespace CommandLineSyntax
                 var outputArg = property.GetCustomAttribute<MainOutputAttributeAttribute>();
                 if (outputArg != null)
                 {
-                    property.SetValue(result, ConvertToPropertyType(arguments.Last(), property.PropertyType));
+                    property.SetValue(target, ConvertToPropertyType(arguments.Last(), property.PropertyType));
                     continue;
                 }
             }
-
-            return result;
         }
 
         protected virtual bool ShouldTakeNextArg(Alias alias, string argument, PropertyInfo property, string[] arguments)
@@ -162,8 +166,16 @@ namespace CommandLineSyntax
                     return customConverter(input);
                 }
 
-                var converted = Convert.ChangeType(input, expectedType, CultureInfo.InvariantCulture);
-                return converted;
+                if (expectedType == typeof(double) &&
+                    Double.TryParse(input.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out var doubleVal))
+                {
+                    return doubleVal;
+                }
+                else
+                {
+                    var converted = Convert.ChangeType(input, expectedType, CultureInfo.InvariantCulture);
+                    return converted;
+                }
             }
             catch (Exception ex)
             {
@@ -183,14 +195,20 @@ namespace CommandLineSyntax
         public T Execute<T>(params string[] arguments) where T : new()
         {
             var result = new T();
+            Execute(result, arguments);
+            return result;
+        }
+
+        public void Execute(object target, params string[] arguments)
+        {
             var argumments = arguments.ToList();
-            var allMethods = result.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance);
+            var allMethods = target.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance);
 
             var pipeline = new List<Action>();
 
             foreach (var method in allMethods)
             {
-                if (method.GetParameters().Any(p => 
+                if (method.GetParameters().Any(p =>
                 p.GetCustomAttribute<MainInputAttributeAttribute>() != null ||
                 p.GetCustomAttribute<MainOutputAttributeAttribute>() != null))
                 {
@@ -206,7 +224,7 @@ namespace CommandLineSyntax
                         {
                             methodArgs[1] = ConvertToPropertyType(arguments.Last(), method.GetParameters()[1].ParameterType);
                         }
-                        pipeline.Add(() => method.Invoke(result, methodArgs));
+                        pipeline.Add(() => method.Invoke(target, methodArgs));
                     }
                     if (methodParams.Length == 1)
                     {
@@ -219,7 +237,7 @@ namespace CommandLineSyntax
                         {
                             methodArgs[0] = ConvertToPropertyType(arguments.Last(), method.GetParameters()[0].ParameterType);
                         }
-                        pipeline.Add(() => method.Invoke(result, methodArgs));
+                        pipeline.Add(() => method.Invoke(target, methodArgs));
                     }
                     continue;
                 }
@@ -234,7 +252,7 @@ namespace CommandLineSyntax
                         {
                             var i = Array.IndexOf<string>(arguments, argument);
                             var input = ConvertToPropertyType(arguments[i + 1], method.GetParameters()[0].ParameterType);
-                            Action toExecute = () => method.Invoke(result, new[] { input });
+                            Action toExecute = () => method.Invoke(target, new[] { input });
                             pipeline.Add(toExecute);
                             continue;
                         }
@@ -243,12 +261,12 @@ namespace CommandLineSyntax
                         if (split.Length == 2)
                         {
                             var input = ConvertToPropertyType(split[1], method.GetParameters()[0].ParameterType);
-                            Action toExecute = () => method.Invoke(result, new[] { input });
+                            Action toExecute = () => method.Invoke(target, new[] { input });
                             pipeline.Add(toExecute);
                         }
                         else if (method.GetParameters().Length == 0)
                         {
-                            method.Invoke(result, new object[0]);
+                            method.Invoke(target, new object[0]);
                         }
                     }
                     else if (optionAttribute.IsRequired)
@@ -263,9 +281,7 @@ namespace CommandLineSyntax
                 }
             }
 
-            return result;
         }
-
     }
 
     public class POSIXParser: AttributeParser

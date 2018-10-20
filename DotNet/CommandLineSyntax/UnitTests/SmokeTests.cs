@@ -11,15 +11,36 @@ namespace UnitTests
     public class SmokeTests
     {
         [TestMethod]
-        public void SmokeTest_ArgumentParser()
+        public void SmokeTest_ArgumentParser_Ints()
         {
-            var testObj = new DynamicTypeBuilder()
-                .WithProperty<int>("MyProperty", "=", "--alias1")
-                .WithProperty<double>("MyDoubleProp", "=", "anotherAlias")
-                .WithProperty<string>("MyStringProp", "=", "--Some-Other-Option")
-                .Build();
+            var possibleSeparators = new[] { "=", "--", "*", "|", "()", "==", "#", "%", "^", "$", ";" };
 
+            foreach (var splitter in possibleSeparators)
+            {
+                var count = 100;
+                var typeBuilder = new DynamicTypeBuilder();
+                var args = new List<string>();
+                for (int i = 0; i <= count; i++)
+                {
+                    typeBuilder = typeBuilder.WithProperty<int>($"MyProperty{i}", splitter, $"--my--property-value{i}");
+                    typeBuilder = typeBuilder.WithProperty<double>($"SomeOtherProperty{i}", splitter, $"-x{i}");
+                    args.Add($"--my--property-value{i}{splitter}{i}");
+                    args.Add($"-x{i}{splitter}{i/3.0}");
+                };
 
+                var testObj = typeBuilder.Build();
+                var parser = new AttributeParser();
+                parser.Parse(testObj, args.ToArray());
+                dynamic dyn = testObj;
+
+                Assert.AreEqual(33, dyn.MyProperty33);
+                Assert.AreEqual(50, dyn.MyProperty50);
+                Assert.AreEqual(100, dyn.MyProperty100);
+
+                Assert.AreEqual(11, dyn.SomeOtherProperty33, 1e-9);
+                Assert.AreEqual(50/3.0, dyn.SomeOtherProperty50, 1e-9);
+                Assert.AreEqual(100/3.0, dyn.SomeOtherProperty100, 1e-9);
+            }
         }
 
     }
@@ -64,11 +85,12 @@ namespace UnitTests
             TypeBuilder tb = GetTypeBuilder();
             ConstructorBuilder constructor = tb.DefineDefaultConstructor(MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName);
 
-            // NOTE: assuming your list contains Field objects with fields FieldName(string) and FieldType(Type)
             foreach (var field in allProps)
+            {
                 CreateProperty(tb, field);
+            }
 
-            Type objectType = tb.CreateType();            
+            Type objectType = tb.CreateType();
 
             return objectType;
         }
@@ -127,6 +149,11 @@ namespace UnitTests
 
             foreach (var alias in definition.Aliases)
             {
+                var optionattCtor = new Type[] { typeof(bool) };
+                var optionCtorInfo = typeof(OptionAttribute).GetConstructor(optionattCtor);
+                var optionAttrBuilder = new CustomAttributeBuilder(optionCtorInfo, new object[] { false });
+                propertyBuilder.SetCustomAttribute(optionAttrBuilder);
+
                 var attrCtorParams = new Type[] { typeof(string), typeof(string) };
                 var attrCtorInfo = typeof(OptionAliasAttribute).GetConstructor(attrCtorParams);
                 var attrBuilder = new CustomAttributeBuilder(attrCtorInfo, new object[] { alias, definition.Splitter });
