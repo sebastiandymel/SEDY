@@ -14,7 +14,7 @@ namespace CommandLineSyntax
         static void Main(string[] args)
         {
             var parser = new AttributeParser();
-            var configuration = parser.Parse<ProgramConfoguration>(args);
+            var configuration = parser.Parse<ProgramConfig>(args);
 
             if (configuration.ShowHelp)
             {
@@ -379,11 +379,6 @@ namespace CommandLineSyntax
     public class ProgramConfoguration
     {
         [Option]
-        [OptionAlias("--days")]
-        [OptionAlias("-d")]
-        public int DaysSince { get; set; }
-
-        [Option]
         [OptionAlias("--help")]
         [OptionAlias("-h")]
         public bool ShowHelp { get; set; }
@@ -437,7 +432,23 @@ namespace CommandLineSyntax
         public string Splitter { get; }
     }
 
-    
 
 
+    public class ProgramConfig
+    {
+        [Option]
+        [OptionAlias("--help")]
+        [OptionAlias("-h")]
+        public bool ShowHelp { get; set; }
+
+        [Option]
+        [OptionAlias("--version")]
+        [OptionAlias("-v")]
+        public bool ShowVersionDetails { get; set; }
+
+        [Option]
+        [OptionAlias("--age-of-client")]
+        [OptionAlias("-a")]
+        public int Age { get; set; }
+    }
 }
