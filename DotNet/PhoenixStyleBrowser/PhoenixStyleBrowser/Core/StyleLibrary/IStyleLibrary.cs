@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace PhoenixStyleBrowser
 {
@@ -10,8 +11,9 @@ namespace PhoenixStyleBrowser
         string Paths { get; }
         string ErrorMessage { get; }
         bool IsValid { get; }
-        bool IsSelected { get; }
+        bool IsSelected { get; set; }
         AsyncCommand LoadLibrary { get; }
         Task Initialize();
+        event EventHandler IsSelectedChanged;
     }
 }

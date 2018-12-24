@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace AspNetDemo
+namespace WEB_ASPMVC_DEMO
 {
     public class FilterConfig
     {

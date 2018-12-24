@@ -79,9 +79,6 @@ namespace PhoenixStyleBrowser
                     colorGroup.Resources.Add(resource);
                 }
             }
-
-
-
             model.Groups.Add(colorGroup);
         }
     }

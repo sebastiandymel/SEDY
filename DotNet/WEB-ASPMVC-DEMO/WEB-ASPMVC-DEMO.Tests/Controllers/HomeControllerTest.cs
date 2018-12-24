@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AspNetDemo;
-using AspNetDemo.Controllers;
+using WEB_ASPMVC_DEMO;
+using WEB_ASPMVC_DEMO.Controllers;
 
-namespace AspNetDemo.Tests.Controllers
+namespace WEB_ASPMVC_DEMO.Tests.Controllers
 {
     [TestClass]
     public class HomeControllerTest

@@ -18,6 +18,8 @@ namespace PhoenixStyleBrowser
         private readonly IResourceDictionaryLoader resourceLoader;
         private readonly FileInfo[] dlls;
 
+        public event EventHandler IsSelectedChanged = delegate { };
+
         protected string Dir { get; }
         public string Name
         {
@@ -77,6 +79,7 @@ namespace PhoenixStyleBrowser
             {
                 isSelected = value;
                 OnPropertyChanged();
+                IsSelectedChanged(this, EventArgs.Empty);
             }
         }
 

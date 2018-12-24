@@ -6,11 +6,11 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2B4D513F-42E8-48EB-8D97-439633110C43}</ProjectGuid>
+    <ProjectGuid>{78C733F5-4B14-482F-A452-75BD2FA758C2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AspNetDemo.Tests</RootNamespace>
-    <AssemblyName>AspNetDemo.Tests</AssemblyName>
+    <RootNamespace>WEB_ASPMVC_DEMO.Tests</RootNamespace>
+    <AssemblyName>WEB-ASPMVC-DEMO.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -99,9 +99,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AspNetDemo\AspNetDemo.csproj">
-      <Project>{957B712F-4882-438C-9189-AC5E44E4D60D}</Project>
-      <Name>AspNetDemo</Name>
+    <ProjectReference Include="..\WEB-ASPMVC-DEMO\WEB-ASPMVC-DEMO.csproj">
+      <Project>{B2FFFDF0-C2A6-45A7-A1E2-889FB3ED6BA5}</Project>
+      <Name>WEB-ASPMVC-DEMO</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

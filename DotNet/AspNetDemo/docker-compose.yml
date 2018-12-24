@@ -1,8 +1,0 @@
-version: '3.4'
-
-services:
-  aspnetdemo:
-    image: ${DOCKER_REGISTRY}aspnetdemo
-    build:
-      context: .\AspNetDemo
-      dockerfile: Dockerfile

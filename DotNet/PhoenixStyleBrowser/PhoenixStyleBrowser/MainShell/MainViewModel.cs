@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -38,7 +39,7 @@ namespace PhoenixStyleBrowser
                     OnPropertyChanged();
                     this.log.Log($"{nameof(IsSearching)} changed to {this.isSearching}");
                 }
-                
+
             }
         }
 
@@ -59,7 +60,7 @@ namespace PhoenixStyleBrowser
             });
             styleLibraryLookup.StyleLibraryDiscovered += OnStyleLibraryDiscovered;
             styleLibraryLookup.LookupCompleted += OnLookupCompleted;
-                     
+
         }
 
         private void OnLookupCompleted(object sender, EventArgs e)
@@ -70,6 +71,26 @@ namespace PhoenixStyleBrowser
         private void OnStyleLibraryDiscovered(object sender, StyleLibraryDiscovererdEventArgs e)
         {
             AllLibraries.Add(e.Library);
+            e.Library.IsSelectedChanged += OnLibarySelectionChanged;
+        }
+
+        private int selectionHandling;
+        private void OnLibarySelectionChanged(object sender, EventArgs e)
+        {
+            if (selectionHandling > 0)
+            {
+                return;
+            }
+            selectionHandling++;
+            var temp = AllLibraries.ToArray();
+            foreach (var item in temp)
+            {
+                if (item != sender)
+                {
+                    item.IsSelected = false;
+                }
+            }
+            selectionHandling--;
         }
 
         public void OnLog(DateTime stamp, string msg, LogLevel level)
@@ -81,12 +102,5 @@ namespace PhoenixStyleBrowser
                 Level = level
             });
         }
-    }
-
-    public class LogItem
-    {
-        public DateTime Stamp { get; set; }
-        public string Msg { get; set; }
-        public LogLevel Level { get; set; }
     }
 }

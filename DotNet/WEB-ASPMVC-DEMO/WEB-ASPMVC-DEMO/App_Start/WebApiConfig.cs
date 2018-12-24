@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace AspNetDemo
+namespace WEB_ASPMVC_DEMO
 {
     public static class WebApiConfig
     {
