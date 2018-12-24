@@ -14,7 +14,7 @@ namespace PhoenixStyleBrowser
 {
     public static class BamlHelper
     {
-        public static async Task<ResourceDictionary> ExtractFromAssembly(string path)
+        public static async Task<ResourceDictionary> ExtractFromAssembly(string path, ILog logger)
         {
             var result = new ResourceDictionary();
             var bamlStreams = new List<Stream>();
@@ -45,7 +45,7 @@ namespace PhoenixStyleBrowser
                     }
                     catch (Exception ex)
                     {
-
+                        logger.Log($"Error while extracting xaml resources from {path}. {ex.Message}");
                     }
                 }
             }

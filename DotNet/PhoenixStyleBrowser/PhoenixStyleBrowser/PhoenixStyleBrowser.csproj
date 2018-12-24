@@ -139,7 +139,13 @@
     <Compile Include="Core\StyleLibrary\LoadingStrategies\HearSuiteResourceLoaderStrategy.cs" />
     <Compile Include="Core\StyleLibrary\LoadingStrategies\IResourceLoaderStrategy.cs" />
     <Compile Include="Core\StyleLibrary\LoadingStrategies\OasisResourceLoaderStrategy.cs" />
+    <Compile Include="MainShell\DesignDataViewModel.cs" />
+    <Compile Include="MainShell\IMainViewModel.cs" />
     <Compile Include="MainShell\LogItem.cs" />
+    <Compile Include="ResourcesPresenter\BrushResource.cs" />
+    <Compile Include="ResourcesPresenter\ColorResource.cs" />
+    <Compile Include="ResourcesPresenter\Resource.cs" />
+    <Compile Include="ResourcesPresenter\ResourceGroup.cs" />
     <Compile Include="ResourcesPresenter\ResourcesPresenter.xaml.cs">
       <DependentUpon>ResourcesPresenter.xaml</DependentUpon>
     </Compile>

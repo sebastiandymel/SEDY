@@ -3,10 +3,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PhoenixStyleBrowser
 {
-    public class MainViewModel : NotifyPropertyChanged, ILogReceiver
+    public class MainViewModel : NotifyPropertyChanged, ILogReceiver, IMainViewModel
     {
         private string rootPath;
         private bool isSearching;
@@ -95,12 +96,14 @@ namespace PhoenixStyleBrowser
 
         public void OnLog(DateTime stamp, string msg, LogLevel level)
         {
-            LogEntries.Add(new LogItem
-            {
-                Stamp = stamp,
-                Msg = msg,
-                Level = level
-            });
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                 LogEntries.Add(new LogItem
+                 {
+                     Stamp = stamp,
+                     Msg = msg,
+                     Level = level
+                 })), DispatcherPriority.Background);
+           
         }
     }
 }

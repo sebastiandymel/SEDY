@@ -10,6 +10,8 @@
     Title="{Binding Title}"
     Width="800"
     Height="450"
+    d:DataContext="{d:DesignInstance Type=local:DesignDataViewModel,
+                                     IsDesignTimeCreatable=True}"
     mc:Ignorable="d">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -63,6 +65,35 @@
                 FontSize="40"
                 Text="Select style library" />
             <ContentControl x:Name="MainContent" />
+
+            <ScrollViewer
+                Height="40"
+                VerticalAlignment="Bottom"
+                VerticalScrollBarVisibility="Auto">
+                <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding LogEntries}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type local:LogItem}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Time" />
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Level" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Margin="4,0,0,0" Text="{Binding Stamp}" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="4,0,0,0"
+                                    Text="{Binding Level}" />
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Margin="4,0,0,0"
+                                    Text="{Binding Msg}"
+                                    TextWrapping="Wrap" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Window>
