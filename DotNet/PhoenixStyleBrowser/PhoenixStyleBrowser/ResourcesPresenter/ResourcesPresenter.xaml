@@ -8,25 +8,22 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary Source="ResourcePresenterStyles.xaml"/>
+    </UserControl.Resources>
     <Grid>
         <ScrollViewer Margin="20">
             <ItemsControl ItemsSource="{Binding Groups}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type local:ResourceGroup}">
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Text="{Binding GroupName}"/>
+                            <TextBlock Text="{Binding GroupName}" />
                             <ItemsControl ItemsSource="{Binding Resources}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate DataType="{x:Type local:ColorResource}">
-                                        <Grid Margin="4" Background="{Binding Color}">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Text="{Binding Key}"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
                             </ItemsControl>
                         </StackPanel>
                     </DataTemplate>
