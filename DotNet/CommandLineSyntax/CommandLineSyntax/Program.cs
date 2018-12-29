@@ -21,9 +21,58 @@ namespace CommandLineSyntax
                 Console.WriteLine("HEEELP");
             }
 
+            
+
+            var c = new ConfigExec();
+            var executor = new ArgumentExecutor();
+            executor.Execute(c, args);
+
             Console.ReadLine();
         }
     }
+
+
+    public class ProgramConfoguration
+    {
+        [Option]
+        [OptionAlias("--days")]
+        [OptionAlias("-d")]
+        public int DaysSince { get; set; }
+
+        [Option]
+        [OptionAlias("--help")]
+        [OptionAlias("-h")]
+        public bool ShowHelp { get; set; }
+
+        [Option]
+        [OptionAlias("--version")]
+        [OptionAlias("-v")]
+        public bool ShowVersion { get; set; }
+
+        [MainInputAttribute]
+        public string ThisIsMainArgument { get; set; }
+    }
+
+public class ConfigExec 
+{
+    [Option]
+    [OptionAlias("-h")]
+    public void HEEELP()
+    {
+        
+        Console.WriteLine("XYZ");
+    }
+
+}
+
+
+
+
+
+
+
+
+
 
     /// <summary>
     /// Parses arguments intro strongly typed object.
@@ -374,27 +423,6 @@ namespace CommandLineSyntax
         {
 
         }
-    }
-
-    public class ProgramConfoguration
-    {
-        [Option]
-        [OptionAlias("--days")]
-        [OptionAlias("-d")]
-        public int DaysSince { get; set; }
-
-        [Option]
-        [OptionAlias("--help")]
-        [OptionAlias("-h")]
-        public bool ShowHelp { get; set; }
-
-        [Option]
-        [OptionAlias("--version")]
-        [OptionAlias("-v")]
-        public bool ShowVersion { get; set; }
-
-        [MainInputAttribute]
-        public string ThisIsMainArgument { get; set; }
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method, AllowMultiple = false)]
