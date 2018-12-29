@@ -25,6 +25,7 @@ namespace PhoenixStyleBrowser
             Container.RegisterType<IResourceDictionaryLoader, ResourceDictionaryLoader>();
             Container.RegisterType<IStyleLibraryLookup, StyleLibraryLookup>();
             Container.RegisterType<IViewController, ViewController>();
+            Container.RegisterType<DefaultLoader, DefaultLoader>();
             Container.RegisterType<IStyleLibraryFactory, StyleLibraryFactory>();
             Container.RegisterType<IView, ResourcesPresenter>("ResourcesPresenterView");
             Container.RegisterInstance<Func<string, IView>>((name) => { return Container.Resolve<IView>(name); });

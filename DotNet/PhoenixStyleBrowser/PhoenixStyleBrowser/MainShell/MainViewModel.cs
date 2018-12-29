@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PhoenixStyleBrowser
 {
-    public class MainViewModel : NotifyPropertyChanged, ILogReceiver
+    public class MainViewModel : NotifyPropertyChanged, ILogReceiver, IMainViewModel
     {
         private string rootPath;
         private bool isSearching;
@@ -38,7 +40,7 @@ namespace PhoenixStyleBrowser
                     OnPropertyChanged();
                     this.log.Log($"{nameof(IsSearching)} changed to {this.isSearching}");
                 }
-                
+
             }
         }
 
@@ -59,7 +61,7 @@ namespace PhoenixStyleBrowser
             });
             styleLibraryLookup.StyleLibraryDiscovered += OnStyleLibraryDiscovered;
             styleLibraryLookup.LookupCompleted += OnLookupCompleted;
-                     
+
         }
 
         private void OnLookupCompleted(object sender, EventArgs e)
@@ -70,23 +72,38 @@ namespace PhoenixStyleBrowser
         private void OnStyleLibraryDiscovered(object sender, StyleLibraryDiscovererdEventArgs e)
         {
             AllLibraries.Add(e.Library);
+            e.Library.IsSelectedChanged += OnLibarySelectionChanged;
+        }
+
+        private int selectionHandling;
+        private void OnLibarySelectionChanged(object sender, EventArgs e)
+        {
+            if (selectionHandling > 0)
+            {
+                return;
+            }
+            selectionHandling++;
+            var temp = AllLibraries.ToArray();
+            foreach (var item in temp)
+            {
+                if (item != sender)
+                {
+                    item.IsSelected = false;
+                }
+            }
+            selectionHandling--;
         }
 
         public void OnLog(DateTime stamp, string msg, LogLevel level)
         {
-            LogEntries.Add(new LogItem
-            {
-                Stamp = stamp,
-                Msg = msg,
-                Level = level
-            });
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                 LogEntries.Add(new LogItem
+                 {
+                     Stamp = stamp,
+                     Msg = msg,
+                     Level = level
+                 })), DispatcherPriority.Background);
+           
         }
-    }
-
-    public class LogItem
-    {
-        public DateTime Stamp { get; set; }
-        public string Msg { get; set; }
-        public LogLevel Level { get; set; }
     }
 }

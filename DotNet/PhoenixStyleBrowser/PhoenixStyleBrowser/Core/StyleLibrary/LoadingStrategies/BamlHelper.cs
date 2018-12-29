@@ -14,7 +14,7 @@ namespace PhoenixStyleBrowser
 {
     public static class BamlHelper
     {
-        public static async Task<ResourceDictionary> ExtractFromAssembly(string path)
+        public static async Task<ResourceDictionary> ExtractFromAssembly(string path, ILog logger)
         {
             var result = new ResourceDictionary();
             var bamlStreams = new List<Stream>();
@@ -25,10 +25,20 @@ namespace PhoenixStyleBrowser
             using (var resourceReader = new ResourceReader(stream))
             {
                 foreach (DictionaryEntry resource in resourceReader)
-                {
+                {                    
                     if (new FileInfo(resource.Key.ToString()).Extension.Equals(".baml"))
                     {
-                        bamlStreams.Add(resource.Value as Stream);
+                        try
+                        {
+                            var rd = LoadBaml<ResourceDictionary>(stream);
+                            result.MergedDictionaries.Add(rd);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.Log($"Error while extracting xaml resources from {path}. {ex.Message}");
+                        }
+
+                        //bamlStreams.Add(resource.Value as Stream);
 
                         //Uri uri = new Uri("/" + assembly.GetName().Name + ";component/" + resource.Key.ToString().Replace(".baml", ".xaml"), UriKind.Relative);
                         //ResourceDictionary skin = Application.LoadComponent(uri) as ResourceDictionary;
@@ -36,18 +46,18 @@ namespace PhoenixStyleBrowser
                     }
                 }
 
-                foreach (var ss in bamlStreams)
-                {
-                    try
-                    {
-                        var rd = LoadBaml<ResourceDictionary>(stream);
-                        result.MergedDictionaries.Add(rd);
-                    }
-                    catch (Exception ex)
-                    {
-
-                    }
-                }
+                //foreach (var ss in bamlStreams)
+                //{
+                //    try
+                //    {
+                //        var rd = LoadBaml<ResourceDictionary>(stream);
+                //        result.MergedDictionaries.Add(rd);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        logger.Log($"Error while extracting xaml resources from {path}. {ex.Message}");
+                //    }
+                //}
             }
 
 

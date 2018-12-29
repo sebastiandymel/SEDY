@@ -17,7 +17,8 @@
             return new[] 
             {
                 "Phoenix.Application.Resources.StyleLibrary.*.dll",
-                "MaterialDesignThemes.Wpf.dll",
+                "MaterialDesignThemes*.dll",
+                "DymmyStyleLibrary.dll"
             };
         }
     }

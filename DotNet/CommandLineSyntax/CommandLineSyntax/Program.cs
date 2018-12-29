@@ -14,7 +14,7 @@ namespace CommandLineSyntax
         static void Main(string[] args)
         {
             var parser = new AttributeParser();
-            var configuration = parser.Parse<ProgramConfoguration>(args);
+            var configuration = parser.Parse<ProgramConfig>(args);
 
             if (configuration.ShowHelp)
             {
@@ -425,6 +425,25 @@ public class ConfigExec
         }
     }
 
+<<<<<<< HEAD
+=======
+    public class ProgramConfoguration
+    {
+        [Option]
+        [OptionAlias("--help")]
+        [OptionAlias("-h")]
+        public bool ShowHelp { get; set; }
+
+        [Option]
+        [OptionAlias("--version")]
+        [OptionAlias("-v")]
+        public bool ShowVersion { get; set; }
+
+        [MainInputAttribute]
+        public string ThisIsMainArgument { get; set; }
+    }
+
+>>>>>>> b00975ceebcc1f55ce62811f3216f2508e76dc24
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method, AllowMultiple = false)]
     public class OptionAttribute : Attribute
     {
@@ -465,7 +484,23 @@ public class ConfigExec
         public string Splitter { get; }
     }
 
-    
 
 
+    public class ProgramConfig
+    {
+        [Option]
+        [OptionAlias("--help")]
+        [OptionAlias("-h")]
+        public bool ShowHelp { get; set; }
+
+        [Option]
+        [OptionAlias("--version")]
+        [OptionAlias("-v")]
+        public bool ShowVersionDetails { get; set; }
+
+        [Option]
+        [OptionAlias("--age-of-client")]
+        [OptionAlias("-a")]
+        public int Age { get; set; }
+    }
 }

@@ -57,6 +57,10 @@ namespace PhoenixStyleBrowser
 
         private void BuildModel(ResourcesPresenterViewModel model, List<Tuple<object, object>> allResource)
         {
+            if (allResource.Count == 0)
+            {                
+                return;
+            }
             var colorGroup = new ResourceGroup
             {
                 GroupName = "Colors",
@@ -79,9 +83,6 @@ namespace PhoenixStyleBrowser
                     colorGroup.Resources.Add(resource);
                 }
             }
-
-
-
             model.Groups.Add(colorGroup);
         }
     }

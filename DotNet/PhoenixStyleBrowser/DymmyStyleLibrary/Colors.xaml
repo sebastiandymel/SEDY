@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:DymmyStyleLibrary">
+    <Color x:Key="MyKey1">Red</Color>
+    <Color x:Key="MyKey2">White</Color>
+    <Color x:Key="MyKey3">Black</Color>
+    <Color x:Key="MyKey4">Green</Color>
+</ResourceDictionary>
