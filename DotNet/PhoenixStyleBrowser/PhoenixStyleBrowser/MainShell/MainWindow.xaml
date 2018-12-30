@@ -63,6 +63,7 @@
                 VerticalAlignment="Center"
                 FontFamily="Lucida Bright"
                 FontSize="40"
+                Visibility="{Binding ElementName=MainContent, Path=Content.Content, Converter={StaticResource Main.Converter.NullMakesMeVisible}}"
                 Text="Select style library" />
             <ContentControl x:Name="MainContent" />
 

@@ -5,4 +5,6 @@
     <Color x:Key="MyKey2">White</Color>
     <Color x:Key="MyKey3">Black</Color>
     <Color x:Key="MyKey4">Green</Color>
+    <Color x:Key="MyKey5">Gray</Color>
+    <Color x:Key="MyKey6">Yellow</Color>
 </ResourceDictionary>

@@ -6,5 +6,6 @@ namespace PhoenixStyleBrowser
     {
         public Color Color { get; set; }
         public override string Type => "Color";
+        public string ColorValue => Color.ToString();
     }
 }

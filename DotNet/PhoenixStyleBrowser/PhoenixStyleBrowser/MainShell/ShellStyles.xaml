@@ -7,9 +7,10 @@
     <SolidColorBrush x:Key="Main.Pane.Background" Color="#FF3D3C40" />
     <SolidColorBrush x:Key="Main.Pane.Background.MouseOver" Color="#FF524554" />
     <SolidColorBrush x:Key="Main.Pane.Background.Selected" Color="#FF342F34" />
-    <SolidColorBrush x:Key="Main.Background" Color="#FF5A5B55" />
+    <SolidColorBrush x:Key="Main.Background" Color="#FF807D68" />
 
     <BooleanToVisibilityConverter x:Key="Main.Convereter.FalseIsHidden" />
+    <local:NullToVisibilityConverter x:Key="Main.Converter.NullMakesMeVisible" Null="Visible" NotNull="Collapsed"/>
 
     <!--
         =============================================

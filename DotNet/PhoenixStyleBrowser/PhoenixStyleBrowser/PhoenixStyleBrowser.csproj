@@ -135,6 +135,7 @@
     <Compile Include="Core\Logger\ILogReceiver.cs" />
     <Compile Include="Core\Logger\Log.cs" />
     <Compile Include="Core\Logger\LogLevel.cs" />
+    <Compile Include="Core\MVVM\NullToVisibilityConverter.cs" />
     <Compile Include="Core\StyleLibrary\LoadingStrategies\BamlHelper.cs" />
     <Compile Include="Core\StyleLibrary\LoadingStrategies\DefaultLoader.cs" />
     <Compile Include="Core\StyleLibrary\LoadingStrategies\ExpressFitResourceLoaderStrategy.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="MainShell\LogItem.cs" />
     <Compile Include="ResourcesPresenter\BrushResource.cs" />
     <Compile Include="ResourcesPresenter\ColorResource.cs" />
+    <Compile Include="ResourcesPresenter\NegativeColorConverter.cs" />
     <Compile Include="ResourcesPresenter\Resource.cs" />
     <Compile Include="ResourcesPresenter\ResourceGroup.cs" />
     <Compile Include="ResourcesPresenter\ResourcesPresenter.xaml.cs">
