@@ -1,9 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CachePoc
 {
-    public class LFUCacheBase<TKey, TVal>
+    /// <summary>
+    /// This cache contains only most frequently used keys. 
+    /// Size determines how much items is cached.
+    /// </summary>
+    /// <typeparam name="TKey">Type of key</typeparam>
+    /// <typeparam name="TVal">Type of stored value</typeparam>
+    public class LFUCacheBase<TKey,TVal>
     {
         private Dictionary<TKey, ValueBox<TVal>> cache = new Dictionary<TKey, ValueBox<TVal>>();
         private Dictionary<TKey, int> keyUsage = new Dictionary<TKey, int>();
@@ -20,6 +27,9 @@ namespace CachePoc
             bool canAdd = false;
             var orderedUsages = keyUsage.Values.OrderBy(x => x).Take(size).ToArray();
 
+            //
+            // Increase usages of key
+            //
             if (keyUsage.TryGetValue(key, out var freq))
             {
                 keyUsage[key] = ++freq;
@@ -29,15 +39,16 @@ namespace CachePoc
                 keyUsage[key] = 1;
             }
 
+            //
+            // Can this item be added to the cache?
+            // It can if the size of a cache has not yet reached maximum or the usage of this key is promoted to 
+            // most frequent keys. In such scenario, we also need to get rid of all the other items which are not frequent enough.
+            //
             canAdd = cache.ContainsKey(key) || orderedUsages.Length < size || keyUsage[key] > orderedUsages[size - 1];
 
             if (canAdd)
             {
-                this.cache[key] = new ValueBox<TVal>
-                {
-                    Value = val,
-                    Usage = keyUsage[key]
-                };
+                this.cache[key] = new ValueBox<TVal> { Value = val, Usage = keyUsage[key] };
 
                 if (this.cache.Count > size)
                 {
@@ -64,6 +75,20 @@ namespace CachePoc
                 return true;
             }
             return false;
+        }
+
+        public TVal GetOrAdd(TKey key, Func<TVal> valueFactory)
+        {
+            if (TryGet(key, out var existingValue))
+            {
+                return existingValue;
+            }
+            else
+            {
+                var newValue = valueFactory();
+                TryAdd(key, newValue);
+                return newValue;
+            }
         }
 
         public int Count => this.cache.Count;
