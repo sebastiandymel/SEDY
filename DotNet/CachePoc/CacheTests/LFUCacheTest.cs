@@ -190,6 +190,12 @@ namespace CacheTests
         {
             PerformanceTest_TryAdd(
                 cacheSize: 1,
+                population: 100,
+                expectedTimeMs: 10,
+                rounds: 1000);
+
+            PerformanceTest_TryAdd(
+                cacheSize: 1,
                 population: 1000,
                 expectedTimeMs: 100,
                 rounds: 100);
@@ -198,6 +204,12 @@ namespace CacheTests
         [TestMethod]
         public void PerformanceTest_Size100_TryAdd()
         {
+            PerformanceTest_TryAdd(
+               cacheSize: 100,
+               population: 100,
+               expectedTimeMs: 10,
+               rounds: 1000);
+
             PerformanceTest_TryAdd(
                 cacheSize: 100,
                 population: 1000,
@@ -208,6 +220,12 @@ namespace CacheTests
         [TestMethod]
         public void PerformanceTest_Size1000_TryAdd()
         {
+            PerformanceTest_TryAdd(
+               cacheSize: 1000,
+               population: 100,
+               expectedTimeMs: 10,
+               rounds: 1000);
+
             PerformanceTest_TryAdd(
                 cacheSize: 1000,
                 population: 1000,
