@@ -18,10 +18,11 @@
                     <DataTemplate DataType="{x:Type local:ResourceGroup}">
                         <StackPanel Orientation="Vertical">
                             <TextBlock FontSize="24" Text="{Binding GroupName}" />
-                            <ItemsControl ItemsSource="{Binding Resources}">
+                            <ItemsControl
+                                ItemsSource="{Binding Resources}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <WrapPanel />
+                                        <WrapPanel IsItemsHost="True" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                             </ItemsControl>

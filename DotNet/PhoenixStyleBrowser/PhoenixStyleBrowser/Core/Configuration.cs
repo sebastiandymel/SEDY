@@ -18,7 +18,8 @@
             {
                 "Phoenix.Application.Resources.StyleLibrary.*.dll",
                 "MaterialDesignThemes*.dll",
-                "DymmyStyleLibrary.dll"
+                "DymmyStyleLibrary.dll",
+                "LargeLibrary.dll"
             };
         }
     }

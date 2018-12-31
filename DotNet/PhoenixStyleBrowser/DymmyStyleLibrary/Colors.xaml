@@ -7,4 +7,10 @@
     <Color x:Key="MyKey4">Green</Color>
     <Color x:Key="MyKey5">Gray</Color>
     <Color x:Key="MyKey6">Yellow</Color>
+    <Color x:Key="MyKey7">DarkGreen</Color>
+    <Color x:Key="MyKey8">White</Color>
+    <Color x:Key="MyKey9">Black</Color>
+    <Color x:Key="MyKey10">Green</Color>
+    <Color x:Key="MyKey11">Gray</Color>
+    <Color x:Key="MyKey12">Yellow</Color>
 </ResourceDictionary>

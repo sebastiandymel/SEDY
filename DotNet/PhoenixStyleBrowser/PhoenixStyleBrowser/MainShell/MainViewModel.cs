@@ -11,6 +11,7 @@ namespace PhoenixStyleBrowser
     {
         private string rootPath;
         private bool isSearching;
+        private bool isLogVisible;
         private readonly Configuration config;
         private readonly ILog log;
         private readonly object collectionLock = new object();
@@ -41,6 +42,15 @@ namespace PhoenixStyleBrowser
                     this.log.Log($"{nameof(IsSearching)} changed to {this.isSearching}");
                 }
 
+            }
+        }
+        public bool IsLogVisible
+        {
+            get { return isLogVisible; }
+            set
+            {
+                isLogVisible = value;
+                OnPropertyChanged();
             }
         }
 
@@ -76,6 +86,8 @@ namespace PhoenixStyleBrowser
         }
 
         private int selectionHandling;
+  
+
         private void OnLibarySelectionChanged(object sender, EventArgs e)
         {
             if (selectionHandling > 0)
@@ -103,7 +115,7 @@ namespace PhoenixStyleBrowser
                      Msg = msg,
                      Level = level
                  })), DispatcherPriority.Background);
-           
+
         }
     }
 }

@@ -505,8 +505,44 @@
         </Setter>
     </Style>
 
+    <!--
+        =============================================
+        TEXTBOX
+        =============================================
+    -->
     <Style x:Key="Main.TextBox" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="#FF807D69" />
+    </Style>
+
+    <!--
+        =============================================
+        LOG
+        =============================================
+    -->
+    <Style x:Key="Main.Log" TargetType="{x:Type ListBox}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate DataType="{x:Type local:LogItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Time" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Level" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="4,0,0,0" Text="{Binding Stamp}" />
+                        <TextBlock
+                                    Grid.Column="1"
+                                    Margin="4,0,0,0"
+                                    Text="{Binding Level}" />
+                        <TextBlock
+                                    Grid.Column="2"
+                                    Margin="4,0,0,0"
+                                    Text="{Binding Msg}"
+                                    TextWrapping="Wrap" />
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

@@ -144,11 +144,16 @@
     <Compile Include="Core\StyleLibrary\LoadingStrategies\HearSuiteResourceLoaderStrategy.cs" />
     <Compile Include="Core\StyleLibrary\LoadingStrategies\IResourceLoaderStrategy.cs" />
     <Compile Include="Core\StyleLibrary\LoadingStrategies\OasisResourceLoaderStrategy.cs" />
+    <Compile Include="Core\ViewController\IViewCache.cs" />
+    <Compile Include="Core\ViewController\ViewCache.cs" />
     <Compile Include="MainShell\DesignDataViewModel.cs" />
     <Compile Include="MainShell\IMainViewModel.cs" />
     <Compile Include="MainShell\LogItem.cs" />
     <Compile Include="ResourcesPresenter\BrushResource.cs" />
+    <Compile Include="ResourcesPresenter\Builders\BrushBuilder.cs" />
+    <Compile Include="ResourcesPresenter\Builders\ColorBuilder.cs" />
     <Compile Include="ResourcesPresenter\ColorResource.cs" />
+    <Compile Include="ResourcesPresenter\Builders\IGroupBuilder.cs" />
     <Compile Include="ResourcesPresenter\NegativeColorConverter.cs" />
     <Compile Include="ResourcesPresenter\Resource.cs" />
     <Compile Include="ResourcesPresenter\ResourceGroup.cs" />

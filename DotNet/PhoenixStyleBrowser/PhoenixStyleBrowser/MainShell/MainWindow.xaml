@@ -63,37 +63,19 @@
                 VerticalAlignment="Center"
                 FontFamily="Lucida Bright"
                 FontSize="40"
-                Visibility="{Binding ElementName=MainContent, Path=Content.Content, Converter={StaticResource Main.Converter.NullMakesMeVisible}}"
-                Text="Select style library" />
+                Text="Select style library"
+                Visibility="{Binding ElementName=MainContent, Path=Content.Content, Converter={StaticResource Main.Converter.NullMakesMeVisible}}" />
             <ContentControl x:Name="MainContent" />
 
             <ScrollViewer
                 Height="40"
                 VerticalAlignment="Bottom"
-                VerticalScrollBarVisibility="Auto">
-                <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding LogEntries}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type local:LogItem}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Time" />
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Level" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Margin="4,0,0,0" Text="{Binding Stamp}" />
-                                <TextBlock
-                                    Grid.Column="1"
-                                    Margin="4,0,0,0"
-                                    Text="{Binding Level}" />
-                                <TextBlock
-                                    Grid.Column="2"
-                                    Margin="4,0,0,0"
-                                    Text="{Binding Msg}"
-                                    TextWrapping="Wrap" />
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                VerticalScrollBarVisibility="Auto"
+                Visibility="{Binding IsLogVisible, Converter={StaticResource Main.Convereter.FalseIsHidden}}">
+                <ListBox
+                    Grid.IsSharedSizeScope="True"
+                    ItemsSource="{Binding LogEntries}"
+                    Style="{DynamicResource Main.Logs}" />
             </ScrollViewer>
         </Grid>
     </Grid>

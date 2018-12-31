@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Media;
 
 namespace PhoenixStyleBrowser
 {
@@ -9,6 +8,11 @@ namespace PhoenixStyleBrowser
     {
         private readonly ILog log;
         private ResourceDictionary resources;
+        private IGroupBuilder[] builders = new IGroupBuilder[]
+        {
+            new ColorBuilder(),
+            new BrushBuilder()
+        };
 
         public ResourcesPresenterViewModelAdapter(ILog log)
         {
@@ -61,29 +65,23 @@ namespace PhoenixStyleBrowser
             {                
                 return;
             }
-            var colorGroup = new ResourceGroup
-            {
-                GroupName = "Colors",
-                IsVisible = true,
-                Type = "Color"
-            };
 
             foreach (var keyVal in allResource)
             {
                 var type = keyVal.Item2.GetType();
-
-                if (type == typeof(Color))
+                foreach (var builder in builders)
                 {
-                    var item = (Color)keyVal.Item2;
-                    var resource = new ColorResource
-                    {
-                        Key = keyVal.Item1.ToString(),
-                        Color = item,
-                    };
-                    colorGroup.Resources.Add(resource);
-                }
+                    builder.Add(type, keyVal.Item1.ToString(), keyVal.Item2);
+                }          
             }
-            model.Groups.Add(colorGroup);
+
+            foreach (var item in builders)
+            {
+                if (!item.IsEmpty())
+                {
+                    model.Groups.Add(item.Get());
+                }
+            }            
         }
     }
 }

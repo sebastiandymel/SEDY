@@ -1,5 +1,6 @@
 ﻿using PhoenixStyleBrowser.Core.ViewController;
 using System;
+using System.Linq;
 
 namespace PhoenixStyleBrowser
 {
