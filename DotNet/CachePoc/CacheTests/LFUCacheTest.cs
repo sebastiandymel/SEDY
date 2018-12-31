@@ -179,7 +179,9 @@ namespace CacheTests
             }
 
             Assert.AreEqual(100, cache.Count);
-            Assert.AreEqual(200, succcessCount);
+            Assert.IsFalse(cache.TryGet("Key999", out var val));
+            Assert.IsTrue(cache.TryGet("Key99", out var val2));
+            Assert.IsFalse(cache.TryGet("Key100", out var val3));
         }
     }
 }

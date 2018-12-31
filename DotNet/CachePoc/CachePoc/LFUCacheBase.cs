@@ -41,7 +41,7 @@ namespace CachePoc
 
             //
             // Can this item be added to the cache?
-            // It can if the size of a cache has not yet reached maximum or the usage of this key is promoted to 
+            // It can, if the size of a cache has not yet reached maximum or the usage of this key is promoted to 
             // most frequent keys. In such scenario, we also need to get rid of all the other items which are not frequent enough.
             //
             canAdd = cache.ContainsKey(key) || orderedUsages.Length < size || keyUsage[key] > orderedUsages[size - 1];
@@ -52,7 +52,7 @@ namespace CachePoc
 
                 if (this.cache.Count > size)
                 {
-                    var toRemove = keyUsage.OrderBy(x => x.Value).Skip(size).Select(x => x.Key);
+                    var toRemove = keyUsage.OrderByDescending(x => x.Value).Skip(size).Select(x => x.Key);
                     foreach (var item in toRemove)
                     {
                         this.cache.Remove(item);
