@@ -17,6 +17,7 @@ namespace PhoenixStyleBrowser
         private readonly IViewController viewController;
         private readonly IResourceDictionaryLoader resourceLoader;
         private readonly FileInfo[] dlls;
+        private string uniqueId;
 
         public event EventHandler IsSelectedChanged = delegate { };
 
@@ -89,6 +90,7 @@ namespace PhoenixStyleBrowser
             this.viewController = viewController;
             this.resourceLoader = resourceLoader;
             this.dlls = dlls;
+            this.uniqueId = Guid.NewGuid().ToString();
         }
 
         public virtual Task Initialize()
@@ -115,7 +117,7 @@ namespace PhoenixStyleBrowser
                 ErrorMessage = string.Empty;
                 IsSelected = true;
                 var dictionaries = await this.resourceLoader.LoadFrom(this.dlls.Select(x => x.FullName).ToArray());
-                this.viewController.Show("ResourcesPresenterView", dictionaries);
+                this.viewController.Show(this.uniqueId, "ResourcesPresenterView", dictionaries);
             }
             catch (Exception ex)
             {
