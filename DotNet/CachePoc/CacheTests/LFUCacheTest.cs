@@ -1,5 +1,6 @@
 ﻿using CachePoc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
 
 namespace CacheTests
 {
@@ -25,7 +26,7 @@ namespace CacheTests
             Assert.IsTrue(cache.TryAdd("SomeKey2", new object()));
             Assert.IsFalse(cache.TryAdd("SomeKey3", new object()));
             Assert.IsTrue(cache.TryAdd("SomeKey2", new object()));
-                        
+
             Assert.AreEqual(2, cache.Count);
         }
 
@@ -119,7 +120,7 @@ namespace CacheTests
                 Assert.Fail("Should not use factory");
                 return -1;
             });
-            
+
             Assert.AreEqual(100, result);
         }
 
@@ -182,6 +183,64 @@ namespace CacheTests
             Assert.IsFalse(cache.TryGet("Key999", out var val));
             Assert.IsTrue(cache.TryGet("Key99", out var val2));
             Assert.IsFalse(cache.TryGet("Key100", out var val3));
+        }
+
+        [TestMethod]
+        public void PerformanceTest_Size1_TryAdd()
+        {
+            PerformanceTest_TryAdd(
+                cacheSize: 1,
+                population: 1000,
+                expectedTimeMs: 100,
+                rounds: 100);
+        }
+
+        [TestMethod]
+        public void PerformanceTest_Size100_TryAdd()
+        {
+            PerformanceTest_TryAdd(
+                cacheSize: 100,
+                population: 1000,
+                expectedTimeMs: 100,
+                rounds: 100);
+        }
+
+        [TestMethod]
+        public void PerformanceTest_Size1000_TryAdd()
+        {
+            PerformanceTest_TryAdd(
+                cacheSize: 1000,
+                population: 1000,
+                expectedTimeMs: 100,
+                rounds: 100);
+        }
+
+        private void PerformanceTest_TryAdd(int cacheSize, int population, int expectedTimeMs, int rounds = 100)
+        {
+            var totalTime = 0.0;
+
+            for (int j = 0; j < rounds; j++)
+            {
+                var cache = new LFUCache<int>(cacheSize);
+                var succcessCount = 0;
+                var stopWatch = new Stopwatch();
+
+                stopWatch.Start();
+                for (int i = 0; i < population; i++)
+                {
+                    if (cache.TryAdd($"Key{i}", i))
+                    {
+                        succcessCount++;
+                    }
+                }
+                stopWatch.Stop();
+                totalTime += stopWatch.ElapsedMilliseconds;
+            }
+
+            double time = totalTime / rounds;
+
+            Debug.Write($"Average time = {time} [ms]");
+            Assert.IsTrue(time < expectedTimeMs);
         }
     }
 }
