@@ -122,7 +122,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainShell\MainWindow.xaml">
+    <Page Include="MainAppWindow\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -146,9 +146,9 @@
     <Compile Include="Core\StyleLibrary\LoadingStrategies\OasisResourceLoaderStrategy.cs" />
     <Compile Include="Core\ViewController\IViewCache.cs" />
     <Compile Include="Core\ViewController\ViewCache.cs" />
-    <Compile Include="MainShell\DesignDataViewModel.cs" />
-    <Compile Include="MainShell\IMainViewModel.cs" />
-    <Compile Include="MainShell\LogItem.cs" />
+    <Compile Include="MainAppWindow\DesignDataViewModel.cs" />
+    <Compile Include="MainAppWindow\IMainViewModel.cs" />
+    <Compile Include="MainAppWindow\LogItem.cs" />
     <Compile Include="ResourcesPresenter\BrushResource.cs" />
     <Compile Include="ResourcesPresenter\Builders\BrushBuilder.cs" />
     <Compile Include="ResourcesPresenter\Builders\ColorBuilder.cs" />
@@ -177,12 +177,12 @@
     <Compile Include="Core\ViewController\ViewHost.xaml.cs">
       <DependentUpon>ViewHost.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainShell\MainViewModel.cs" />
-    <Compile Include="MainShell\MainWindow.xaml.cs">
+    <Compile Include="MainAppWindow\MainViewModel.cs" />
+    <Compile Include="MainAppWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MainShell\ShellStyles.xaml">
+    <Page Include="MainAppWindow\ShellStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
