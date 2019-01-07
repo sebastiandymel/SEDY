@@ -1,7 +1,7 @@
 // ===============================
 // GAME STATE VARIABLES
 // ===============================
-const debug = true;
+const debug = false;
 var ballRadius = 10;
 var x = 0;
 var y = 0;
@@ -28,7 +28,7 @@ const color_ball = "#0095DD";
 
 var bricksDefinition = {
   rowCount: 4,
-  columnCount: 5,
+  columnCount: 6,
   height: 20,
   padding: 10,
   offsetTop: 30,
@@ -97,7 +97,7 @@ function hookEvents() {
     waitsForUserInput = false;
   });
 
-  // NEXT LEVEL
+  // DEBUG
   if (debug) {
     var debugBtn = document.getElementById(knownGameElements.DebugBtn);
     debugBtn.style.display = "flex";
@@ -144,12 +144,12 @@ function generateBricks() {
   for (var c = 0; c < bricksDefinition.columnCount; c++) {
     bricksDefinition.bricks[c] = [];
     for (var r = 0; r < bricksDefinition.rowCount; r++) {
-      var rndWidth = randomInRange(80, 80);
+      //var rndWidth = randomInRange(80, 80);
       bricksDefinition.bricks[c][r] = {
         x: 0,
         y: 0,
         status: 1,
-        width: rndWidth
+        width: 80
       };
     }
   }
@@ -201,12 +201,17 @@ function drawPaddle() {
 }
 
 function drawBricks() {
+  bricksDefinition.offsetLeft =
+    (canvas.width -
+    bricksDefinition.columnCount * 80 -
+    (bricksDefinition.columnCount - 1) * bricksDefinition.padding) / 2;
+
   for (var r = 0; r < bricksDefinition.rowCount; r++) {
     var offsetX = bricksDefinition.offsetLeft;
     for (var c = 0; c < bricksDefinition.columnCount; c++) {
       if (bricksDefinition.bricks[c][r].status == 1) {
         // CALCULATE POSITION
-        var brickX = bricksDefinition.padding + offsetX;
+        var brickX = offsetX;
         var brickY =
           r * (bricksDefinition.height + bricksDefinition.padding) +
           bricksDefinition.offsetTop;
@@ -225,7 +230,7 @@ function drawBricks() {
         ctx.closePath();
       }
       offsetX +=
-        bricksDefinition.bricks[c][r].width + bricksDefinition.offsetLeft;
+        bricksDefinition.bricks[c][r].width + bricksDefinition.padding;
     }
   }
 }
