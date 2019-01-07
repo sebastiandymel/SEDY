@@ -1,12 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>::::::: SEDY simple game :::::::</title>
-        <script src="js/game.js" ></script>
-        <link rel = "stylesheet" type = "text/css" href = "css/main.css" /> 
-    </head>
-    <body>
-        <canvas height="400" width="600" id="board"></canvas>
-        <div class="game-over-notify">Game Over</div>
-    </body>
+  <head>
+    <title>::::::: SEDY simple game :::::::</title>
+    <script src="js/game.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+  </head>
+  <body>
+    <table>
+      <tbody>
+        <tr>
+          <td><canvas height="400" width="600" id="board"> </canvas></td>
+          <td style="width: 84px; padding: 20px;">
+            <p style="font-size: 16px; vertical-align: top">level:</p>
+            <p style="font-size: 16px; vertical-align: top" id="_level"></p>
+            <p>score:</p>
+            <p id="_score"></p>
+            <p>highest score:</p>
+            <p id="_highscore"></p>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="width: 84px;">
+            <div style="height: 20px; width: 50px; background: red; display: none" id="_debugBtn" />
+        </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="game-over-notify">Game Over</div>
+    <div class="game-won-notify">Level finished!</div>
+  </body>
 </html>
