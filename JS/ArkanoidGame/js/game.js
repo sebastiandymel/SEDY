@@ -1,13 +1,13 @@
 // ===============================
 // GAME STATE VARIABLES
 // ===============================
-const debug = false;
-var ballRadius = 10;
+const debug = true;
+var ballRadius = 15;
 var x = 0;
 var y = 0;
 var dx = 2;
 var dy = -2;
-var platformHeight = 10;
+var platformHeight = 20;
 var platformWidth = 90;
 var platformX = 0;
 var rightPressed = false;
@@ -37,6 +37,7 @@ var bricksDefinition = {
 };
 
 var gameLevel = -1;
+const maxLevel = 4;
 var score = 0;
 var highestScore = 0;
 
@@ -83,11 +84,7 @@ function hookEvents() {
 
   // GAME OVER
   gameOverNotify.addEventListener("click", function() {
-    gameLevel = -1;
-    score = 0;
-    nextLevel();
-    clearOverlays();
-    waitsForUserInput = false;
+    restartGame();
   });
 
   // NEXT LEVEL
@@ -109,6 +106,14 @@ function hookEvents() {
       }
     });
   }
+}
+
+function restartGame() {
+  gameLevel = -1;
+  score = 0;
+  nextLevel();
+  clearOverlays();
+  waitsForUserInput = false;
 }
 
 function clearOverlays() {
@@ -187,7 +192,7 @@ function drawBall() {
   ctx.closePath();
 }
 
-function drawPaddle() {
+function drawPlatform() {
   ctx.beginPath();
   ctx.rect(
     platformX,
@@ -248,6 +253,14 @@ function draw() {
     return;
   }
 
+  if (gameLevel == maxLevel)
+  {    
+    alert("You won the game! Congratulations!\nPress OK to start again.");
+    clearInterval(interval);
+    restartGame();
+    return;
+  }
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   if (hasAnyBrick() == false) {
@@ -259,7 +272,7 @@ function draw() {
 
   drawBricks();
   drawBall();
-  drawPaddle();
+  drawPlatform();
   collisionDetection();
   drawScore();
 
