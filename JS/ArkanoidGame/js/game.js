@@ -2,7 +2,8 @@
 // GAME STATE VARIABLES
 // ===============================
 const debug = true;
-var ballRadius = 15;
+const refreshRate_ms = 20;
+const ballRadius = 15;
 var x = 0;
 var y = 0;
 var dx = 2;
@@ -12,22 +13,17 @@ var platformWidth = 90;
 var platformX = 0;
 var rightPressed = false;
 var leftPressed = false;
-var refreshRate_ms = 20;
-var gameOverNotify = null;
-var gameWonNotify = null;
-var scoreNotify = null;
-var highestScoreNotify = null;
-var ctx = null;
-var canvas = null;
-var interval;
 var waitsForUserInput = false;
+var interval;
+var ctx = null;
 
+// COLORS
 const color_brick = "#001ADD";
 const color_platform = "#0095DD";
 const color_ball = "#0095DD";
 
 var bricksDefinition = {
-  rowCount: 4,
+  rowCount: 5,
   columnCount: 6,
   height: 20,
   padding: 10,
@@ -40,22 +36,31 @@ var gameLevel = -1;
 const maxLevel = 4;
 var score = 0;
 var highestScore = 0;
-
 // Level                         0    1    2    3   4
-var platformWidtPerGameLevel = [400, 200, 100, 90, 70];
-var platformSpeedPerGameLevel = [11, 12, 15, 20, 30];
-var knownGameElements = {
-  Canvas: "board",
-  GameOver: ".game-over-notify",
-  GameWon: ".game-won-notify",
+const platformWidtPerGameLevel = [400, 200, 100, 90, 70];
+const platformSpeedPerGameLevel =[11, 12, 15, 20, 30];
+
+//
+// Elements accessible from DOM
+//
+const knownGameElements = {
+  Canvas:       "board",
+  GameOver:     ".game-over-notify",
+  GameWon:      ".game-won-notify",
   GameLevelTag: "_level",
-  Score: "_score",
+  Score:        "_score",
   HighestScore: "_highscore",
-  DebugBtn: "_debugBtn"
+  DebugBtn:     "_debugBtn"
 };
+// References to DOM elements
+var gameOverNotify = null;
+var gameWonNotify = null;
+var scoreNotify = null;
+var highestScoreNotify = null;
+var canvas = null;
 
 // ===============================
-// STARTUP
+// STARTUP - WINDOW LOADED
 // ===============================
 
 window.onload = function() {
