@@ -17,6 +17,7 @@ const tilesHorizontal = 48;
 const playerVerticalOffset = 6;
 const playerMoveSize = tileSize / 3;
 const playerJumpSize = 5;
+const coinScore = 5;
 // =========================================================================
 // Fields
 // =========================================================================
@@ -28,6 +29,7 @@ var gameObjects = {
   bonus: null,
   coin: null
 };
+var score = 0;
 
 var keyboard = {
   left: false,
@@ -47,20 +49,27 @@ var blockers = [];
 // GAME INITIALIZATION
 // =========================================================================
 window.onload = function() {
-  canvas = document.getElementById("game-board");
-  
-  ctx = canvas.getContext("2d");
   document.addEventListener("keydown", keyDownHandler, false);
   document.addEventListener("keyup", keyUpHandler, false);
 
-  loadLevelData(1);
-
+  loadLevelData(1, initializeCanvas);
   initializeGameObjects();
   setInterval(draw, refresh_ms);
 };
 
-function loadLevelData(levelNumber) {
-  var file =  "levels/level" + levelNumber + ".dat";
+function initializeCanvas() {
+  canvas = document.getElementById("game-board");
+  ctx = canvas.getContext("2d");
+  canvas.setAttribute("width", tilesHorizontal * tileSize);
+  canvas.setAttribute("height", (levelData.length / 48) * tileSize);
+}
+
+function loadLevelData(levelNumber, callback) {
+  var prefix = "levels/level";
+  if (levelNumber < 10) {
+    prefix += "0";
+  }
+  var file = prefix + levelNumber + ".dat";
   var fs = require("fs");
   fs.readFile(file, "utf-8", (err, data) => {
     if (err) {
@@ -68,10 +77,8 @@ function loadLevelData(levelNumber) {
       return;
     }
     console.log("The level content is : \n" + data);
-    levelData = data.replace(/(\r\n|\n|\r)/gm, "");
-
-    canvas.setAttribute("width", tilesHorizontal * tileSize);
-  canvas.setAttribute("height", (levelData.length / 48) * tileSize);
+    levelData = Array.from(data.replace(/(\r\n|\n|\r)/gm, ""));
+    callback();
   });
 }
 
@@ -163,14 +170,24 @@ function drawLevel(levelToDraw) {
   for (var j = 0; j < rows; j++) {
     for (i = 0; i < columns; i++) {
       var index = j * tilesHorizontal + i;
-      const element = levelToDraw.charAt(index);
+      const element = levelToDraw[index];
       if (element == "#") {
         walls[wallsIndex++] = { x: startx, y: starty };
       } else if (element == "P") {
         playerPosition_y = starty + player.y - playerVerticalOffset;
         playerPosition_x = startx + player.x;
       } else if (element == "O") {
-        coins[coinsIndex++] = { x: startx, y: starty };
+        if (
+          collide(
+            toTileRect(playerPosition_x, playerPosition_y),
+            toTileRect(startx, starty)
+          )
+        ) {
+          levelToDraw[index] = ".";
+          score += coinScore;
+        } else {
+          coins[coinsIndex++] = { x: startx, y: starty };
+        }
       } else if (element == "?") {
         bonus[bonusIndex++] = { x: startx, y: starty };
       }
@@ -223,6 +240,24 @@ function drawLevel(levelToDraw) {
   }
 }
 
+function collide(r1, r2) {
+  return !(
+    r2.left > r1.right ||
+    r2.right < r1.left ||
+    r2.top > r1.bottom ||
+    r2.bottom < r1.top
+  );
+}
+
+function toTileRect(x, y) {
+  return {
+    left: x,
+    right: x + tileSize,
+    top: y,
+    bottom: y + tileSize
+  };
+}
+
 function drawGameObject(gameObj, positions, length, isBlocker) {
   if (gameObj != null) {
     for (var i = 0; i < length; i++) {
@@ -240,12 +275,12 @@ function drawGameObject(gameObj, positions, length, isBlocker) {
 }
 
 function canGoRight(oldX, oldY, offset) {
-  var newX = oldX + offset + tileSize;
   for (var i = 0; i < blockers.length; i++) {
     if (
-      newX >= blockers[i].x &&
-      newX <= blockers[i].x + blockers[i].width &&
-      (oldY >= blockers[i].y && oldY <= blockers[i].y + blockers[i].height)
+      collide(
+        toTileRect(oldX + playerMoveSize, oldY),
+        toTileRect(blockers[i].x, blockers[i].y)
+      )
     ) {
       return false;
     }
