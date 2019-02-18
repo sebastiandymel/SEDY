@@ -16,7 +16,7 @@ const tileSize = 16;
 const tilesHorizontal = 48;
 const playerVerticalOffset = 6;
 const playerMoveSize = tileSize / 3;
-const playerJumpSize = 5;
+const playerJumpSize = tileSize * 1.5;
 const coinScore = 5;
 // =========================================================================
 // Fields
@@ -48,10 +48,10 @@ var blockers = [];
 // =========================================================================
 // GAME INITIALIZATION
 // =========================================================================
+
 window.onload = function() {
   document.addEventListener("keydown", keyDownHandler, false);
   document.addEventListener("keyup", keyUpHandler, false);
-
   loadLevelData(1, initializeCanvas);
   initializeGameObjects();
   setInterval(draw, refresh_ms);
@@ -102,13 +102,10 @@ function initializeGameObjects() {
   gameObjects.coin = new Image();
   gameObjects.coin.src = imgs_paths.coin;
 }
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  blockers = [];
-  if (levelData != null) {
-    drawLevel(levelData);
-  }
-}
+
+// =========================================================================
+// KEYBOARD NAVIGATION
+// =========================================================================
 
 function keyDownHandler(e) {
   if (e.key == "Left" || e.key == "ArrowLeft" || e.key == "A" || e.key == "a") {
@@ -147,6 +144,18 @@ function keyUpHandler(e) {
     e.key == "W"
   ) {
     keyboard.up = false;
+  }
+}
+
+// =========================================================================
+// DRAWING - GAME LOOP
+// =========================================================================
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  blockers = [];
+  if (levelData != null) {
+    drawLevel(levelData);
   }
 }
 
@@ -233,12 +242,32 @@ function drawLevel(levelToDraw) {
         fallHeigh++;
       }
       player.y += fallHeigh;
-    } else if (keyboard.up) {
+    } else if (keyboard.up && canGoUp(playerPosition_x, playerPosition_y)) {
       player.y -= playerJumpSize;
     }
     ctx.drawImage(gameObjects.player, playerPosition_x, playerPosition_y);
   }
 }
+
+function drawGameObject(gameObj, positions, length, isBlocker) {
+  if (gameObj != null) {
+    for (var i = 0; i < length; i++) {
+      ctx.drawImage(gameObj, positions[i].x, positions[i].y);
+      if (isBlocker == false) {
+        blockers[blockers.length] = {
+          x: positions[i].x,
+          y: positions[i].y,
+          width: tileSize,
+          height: tileSize
+        };
+      }
+    }
+  }
+}
+
+// =========================================================================
+// COLISION DETECTION
+// =========================================================================
 
 function collide(r1, r2) {
   return !(
@@ -258,22 +287,6 @@ function toTileRect(x, y) {
   };
 }
 
-function drawGameObject(gameObj, positions, length, isBlocker) {
-  if (gameObj != null) {
-    for (var i = 0; i < length; i++) {
-      ctx.drawImage(gameObj, positions[i].x, positions[i].y);
-      if (isBlocker == false) {
-        blockers[blockers.length] = {
-          x: positions[i].x,
-          y: positions[i].y,
-          width: tileSize,
-          height: tileSize
-        };
-      }
-    }
-  }
-}
-
 function canGoRight(oldX, oldY, offset) {
   for (var i = 0; i < blockers.length; i++) {
     if (
@@ -289,13 +302,26 @@ function canGoRight(oldX, oldY, offset) {
 }
 
 function canGoLeft(oldX, oldY, offset) {
-  var newX = oldX - offset;
   for (var i = 0; i < blockers.length; i++) {
     if (
-      newX >= blockers[i].x &&
-      newX <= blockers[i].x + blockers[i].width &&
-      oldY >= blockers[i].y &&
-      oldY <= blockers[i].y + blockers[i].height
+      collide(
+        toTileRect(oldX - playerMoveSize, oldY),
+        toTileRect(blockers[i].x, blockers[i].y)
+      )
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function canGoUp(oldX, oldY, offset) {
+  for (var i = 0; i < blockers.length; i++) {
+    if (
+      collide(
+        toTileRect(oldX , oldY - playerJumpSize),
+        toTileRect(blockers[i].x, blockers[i].y)
+      )
     ) {
       return false;
     }
