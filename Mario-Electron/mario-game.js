@@ -50,7 +50,6 @@ var blockers = [];
 // =========================================================================
 // GAME INITIALIZATION
 // =========================================================================
-
 window.onload = function() {
   document.addEventListener("keydown", keyDownHandler, false);
   document.addEventListener("keyup", keyUpHandler, false);
@@ -59,14 +58,8 @@ window.onload = function() {
   setInterval(draw, refresh_ms);
 };
 
-function initializeCanvas() {
-  canvas = document.getElementById("game-board");
-  ctx = canvas.getContext("2d");
-  canvas.setAttribute("width", tilesHorizontal * tileSize);
-  canvas.setAttribute("height", (levelData.length / 48) * tileSize);
-}
-
 function loadLevelData(levelNumber, callback) {
+  console.log("Loading level nuber " + levelNumber);
   var prefix = "levels/level";
   if (levelNumber < 10) {
     prefix += "0";
@@ -79,9 +72,17 @@ function loadLevelData(levelNumber, callback) {
       return;
     }
     console.log("The level content is : \n" + data);
-    levelData = Array.from(data.replace(/(\r\n|\n|\r)/gm, ""));
-    callback();
+    var levelData = Array.from(data.replace(/(\r\n|\n|\r)/gm, ""));
+    callback(levelData);
   });
+}
+
+function initializeCanvas(data) {
+  levelData = data;
+  canvas = document.getElementById("game-board");
+  ctx = canvas.getContext("2d");
+  canvas.setAttribute("width", tilesHorizontal * tileSize);
+  canvas.setAttribute("height", (levelData.length / 48) * tileSize);
 }
 
 function initializeGameObjects() {
@@ -244,24 +245,22 @@ function drawLevel(levelToDraw) {
         fallHeigh++;
       }
       player.y += fallHeigh;
-    } else if (
-      keyboard.up &&
-      !isJumping      
-    ) {
+    } else if (keyboard.up && !isJumping) {
       isJumping = true;
     }
 
     if (isJumping) {
-      var increment = playerJumpSize / 7;
+      var increment = playerJumpSize / 5;
       jumpDistance += increment;
-
       if (jumpDistance >= playerJumpSize) {
         isJumping = false;
         jumpDistance = 0;
       } else {
         var x = 0;
-        while (canGoUp(playerPosition_x, playerPosition_y - 1) && x <= increment)
-        {
+        while (
+          canGoUp(playerPosition_x, playerPosition_y - 1) &&
+          x <= increment
+        ) {
           player.y -= 1;
           x++;
         }
@@ -342,7 +341,7 @@ function canGoUp(oldX, oldY) {
   for (var i = 0; i < blockers.length; i++) {
     if (
       collide(
-        toTileRect(oldX, oldY-2),
+        toTileRect(oldX, oldY - 2),
         toTileRect(blockers[i].x, blockers[i].y)
       )
     ) {
