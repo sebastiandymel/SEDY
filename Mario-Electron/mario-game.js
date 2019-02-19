@@ -16,7 +16,7 @@ const tileSize = 16;
 const tilesHorizontal = 48;
 const playerVerticalOffset = 6;
 const playerMoveSize = tileSize / 3;
-const playerJumpSize = tileSize * 1.5;
+const playerJumpSize = tileSize * 2.5;
 const coinScore = 5;
 // =========================================================================
 // Fields
@@ -40,6 +40,8 @@ var player = {
   x: 0,
   y: 0
 };
+var isJumping = false;
+var jumpDistance = 0;
 // Array of blocking elements. Each element has
 // {x, y} - starting cooridantes
 // width, height - size of this blocking element
@@ -233,7 +235,7 @@ function drawLevel(levelToDraw) {
       player.x -= playerMoveSize;
     }
 
-    if (fallsDown(playerPosition_x, playerPosition_y)) {
+    if (fallsDown(playerPosition_x, playerPosition_y) && !isJumping) {
       var fallHeigh = 0;
       while (
         fallHeigh < tileSize / 3 &&
@@ -242,9 +244,30 @@ function drawLevel(levelToDraw) {
         fallHeigh++;
       }
       player.y += fallHeigh;
-    } else if (keyboard.up && canGoUp(playerPosition_x, playerPosition_y)) {
-      player.y -= playerJumpSize;
+    } else if (
+      keyboard.up &&
+      !isJumping      
+    ) {
+      isJumping = true;
     }
+
+    if (isJumping) {
+      var increment = playerJumpSize / 7;
+      jumpDistance += increment;
+
+      if (jumpDistance >= playerJumpSize) {
+        isJumping = false;
+        jumpDistance = 0;
+      } else {
+        var x = 0;
+        while (canGoUp(playerPosition_x, playerPosition_y - 1) && x <= increment)
+        {
+          player.y -= 1;
+          x++;
+        }
+      }
+    }
+
     ctx.drawImage(gameObjects.player, playerPosition_x, playerPosition_y);
   }
 }
@@ -315,11 +338,11 @@ function canGoLeft(oldX, oldY, offset) {
   return true;
 }
 
-function canGoUp(oldX, oldY, offset) {
+function canGoUp(oldX, oldY) {
   for (var i = 0; i < blockers.length; i++) {
     if (
       collide(
-        toTileRect(oldX , oldY - playerJumpSize),
+        toTileRect(oldX, oldY-2),
         toTileRect(blockers[i].x, blockers[i].y)
       )
     ) {
