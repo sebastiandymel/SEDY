@@ -5,6 +5,7 @@
 // # - wall, player cannot walk through it
 // ? - unknown bonus
 // O - coin
+// % - Level exit
 // =========================================================================
 var levelData = null;
 
@@ -27,7 +28,8 @@ var gameObjects = {
   player: null,
   wall: null,
   bonus: null,
-  coin: null
+  coin: null,
+  princes: null
 };
 var score = 0;
 
@@ -90,7 +92,8 @@ function initializeGameObjects() {
     player: "imgs/mario_1.png",
     wall: "imgs/wall.png",
     bonus: "imgs/bonus.png",
-    coin: "imgs/coin.png"
+    coin: "imgs/coin.png",
+    princes: "imgs/princes.png"
   };
 
   gameObjects.player = new Image();
@@ -104,6 +107,9 @@ function initializeGameObjects() {
 
   gameObjects.coin = new Image();
   gameObjects.coin.src = imgs_paths.coin;
+
+  gameObjects.princes = new Image();
+  gameObjects.princes.src = imgs_paths.princes;
 }
 
 // =========================================================================
@@ -179,6 +185,9 @@ function drawLevel(levelToDraw) {
   var coins = [];
   var coinsIndex = 0;
 
+  var princesPosition_x = null;
+  var princesPosition_y = null;
+
   for (var j = 0; j < rows; j++) {
     for (i = 0; i < columns; i++) {
       var index = j * tilesHorizontal + i;
@@ -202,6 +211,9 @@ function drawLevel(levelToDraw) {
         }
       } else if (element == "?") {
         bonus[bonusIndex++] = { x: startx, y: starty };
+      } else if (element == "%") {
+        princesPosition_x = startx;
+        princesPosition_y = starty;
       }
       startx += tileSize;
     }
@@ -218,6 +230,15 @@ function drawLevel(levelToDraw) {
   // DRAW BONUS
   drawGameObject(gameObjects.bonus, bonus, bonusIndex, false);
 
+  // DRAW PRINCES
+  if (princesPosition_x != null && princesPosition_y != null) {
+    ctx.drawImage(
+      gameObjects.princes,
+      princesPosition_x,
+      princesPosition_y - 9
+    );
+  }
+
   // DRAW PLAYER
   if (
     gameObjects.player != null &&
@@ -226,12 +247,12 @@ function drawLevel(levelToDraw) {
   ) {
     if (
       keyboard.right &&
-      canGoRight(playerPosition_x, playerPosition_y, playerMoveSize)
+      canGoRight(playerPosition_x, playerPosition_y)
     ) {
       player.x += playerMoveSize;
     } else if (
       keyboard.left &&
-      canGoLeft(playerPosition_x, playerPosition_y, playerMoveSize)
+      canGoLeft(playerPosition_x, playerPosition_y)
     ) {
       player.x -= playerMoveSize;
     }
@@ -309,7 +330,16 @@ function toTileRect(x, y) {
   };
 }
 
-function canGoRight(oldX, oldY, offset) {
+function toTileRect2(x, y, size) {
+  return {
+    left: x,
+    right: x + size,
+    top: y,
+    bottom: y + size
+  };
+}
+
+function canGoRight(oldX, oldY) {
   for (var i = 0; i < blockers.length; i++) {
     if (
       collide(
@@ -323,11 +353,11 @@ function canGoRight(oldX, oldY, offset) {
   return true;
 }
 
-function canGoLeft(oldX, oldY, offset) {
+function canGoLeft(oldX, oldY) {
   for (var i = 0; i < blockers.length; i++) {
     if (
       collide(
-        toTileRect(oldX - playerMoveSize, oldY),
+        toTileRect(oldX - playerMoveSize-1, oldY),
         toTileRect(blockers[i].x, blockers[i].y)
       )
     ) {
@@ -341,7 +371,7 @@ function canGoUp(oldX, oldY) {
   for (var i = 0; i < blockers.length; i++) {
     if (
       collide(
-        toTileRect(oldX, oldY - 2),
+        toTileRect2(oldX+1, oldY - 2, tileSize-1),
         toTileRect(blockers[i].x, blockers[i].y)
       )
     ) {
