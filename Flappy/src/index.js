@@ -47,6 +47,7 @@ function restart() {
       scored: false
     };
   }
+  scoreValue = 0;
   player_y = 100;
   colision = false;
 }
@@ -58,6 +59,7 @@ function draw() {
   }
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  isGameOverVisible = false;
 
   var gapSize = player_height * 3.5;
 
@@ -102,9 +104,9 @@ function draw() {
 
   // UPDATE PLAYER POSITION
   if (!colision) {
-    if (isUp) {
+    if (isUp && player_y > player_height) {
       player_y -= player_speed * 5;
-    } else {
+    } else if (player_y < (canvas.height - player_height)) {
       player_y += player_speed;
     }
   }
@@ -121,7 +123,7 @@ function drawGameOver() {
   if (isGameOverVisible) {
     return;
   }
-  ctx.font = "60px Arial";
+  ctx.font = "75px Arial";
   ctx.fillStyle = "red";
   ctx.textAlign = "center";
   ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
@@ -147,17 +149,20 @@ function keyUpHandler(e) {
   }
 }
 
+const Keys = {
+  Enter: 13,
+  Space: 32
+};
+
 function isEnter(e) {
-  if (e.keyCode == enterKeycode) {
+  if (e.keyCode == Keys.Enter) {
     return true;
   }
   return false;
 }
 
-const enterKeycode = 13;
-const spaceKeycode = 32;
 function isKeyUp(e) {
-  if (e.key == "W" || e.key == "w" || e.keyCode == spaceKeycode) {
+  if (e.key == "W" || e.key == "w" || e.keyCode == Keys.Space) {
     return true;
   }
   return false;
