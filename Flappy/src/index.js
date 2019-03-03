@@ -7,12 +7,18 @@ const player_height = 60;
 const player_speed = 6;
 
 var canvas = null;
+var scoreElement = null;
+var scoreValue = 0;
 var ctx = null;
 var bars = [];
-var player_y = 100;
+var player_y;
 var isUp = false;
 var colision = false;
 var player_center_x = 100;
+var birdImage = null;
+
+birdImage = new Image();
+birdImage.src = "bird_1.PNG";
 
 window.onload = load;
 document.addEventListener("keydown", keyDownHandler, false);
@@ -20,25 +26,34 @@ document.addEventListener("keyup", keyUpHandler, false);
 
 function load() {
   canvas = document.getElementById("canvas");
+  canvas.focus();
   canvas.setAttribute("width", 800);
   canvas.setAttribute("height", 480);
   ctx = canvas.getContext("2d");
+  scoreElement = document.getElementById("score");
 
+  restart();
+  setInterval(draw, refresh_rate_ms);
+}
+
+function restart() {
   var numberOfBarsPerScreen = 5;
   var offset = canvas.width / numberOfBarsPerScreen;
 
   for (var i = 0; i < numberOfBarsPerScreen; i++) {
     bars[i] = {
       x: offset * i + canvas.width / 2,
-      gap: 30 * (i + 1)
+      gap: 30 * (i + 1),
+      scored: false
     };
   }
-
-  setInterval(draw, refresh_rate_ms);
+  player_y = 100;
+  colision = false;
 }
 
 function draw() {
   if (colision) {
+    drawGameOver();
     return;
   }
 
@@ -52,6 +67,7 @@ function draw() {
 
     if (bars[i].x < -bar_width) {
       bars[i].x = canvas.width;
+      bars[i].scored = false;
     }
 
     var x = bars[i].x;
@@ -74,8 +90,15 @@ function draw() {
     var r1 = toRect(x, y, width, height);
     var r2 = toRect(x, height + gapSize, width, bars[i].gap);
     var playerR = playerRect();
-    colision = colision || hasCollide(playerR, r1) || hasCollide(playerR, r2);    
+    colision = colision || hasCollide(playerR, r1) || hasCollide(playerR, r2);
+
+    if (!bars[i].scored && bars[i].x < player_center_x - player_height / 2) {
+      bars[i].scored = true;
+      scoreValue += 10;
+    }
   }
+
+  drawScore();
 
   // UPDATE PLAYER POSITION
   if (!colision) {
@@ -86,16 +109,35 @@ function draw() {
     }
   }
 
-  ctx.beginPath();
-  ctx.arc(player_center_x, player_y, player_height / 2, 0, Math.PI * 2);
-  ctx.fillStyle = "black";
-  ctx.fill();
-  ctx.closePath();
+  ctx.drawImage(
+    birdImage,
+    player_center_x - player_height / 2 - 12,
+    player_y - player_height / 2
+  );
+}
+
+var isGameOverVisible = false;
+function drawGameOver() {
+  if (isGameOverVisible) {
+    return;
+  }
+  ctx.font = "60px Arial";
+  ctx.fillStyle = "red";
+  ctx.textAlign = "center";
+  ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
+  isGameOverVisible = true;
+}
+
+function drawScore() {
+  scoreElement.innerHTML = scoreValue;
 }
 
 function keyDownHandler(e) {
   if (isKeyUp(e)) {
     isUp = true;
+  }
+  if (isEnter(e) && isGameOverVisible && colision) {
+    restart();
   }
 }
 
@@ -105,6 +147,14 @@ function keyUpHandler(e) {
   }
 }
 
+function isEnter(e) {
+  if (e.keyCode == enterKeycode) {
+    return true;
+  }
+  return false;
+}
+
+const enterKeycode = 13;
 const spaceKeycode = 32;
 function isKeyUp(e) {
   if (e.key == "W" || e.key == "w" || e.keyCode == spaceKeycode) {
