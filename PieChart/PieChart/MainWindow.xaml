@@ -11,7 +11,96 @@
     Height="650"
     mc:Ignorable="d">
     <Window.Resources>
+        <Style x:Key="Style.Path.Base" TargetType="{x:Type Path}">
+            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="2" BlurRadius="3" Direction="270" Color="Black"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleX)">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.2">
+                                        <EasingDoubleKeyFrame.EasingFunction>
+                                            <BackEase />
+                                        </EasingDoubleKeyFrame.EasingFunction>
+                                    </EasingDoubleKeyFrame>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleY)">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.2">
+                                        <EasingDoubleKeyFrame.EasingFunction>
+                                            <BackEase />
+                                        </EasingDoubleKeyFrame.EasingFunction>
+                                    </EasingDoubleKeyFrame>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleX)">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleY)">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style TargetType="{x:Type local:PieChartControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Canvas
+                            Name="PART_CANVAS"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="SliceStyleSelector">
+                <Setter.Value>
+                    <local:SliceStyleSelector>
+                        <local:IndexBasedSliceStyle Index="0" IsDefault="True">
+                            <Style TargetType="{x:Type Path}" BasedOn="{StaticResource Style.Path.Base}">
+                                <Setter Property="Stroke" Value="Black" />
+                                <Setter Property="Fill" Value="Red" />
+                            </Style>
+                        </local:IndexBasedSliceStyle>
+                        <local:IndexBasedSliceStyle Index="1">
+                            <Style TargetType="{x:Type Path}" BasedOn="{StaticResource Style.Path.Base}">
+                                <Setter Property="Stroke" Value="Black" />
+                                <Setter Property="Fill" Value="Blue" />
+                            </Style>
+                        </local:IndexBasedSliceStyle>
+                        <local:IndexBasedSliceStyle Index="2">
+                            <Style TargetType="{x:Type Path}" BasedOn="{StaticResource Style.Path.Base}">
+                                <Setter Property="Stroke" Value="Black" />
+                                <Setter Property="Fill" Value="Green" />
+                            </Style>
+                        </local:IndexBasedSliceStyle>
+                        <local:IndexBasedSliceStyle Index="3" >
+                            <Style TargetType="{x:Type Path}" BasedOn="{StaticResource Style.Path.Base}">
+                                <Setter Property="Stroke" Value="Black" />
+                                <Setter Property="Fill" Value="Orange" />
+                            </Style>
+                        </local:IndexBasedSliceStyle>
+                    </local:SliceStyleSelector>
+                </Setter.Value>
+            </Setter>
             <Setter Property="OutlineThickness" Value="2" />
             <Setter Property="OutlineBrush" Value="Black" />
         </Style>
@@ -21,8 +110,7 @@
             Width="100"
             Height="100"
             Margin="40"
-            OutlineThickness="5"
-            StrokeThickness="1">
+            OutlineThickness="5">
             <local:PieChartControl.ItemsSource>
                 <x:Array Type="{x:Type core:Double}">
                     <core:Double>30.0</core:Double>
@@ -32,23 +120,20 @@
                     <core:Double>10.0</core:Double>
                 </x:Array>
             </local:PieChartControl.ItemsSource>
-            <local:PieChartControl.SliceStrokes>
-                <x:Array Type="{x:Type Brush}">
-                    <SolidColorBrush Color="Black" />
-                    <SolidColorBrush Color="Black" />
-                    <SolidColorBrush Color="Black" />
-                    <SolidColorBrush Color="Black" />
-                    <SolidColorBrush Color="Black" />
-                </x:Array>
-            </local:PieChartControl.SliceStrokes>
         </local:PieChartControl>
+
+        <local:PieChartControl
+            Width="100"
+            Height="100"
+            Margin="40"
+            ItemsSource="10,20,30,40"
+            OutlineThickness="5" />
 
         <local:PieChartControl
             Width="150"
             Height="150"
             Margin="40"
-            OutlineThickness="5"
-            StrokeThickness="4">
+            OutlineThickness="5">
             <local:PieChartControl.ItemsSource>
                 <x:Array Type="{x:Type core:Double}">
                     <core:Double>90.0</core:Double>
@@ -56,23 +141,13 @@
                     <core:Double>30.0</core:Double>
                 </x:Array>
             </local:PieChartControl.ItemsSource>
-            <local:PieChartControl.SliceStrokes>
-                <x:Array Type="{x:Type Brush}">
-                    <SolidColorBrush Color="Black" />
-                    <SolidColorBrush Color="Black" />
-                    <SolidColorBrush Color="Black" />
-                    <SolidColorBrush Color="Black" />
-                    <SolidColorBrush Color="Black" />
-                </x:Array>
-            </local:PieChartControl.SliceStrokes>
         </local:PieChartControl>
 
         <local:PieChartControl
             Width="150"
             Height="150"
             Margin="40"
-            OutlineThickness="5"
-            StrokeThickness="4">
+            OutlineThickness="5">
             <local:PieChartControl.ItemsSource>
                 <x:Array Type="{x:Type core:Double}">
                     <core:Double>90.0</core:Double>
@@ -81,16 +156,14 @@
                     <core:Double>90.0</core:Double>
                 </x:Array>
             </local:PieChartControl.ItemsSource>
+
         </local:PieChartControl>
 
         <local:PieChartControl
             Width="150"
             Height="150"
             Margin="40"
-            OutlineThickness="5"
-            SliceFill="Gray"
-            SliceStroke="Green"
-            StrokeThickness="4">
+            OutlineThickness="5">
             <local:PieChartControl.ItemsSource>
                 <x:Array Type="{x:Type core:Double}">
                     <core:Double>90.0</core:Double>
@@ -105,9 +178,7 @@
             Width="200"
             Height="200"
             Margin="40"
-            OutlineThickness="0"
-            SliceStroke="Black"
-            StrokeThickness="1">
+            OutlineThickness="0">
             <local:PieChartControl.ItemsSource>
                 <x:Array Type="{x:Type core:Double}">
                     <core:Double>90.0</core:Double>
@@ -123,9 +194,7 @@
             Height="200"
             Margin="40"
             OutlineBrush="Black"
-            OutlineThickness="2"
-            SliceStroke="White"
-            StrokeThickness="10">
+            OutlineThickness="2">
             <local:PieChartControl.ItemsSource>
                 <x:Array Type="{x:Type core:Double}">
                     <core:Double>90.0</core:Double>

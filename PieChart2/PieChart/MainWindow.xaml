@@ -1,0 +1,168 @@
+﻿<Window
+    x:Class="PieChart.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="clr-namespace:System;assembly=mscorlib"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:PieChart"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="650"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style TargetType="{x:Type local:PieChartControl}">
+            <Setter Property="OutlineThickness" Value="2" />
+            <Setter Property="OutlineBrush" Value="Black" />
+        </Style>
+    </Window.Resources>
+    <WrapPanel>
+        <local:PieChartControl
+            Width="100"
+            Height="100"
+            Margin="40"
+            OutlineThickness="5"
+            StrokeThickness="1">
+            <local:PieChartControl.ItemsSource>
+                <x:Array Type="{x:Type core:Double}">
+                    <core:Double>30.0</core:Double>
+                    <core:Double>10.0</core:Double>
+                    <core:Double>60.0</core:Double>
+                    <core:Double>30.0</core:Double>
+                    <core:Double>10.0</core:Double>
+                </x:Array>
+            </local:PieChartControl.ItemsSource>
+            <local:PieChartControl.SliceStrokes>
+                <x:Array Type="{x:Type Brush}">
+                    <SolidColorBrush Color="Black" />
+                    <SolidColorBrush Color="Black" />
+                    <SolidColorBrush Color="Black" />
+                    <SolidColorBrush Color="Black" />
+                    <SolidColorBrush Color="Black" />
+                </x:Array>
+            </local:PieChartControl.SliceStrokes>
+        </local:PieChartControl>
+
+        <local:PieChartControl
+            Width="100"
+            Height="100"
+            Margin="40"
+            ItemsSource="10,20,30,40"
+            OutlineThickness="5"
+            StrokeThickness="1">
+
+            <local:PieChartControl.SliceStrokes>
+                <x:Array Type="{x:Type Brush}">
+                    <SolidColorBrush Color="Black" />
+                    <SolidColorBrush Color="Black" />
+                    <SolidColorBrush Color="Black" />
+                    <SolidColorBrush Color="Black" />
+                    <SolidColorBrush Color="Black" />
+                </x:Array>
+            </local:PieChartControl.SliceStrokes>
+        </local:PieChartControl>
+
+        <local:PieChartControl
+            Width="150"
+            Height="150"
+            Margin="40"
+            OutlineThickness="5"
+            StrokeThickness="4">
+            <local:PieChartControl.ItemsSource>
+                <x:Array Type="{x:Type core:Double}">
+                    <core:Double>90.0</core:Double>
+                    <core:Double>60.0</core:Double>
+                    <core:Double>30.0</core:Double>
+                </x:Array>
+            </local:PieChartControl.ItemsSource>
+            <local:PieChartControl.SliceFills>
+                <x:Array Type="{x:Type Brush}">
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Offset="0" Color="Black" />
+                        <GradientStop Offset="1" Color="#FFD14747" />
+                        <GradientStop Offset="0.488" Color="#FF224965" />
+                    </LinearGradientBrush>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Offset="1" Color="#FFD14747" />
+                        <GradientStop Offset="0.104" Color="White" />
+                    </LinearGradientBrush>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#FF8C96CA" Offset="0.849"/>
+                        <GradientStop Color="#FF51DF5D" Offset="0.552"/>
+                    </RadialGradientBrush>
+                </x:Array>
+            </local:PieChartControl.SliceFills>
+        </local:PieChartControl>
+
+        <local:PieChartControl
+            Width="150"
+            Height="150"
+            Margin="40"
+            OutlineThickness="5"
+            StrokeThickness="4">
+            <local:PieChartControl.ItemsSource>
+                <x:Array Type="{x:Type core:Double}">
+                    <core:Double>90.0</core:Double>
+                    <core:Double>90.0</core:Double>
+                    <core:Double>90.0</core:Double>
+                    <core:Double>90.0</core:Double>
+                </x:Array>
+            </local:PieChartControl.ItemsSource>
+
+        </local:PieChartControl>
+
+        <local:PieChartControl
+            Width="150"
+            Height="150"
+            Margin="40"
+            OutlineThickness="5"
+            SliceFill="Gray"
+            SliceStroke="Green"
+            StrokeThickness="4">
+            <local:PieChartControl.ItemsSource>
+                <x:Array Type="{x:Type core:Double}">
+                    <core:Double>90.0</core:Double>
+                    <core:Double>90.0</core:Double>
+                    <core:Double>90.0</core:Double>
+                    <core:Double>90.0</core:Double>
+                </x:Array>
+            </local:PieChartControl.ItemsSource>
+        </local:PieChartControl>
+
+        <local:PieChartControl
+            Width="200"
+            Height="200"
+            Margin="40"
+            OutlineThickness="0"
+            SliceStroke="Black"
+            StrokeThickness="1">
+            <local:PieChartControl.ItemsSource>
+                <x:Array Type="{x:Type core:Double}">
+                    <core:Double>90.0</core:Double>
+                    <core:Double>90.0</core:Double>
+                    <core:Double>90.0</core:Double>
+                    <core:Double>90.0</core:Double>
+                </x:Array>
+            </local:PieChartControl.ItemsSource>
+        </local:PieChartControl>
+
+        <local:PieChartControl
+            Width="200"
+            Height="200"
+            Margin="40"
+            OutlineBrush="Black"
+            OutlineThickness="2"
+            SliceStroke="White"
+            StrokeThickness="10">
+            <local:PieChartControl.ItemsSource>
+                <x:Array Type="{x:Type core:Double}">
+                    <core:Double>90.0</core:Double>
+                    <core:Double>90.0</core:Double>
+                    <core:Double>90.0</core:Double>
+                    <core:Double>90.0</core:Double>
+                </x:Array>
+            </local:PieChartControl.ItemsSource>
+        </local:PieChartControl>
+
+    </WrapPanel>
+</Window>

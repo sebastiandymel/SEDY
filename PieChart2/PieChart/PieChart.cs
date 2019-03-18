@@ -5,50 +5,20 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace PieChart
 {
-    public class PieChartControl : Control
+    public class PieChartControl : FrameworkElement
     {
-        private const string PART_CANVAS = "PART_CANVAS";
-        private Canvas internalCanvas;
-
         public PieChartControl()
         {
            
         }
 
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-            this.internalCanvas = Template.FindName(PART_CANVAS, this) as Canvas;
-            Update();
-        }
-
         #region Dependency properties
-
-        #region Slice Style Selector
-
-        public StyleSelector SliceStyleSelector
-        {
-            get { return (StyleSelector)GetValue(SliceStyleSelectorProperty); }
-            set { SetValue(SliceStyleSelectorProperty, value); }
-        }
-
-        public static readonly DependencyProperty SliceStyleSelectorProperty =
-            DependencyProperty.Register(
-                "SliceStyleSelector", 
-                typeof(StyleSelector), 
-                typeof(PieChartControl), 
-                new PropertyMetadata(null));
-
-        #endregion Slice Style Selector
-
-        #region ItemsSource
 
         [TypeConverter(typeof(CommaSeparatedStringToPieSliceTypeConverter))]
         public IEnumerable ItemsSource
@@ -68,9 +38,39 @@ namespace PieChart
             ((PieChartControl)d).Update();
         }
 
-        #endregion ItemsSource
+        public IEnumerable SliceStrokes
+        {
+            get { return (IEnumerable)GetValue(SliceStrokesProperty); }
+            set { SetValue(SliceStrokesProperty, value); }
+        }
 
-        #region Outline Thickness
+        public static readonly DependencyProperty SliceStrokesProperty = DependencyProperty.Register(
+            "SliceStrokes",
+            typeof(IEnumerable),
+            typeof(PieChartControl),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnSliceStrokesChanged));
+
+        private static void OnSliceStrokesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((PieChartControl)d).Update();
+        }
+
+        public IEnumerable SliceFills
+        {
+            get { return (IEnumerable)GetValue(SliceFillsProperty); }
+            set { SetValue(SliceFillsProperty, value); }
+        }
+
+        public static readonly DependencyProperty SliceFillsProperty = DependencyProperty.Register(
+            "SliceFills",
+            typeof(IEnumerable),
+            typeof(PieChartControl),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnSliceFillsChanged));
+
+        private static void OnSliceFillsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((PieChartControl)d).Update();
+        }
 
         public double OutlineThickness
         {
@@ -84,7 +84,17 @@ namespace PieChart
             typeof(PieChartControl),
             new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender));
 
-        #endregion Outline Thickness
+        public double StrokeThickness
+        {
+            get { return (double)GetValue(StrokeThicknessProperty); }
+            set { SetValue(StrokeThicknessProperty, value); }
+        }
+
+        public static readonly DependencyProperty StrokeThicknessProperty = DependencyProperty.Register(
+            "StrokeThickness",
+            typeof(double),
+            typeof(PieChartControl),
+            new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush OutlineBrush
         {
@@ -97,14 +107,33 @@ namespace PieChart
                 typeof(Brush),
                 typeof(PieChartControl), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
+        public Brush SliceFill
+        {
+            get { return (Brush)GetValue(SliceFillProperty); }
+            set { SetValue(SliceFillProperty, value); }
+        }
+
+        public static readonly DependencyProperty SliceFillProperty = DependencyProperty.Register(
+                "SliceFill",
+                typeof(Brush),
+                typeof(PieChartControl), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush SliceStroke
+        {
+            get { return (Brush)GetValue(SliceStrokeProperty); }
+            set { SetValue(SliceStrokeProperty, value); }
+        }
+
+        public static readonly DependencyProperty SliceStrokeProperty = DependencyProperty.Register(
+                "SliceStroke",
+                typeof(Brush),
+                typeof(PieChartControl), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         #endregion Dependency properties
 
         protected override void OnRender(DrawingContext drawingContext)
         {
             base.OnRender(drawingContext);
-
-            this.internalCanvas.Children.Clear();
 
             var radius = ActualHeight / 2;
 
@@ -119,7 +148,6 @@ namespace PieChart
             var slicePoint = new Point(radius, 0);
             foreach (var slice in this.slices)
             {
-                var path = new Path();
                 var pathGeometry = new PathGeometry();
                 var pathFigure = new PathFigure();
                 pathFigure.StartPoint = center;
@@ -139,37 +167,11 @@ namespace PieChart
                 pathFigure.Segments.Add(arcSegment);
                 pathGeometry.Figures.Add(pathFigure);
 
-                path.ToolTip = $"{Math.Round((slice.Value / 360.0) * 100, 1, MidpointRounding.AwayFromZero)}%";
-                path.Data = pathGeometry;                
-                SetStyle(path, slice);
-
-                this.internalCanvas.Children.Add(path);
+                var slicePen = new Pen(GetStrokeBySlice(slice), StrokeThickness);
+                drawingContext.DrawGeometry(GetFillBySlice(slice), slicePen , pathGeometry);
 
                 slicePoint = endOfArc;
             }
-        }
-
-        private void SetStyle(Path path, PieSliceVal slice)
-        {
-            var style = GetStyle(slice);
-            if (style != null)
-            {
-                path.Style = style;
-            }
-            else
-            {
-                path.Stroke = GetStrokeBySlice(slice);
-                path.Fill = GetFillBySlice(slice);
-            }
-        }
-
-        private Style GetStyle(PieSliceVal slice)
-        {
-            if (SliceStyleSelector != null)
-            {
-                return SliceStyleSelector.SelectStyle(slice.Index, this);
-            }
-            return null;
         }
 
         private List<PieSliceVal> slices = new List<PieSliceVal>();
@@ -206,22 +208,54 @@ namespace PieChart
                     }
                 }
             }
+
+            this.sliceStrokes = Array.Empty<Brush>();
+            if (SliceStrokes is IEnumerable<Brush> sliceStrokeBrushes)
+            {
+                this.sliceStrokes = sliceStrokeBrushes.ToArray();
+            }
+
+            this.sliceFills = Array.Empty<Brush>();
+            if (SliceFills is IEnumerable<Brush> sliceFillsBrushes)
+            {
+                this.sliceFills = sliceFillsBrushes.ToArray();
+            }
         }
 
         private Brush GetFillBySlice(PieSliceVal slice)
         {
+            if (this.sliceFills.Length > slice.Index)
+            {
+                return this.sliceFills[slice.Index];
+            }
+            if (SliceFill != null)
+            {
+                return SliceFill;
+            }
             Color c = this.predefinedColors.Length > slice.Index 
                 ? predefinedColors[slice.Index] 
                 : Colors.Black;
             return new SolidColorBrush { Color = c  };
         }
+
         private Brush GetStrokeBySlice(PieSliceVal slice)
         {
+            if (this.sliceStrokes.Length > slice.Index)
+            {
+                return this.sliceStrokes[slice.Index];
+            }
+            if (SliceStroke != null)
+            {
+                return SliceStroke;
+            }
             Color c = this.predefinedColors.Length > slice.Index
                 ? predefinedColors[slice.Index]
                 : Colors.Black;
             return new SolidColorBrush { Color = c };
         }
+
+        private Brush[] sliceStrokes = Array.Empty<Brush>();
+        private Brush[] sliceFills = Array.Empty<Brush>();
         private Color[] predefinedColors = new Color[]
         {
             Colors.Blue,
@@ -284,6 +318,7 @@ namespace PieChart
         }
     }
 
+    [TypeConverter(typeof(CommaSeparatedStringToPieSliceTypeConverter))]
     public class PieSlices : IEnumerable<IPieSlice>
     {
         private List<IPieSlice> slices;
