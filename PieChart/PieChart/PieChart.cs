@@ -86,6 +86,8 @@ namespace PieChart
 
         #endregion Outline Thickness
 
+        #region Outline Stroke
+
         public Brush OutlineBrush
         {
             get { return (Brush)GetValue(OutlineBrushProperty); }
@@ -97,6 +99,7 @@ namespace PieChart
                 typeof(Brush),
                 typeof(PieChartControl), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
+        #endregion Outline Stroke
 
         #endregion Dependency properties
 
@@ -116,7 +119,7 @@ namespace PieChart
             //
             var angle = 0.0;
 
-            var slicePoint = new Point(radius, 0);
+            var lastPoint = new Point(radius, 0);
             foreach (var slice in this.slices)
             {
                 var path = new Path();
@@ -125,11 +128,13 @@ namespace PieChart
                 pathFigure.StartPoint = center;
                 pathFigure.IsClosed = true;
                            
-                var lineSegment = new LineSegment(slicePoint, true);
+                var lineSegment = new LineSegment(lastPoint, true);
                 lineSegment.IsSmoothJoin = true;
                 angle += slice.Value;
                 var arcSegment = new ArcSegment();
-                var endOfArc = new Point(Math.Cos(angle * Math.PI / 180) * radius + center.X, Math.Sin(angle * Math.PI / 180) * radius + center.Y);
+                var endOfArc = new Point(
+                    Math.Cos((slice.Value-90) * Math.PI / 180) * center.X + center.X, 
+                    Math.Sin((slice.Value-90) * Math.PI / 180) * center.Y + center.Y);
                 arcSegment.IsLargeArc = slice.Value >= 180.0;
                 arcSegment.Point = endOfArc;
                 arcSegment.Size = new Size(radius, radius);
@@ -140,12 +145,13 @@ namespace PieChart
                 pathGeometry.Figures.Add(pathFigure);
 
                 path.ToolTip = $"{Math.Round((slice.Value / 360.0) * 100, 1, MidpointRounding.AwayFromZero)}%";
-                path.Data = pathGeometry;                
+                path.Data = pathGeometry;
+                
                 SetStyle(path, slice);
 
                 this.internalCanvas.Children.Add(path);
 
-                slicePoint = endOfArc;
+                lastPoint = endOfArc;
             }
         }
 
@@ -290,7 +296,6 @@ namespace PieChart
 
         public PieSlices()
         {
-
         }
 
         public PieSlices(string input)

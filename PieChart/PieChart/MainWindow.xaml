@@ -84,6 +84,7 @@
                             <Style TargetType="{x:Type Path}" BasedOn="{StaticResource Style.Path.Base}">
                                 <Setter Property="Stroke" Value="Black" />
                                 <Setter Property="Fill" Value="Blue" />
+                                <Setter Property="Opacity" Value="0.3" />
                             </Style>
                         </local:IndexBasedSliceStyle>
                         <local:IndexBasedSliceStyle Index="2">
@@ -106,7 +107,7 @@
         </Style>
     </Window.Resources>
     <WrapPanel>
-        <local:PieChartControl
+        <!--<local:PieChartControl
             Width="100"
             Height="100"
             Margin="40"
@@ -157,24 +158,22 @@
                 </x:Array>
             </local:PieChartControl.ItemsSource>
 
-        </local:PieChartControl>
+        </local:PieChartControl>-->
 
         <local:PieChartControl
             Width="150"
             Height="150"
-            Margin="40"
+            Margin="40" x:Name="s4"
             OutlineThickness="5">
             <local:PieChartControl.ItemsSource>
                 <x:Array Type="{x:Type core:Double}">
                     <core:Double>90.0</core:Double>
-                    <core:Double>90.0</core:Double>
-                    <core:Double>90.0</core:Double>
-                    <core:Double>90.0</core:Double>
+                    <core:Double>270.0</core:Double>
                 </x:Array>
             </local:PieChartControl.ItemsSource>
         </local:PieChartControl>
 
-        <local:PieChartControl
+        <!--<local:PieChartControl
             Width="200"
             Height="200"
             Margin="40"
@@ -187,9 +186,9 @@
                     <core:Double>90.0</core:Double>
                 </x:Array>
             </local:PieChartControl.ItemsSource>
-        </local:PieChartControl>
+        </local:PieChartControl>-->
 
-        <local:PieChartControl
+        <!--<local:PieChartControl
             Width="200"
             Height="200"
             Margin="40"
@@ -203,7 +202,7 @@
                     <core:Double>90.0</core:Double>
                 </x:Array>
             </local:PieChartControl.ItemsSource>
-        </local:PieChartControl>
+        </local:PieChartControl>-->
 
     </WrapPanel>
 </Window>
