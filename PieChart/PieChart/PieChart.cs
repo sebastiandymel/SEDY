@@ -76,16 +76,15 @@ namespace PieChart
             {
                 ((PieChartControl) d).Subscribe(observable);
             }
-
             ((PieChartControl)d).Update();
         }
 
-        private void Subscribe(ObservableCollection<IPieSlice> observable)
+        private void Subscribe(INotifyCollectionChanged observable)
         {
             observable.CollectionChanged += OnItemsChanged;
         }
 
-        private void UnSubscribe(ObservableCollection<IPieSlice> observable)
+        private void UnSubscribe(INotifyCollectionChanged observable)
         {
             observable.CollectionChanged -= OnItemsChanged;
         }
@@ -199,14 +198,10 @@ namespace PieChart
 
         private Style GetStyle(PieSliceVal slice)
         {
-            if (SliceStyleSelector != null)
-            {
-                return SliceStyleSelector.SelectStyle(slice.Index, this);
-            }
-            return null;
+            return SliceStyleSelector?.SelectStyle(slice.Index, this);
         }
 
-        private List<PieSliceVal> slices = new List<PieSliceVal>();
+        private readonly List<PieSliceVal> slices = new List<PieSliceVal>();
         
         private void Update()
         {
