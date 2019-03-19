@@ -17,19 +17,15 @@ namespace PieChart
 {
     public class PieChartControl : Control
     {
+        private readonly List<PieSliceVal> slices = new List<PieSliceVal>();
         private const string PART_CANVAS = "PART_CANVAS";
         private Canvas internalCanvas;
-
-        public PieChartControl()
-        {
-           
-        }
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
             this.internalCanvas = Template.FindName(PART_CANVAS, this) as Canvas;
-            Update();
+            UpdateItems();
         }
 
         #region Dependency properties
@@ -76,7 +72,7 @@ namespace PieChart
             {
                 ((PieChartControl) d).Subscribe(observable);
             }
-            ((PieChartControl)d).Update();
+            ((PieChartControl)d).UpdateItems();
         }
 
         private void Subscribe(INotifyCollectionChanged observable)
@@ -91,7 +87,7 @@ namespace PieChart
 
         private void OnItemsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Update();
+            UpdateItems();
         }
 
         #endregion ItemsSource
@@ -149,7 +145,6 @@ namespace PieChart
                     Math.Sin((a - 90) * Math.PI / 180) * r + center.Y);
             }
 
-            //
             var angle = 0.0;
 
             foreach (var slice in this.slices)
@@ -201,12 +196,9 @@ namespace PieChart
             return SliceStyleSelector?.SelectStyle(slice.Index, this);
         }
 
-        private readonly List<PieSliceVal> slices = new List<PieSliceVal>();
-        
-        private void Update()
+        private void UpdateItems()
         {
             this.slices.Clear();
-
             if (ItemsSource != null)
             {
                 if (ItemsSource is IEnumerable<double> doubleCollection)
@@ -234,7 +226,6 @@ namespace PieChart
                         });
                     }
                 }
-
                 InvalidateVisual();
             }
         }
@@ -262,7 +253,7 @@ namespace PieChart
             Colors.Gray,
             Colors.Yellow
         };
-
+        
         private struct PieSliceVal
         {
             public int Index;
@@ -314,7 +305,6 @@ namespace PieChart
             return new PieSlices(value as string);
         }
     }
-
     public class PieSlices : IEnumerable<IPieSlice>
     {
         private List<IPieSlice> slices;
