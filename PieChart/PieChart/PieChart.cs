@@ -17,9 +17,10 @@ namespace PieChart
 {
     public class PieChartControl : Control
     {
-        private readonly List<PieSliceVal> slices = new List<PieSliceVal>();
+        protected readonly List<PieSliceVal> slices = new List<PieSliceVal>();
+        protected Canvas internalCanvas;
         private const string PART_CANVAS = "PART_CANVAS";
-        private Canvas internalCanvas;
+        
 
         public override void OnApplyTemplate()
         {
@@ -129,6 +130,11 @@ namespace PieChart
         {
             base.OnRender(drawingContext);
 
+            if (this.internalCanvas == null)
+            {
+                return;
+            }
+
             this.internalCanvas.Children.Clear();
 
             var radius = ActualHeight / 2;
@@ -137,13 +143,6 @@ namespace PieChart
             var pen = new Pen(OutlineBrush, OutlineThickness);
             var center = new Point(ActualWidth / 2, ActualHeight / 2);
             drawingContext.DrawEllipse(null, pen, center, radius, radius);
-
-            Point ToPoint(double a, double r)
-            {
-                return new Point(
-                    Math.Cos((a - 90) * Math.PI / 180) * r + center.X,
-                    Math.Sin((a - 90) * Math.PI / 180) * r + center.Y);
-            }
 
             var angle = 0.0;
 
@@ -177,7 +176,16 @@ namespace PieChart
             }
         }
 
-        private void SetStyle(Path path, PieSliceVal slice)
+
+        protected Point ToPoint(double a, double r)
+        {
+            var center = new Point(ActualWidth / 2, ActualHeight / 2);
+            return new Point(
+                Math.Cos((a - 90) * Math.PI / 180) * r + center.X,
+                Math.Sin((a - 90) * Math.PI / 180) * r + center.Y);
+        }
+
+        protected void SetStyle(Path path, PieSliceVal slice)
         {
             var style = GetStyle(slice);
             if (style != null)
@@ -230,14 +238,14 @@ namespace PieChart
             }
         }
 
-        private Brush GetFillBySlice(PieSliceVal slice)
+        protected Brush GetFillBySlice(PieSliceVal slice)
         {
             Color c = this.predefinedColors.Length > slice.Index 
                 ? predefinedColors[slice.Index] 
                 : Colors.Black;
             return new SolidColorBrush { Color = c  };
         }
-        private Brush GetStrokeBySlice(PieSliceVal slice)
+        protected Brush GetStrokeBySlice(PieSliceVal slice)
         {
             Color c = this.predefinedColors.Length > slice.Index
                 ? predefinedColors[slice.Index]
@@ -254,7 +262,7 @@ namespace PieChart
             Colors.Yellow
         };
         
-        private struct PieSliceVal
+        protected struct PieSliceVal
         {
             public int Index;
             public double Value;
@@ -332,6 +340,7 @@ namespace PieChart
 
     public class DimOtherBehavior : Behavior<PieChartControl>
     {
+
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -348,7 +357,7 @@ namespace PieChart
             {
                 foreach (var child in c.Children.OfType<Path>())
                 {
-                    child.Opacity = 1;
+                    PathExtensions.SetIsDimmed(child, false);
                 }
             }
         }
@@ -364,7 +373,14 @@ namespace PieChart
                 {
                     foreach (var child in c.Children.OfType<Path>())
                     {
-                        child.Opacity = hitPath == child ? 1 : DimmedOpacity;
+                        if (hitPath == child)
+                        {
+                            PathExtensions.SetIsDimmed(child, false);
+                        }
+                        else
+                        {
+                            PathExtensions.SetIsDimmed(child, true);
+                        }
                     }
                 }
                 else
@@ -376,5 +392,111 @@ namespace PieChart
                 }
             }
         }
+    }
+
+    public static class PathExtensions
+    {
+        public static bool GetIsDimmed(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsDimmedProperty);
+        }
+
+        public static void SetIsDimmed(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsDimmedProperty, value);
+        }
+
+        public static readonly DependencyProperty IsDimmedProperty =
+            DependencyProperty.RegisterAttached("IsDimmed", typeof(bool), typeof(PathExtensions), new PropertyMetadata(false));
+
+
+    }
+
+    public class RingChartControl: PieChartControl
+    {
+
+
+        public double InnerRadius
+        {
+            get { return (double)GetValue(InnerRadiusProperty); }
+            set { SetValue(InnerRadiusProperty, value); }
+        }
+
+        public static readonly DependencyProperty InnerRadiusProperty =
+            DependencyProperty.Register(
+                "InnerRadius", 
+                typeof(double), 
+                typeof(RingChartControl), 
+                new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender));
+        
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            if ((int)InnerRadius == 0)
+            {
+                base.OnRender(drawingContext);
+            }
+            if (this.internalCanvas == null)
+            {
+                return;
+            }
+            this.internalCanvas.Children.Clear();
+
+            var radius = ActualHeight / 2;
+
+            // OUTLINE
+            var pen = new Pen(OutlineBrush, OutlineThickness);
+            var center = new Point(ActualWidth / 2, ActualHeight / 2);
+            drawingContext.DrawEllipse(null, pen, center, radius, radius);
+
+            if (InnerRadius > radius - 1)
+            {
+                return;
+            }
+
+            var angle = 0.0;
+
+            foreach (var slice in this.slices)
+            {
+                var lastPoint = ToPoint(angle, radius);
+
+                var path = new Path();
+                var pathGeometry = new PathGeometry();
+                var pathFigure = new PathFigure
+                {
+                    StartPoint = ToPoint(angle, InnerRadius),
+                    IsClosed = false
+                };
+
+                angle += slice.Value;
+                var arcSegment1 = GetArc(radius, angle, slice);
+                var arcSegment2 = GetArc(InnerRadius, angle-slice.Value, slice, SweepDirection.Counterclockwise);
+                var lineSegment1 = new LineSegment(lastPoint, true) { IsSmoothJoin = true };
+                var lineSegment2 = new LineSegment(ToPoint(angle,InnerRadius) , true) { IsSmoothJoin = true };
+                pathFigure.Segments.Add(lineSegment1);
+                pathFigure.Segments.Add(arcSegment1);
+                pathFigure.Segments.Add(lineSegment2);
+                pathFigure.Segments.Add(arcSegment2);
+                pathGeometry.Figures.Add(pathFigure);
+
+                path.ToolTip = $"{Math.Round(slice.Value / 360.0 * 100, 1, MidpointRounding.AwayFromZero)}%";
+                path.Data = pathGeometry;
+
+                SetStyle(path, slice);
+                this.internalCanvas.Children.Add(path);
+            }
+        }
+
+        private ArcSegment GetArc(double radius, double angle, PieSliceVal slice, SweepDirection direction = SweepDirection.Clockwise)
+        {
+            var arcSegment = new ArcSegment();
+            var endOfArc = ToPoint(angle, radius);
+            arcSegment.IsLargeArc = slice.Value >= 180.0;
+            arcSegment.Point = endOfArc;
+            arcSegment.Size = new Size(radius, radius);
+            arcSegment.SweepDirection = direction;
+            arcSegment.IsSmoothJoin = true;
+            return arcSegment;
+        }
+
     }
 }
