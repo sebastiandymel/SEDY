@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interactivity;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -116,42 +117,43 @@ namespace PieChart
             var center = new Point(ActualWidth / 2, ActualHeight / 2);
             drawingContext.DrawEllipse(null, pen, center, radius, radius);
 
+            Point ToPoint(double a, double r)
+            {
+                return new Point(
+                    Math.Cos((a - 90) * Math.PI / 180) * r + center.X,
+                    Math.Sin((a - 90) * Math.PI / 180) * r + center.Y);
+            }
+
             //
             var angle = 0.0;
 
-            var lastPoint = new Point(radius, 0);
             foreach (var slice in this.slices)
             {
+                var lastPoint = ToPoint(angle, radius);
+
                 var path = new Path();
                 var pathGeometry = new PathGeometry();
-                var pathFigure = new PathFigure();
-                pathFigure.StartPoint = center;
-                pathFigure.IsClosed = true;
-                           
-                var lineSegment = new LineSegment(lastPoint, true);
-                lineSegment.IsSmoothJoin = true;
+                var pathFigure = new PathFigure {StartPoint = center, IsClosed = true};
+
                 angle += slice.Value;
                 var arcSegment = new ArcSegment();
-                var endOfArc = new Point(
-                    Math.Cos((slice.Value-90) * Math.PI / 180) * center.X + center.X, 
-                    Math.Sin((slice.Value-90) * Math.PI / 180) * center.Y + center.Y);
+                var endOfArc = ToPoint(angle, radius);
                 arcSegment.IsLargeArc = slice.Value >= 180.0;
                 arcSegment.Point = endOfArc;
                 arcSegment.Size = new Size(radius, radius);
                 arcSegment.SweepDirection = SweepDirection.Clockwise;
                 arcSegment.IsSmoothJoin = true;
+
+                var lineSegment = new LineSegment(lastPoint, true) { IsSmoothJoin = true };
                 pathFigure.Segments.Add(lineSegment);
                 pathFigure.Segments.Add(arcSegment);
                 pathGeometry.Figures.Add(pathFigure);
 
-                path.ToolTip = $"{Math.Round((slice.Value / 360.0) * 100, 1, MidpointRounding.AwayFromZero)}%";
+                path.ToolTip = $"{Math.Round(slice.Value / 360.0 * 100, 1, MidpointRounding.AwayFromZero)}%";
                 path.Data = pathGeometry;
                 
                 SetStyle(path, slice);
-
                 this.internalCanvas.Children.Add(path);
-
-                lastPoint = endOfArc;
             }
         }
 
@@ -312,6 +314,54 @@ namespace PieChart
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.slices.GetEnumerator();
+        }
+    }
+
+    public class DimOtherBehavior : Behavior<PieChartControl>
+    {
+        protected override void OnAttached()
+        {
+            base.OnAttached();
+            AssociatedObject.MouseMove += OnMouseMove;
+            AssociatedObject.MouseLeave += OnMouseLeave;
+        }
+
+        public double DimmedOpacity { get; set; } = 0.2;
+
+        private void OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            var c = AssociatedObject.Template.FindName("PART_CANVAS", AssociatedObject) as Canvas;
+            if (c != null)
+            {
+                foreach (var child in c.Children.OfType<Path>())
+                {
+                    child.Opacity = 1;
+                }
+            }
+        }
+
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            var c = AssociatedObject.Template.FindName("PART_CANVAS", AssociatedObject) as Canvas;
+            if (c != null)
+            {
+                var pt = e.GetPosition((UIElement) sender);
+                var result = VisualTreeHelper.HitTest(AssociatedObject, pt);
+                if (result?.VisualHit is Path hitPath)
+                {
+                    foreach (var child in c.Children.OfType<Path>())
+                    {
+                        child.Opacity = hitPath == child ? 1 : DimmedOpacity;
+                    }
+                }
+                else
+                {
+                    foreach (var child in c.Children.OfType<Path>())
+                    {
+                        child.Opacity =1;
+                    }
+                }
+            }
         }
     }
 }
