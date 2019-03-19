@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -44,7 +45,7 @@ namespace PieChart
                 "SliceStyleSelector", 
                 typeof(StyleSelector), 
                 typeof(PieChartControl), 
-                new PropertyMetadata(null));
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         #endregion Slice Style Selector
 
@@ -138,11 +139,15 @@ namespace PieChart
             this.internalCanvas.Children.Clear();
 
             var radius = ActualHeight / 2;
+            var center = new Point(ActualWidth / 2, ActualHeight / 2);
 
             // OUTLINE
-            var pen = new Pen(OutlineBrush, OutlineThickness);
-            var center = new Point(ActualWidth / 2, ActualHeight / 2);
-            drawingContext.DrawEllipse(null, pen, center, radius, radius);
+            if (OutlineThickness > 0)
+            {
+                var pen = new Pen(OutlineBrush, OutlineThickness);
+                
+                drawingContext.DrawEllipse(null, pen, center, radius, radius);
+            }
 
             var angle = 0.0;
 
@@ -362,141 +367,58 @@ namespace PieChart
             }
         }
 
+        private Canvas canvas;
+
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            var c = AssociatedObject.Template.FindName("PART_CANVAS", AssociatedObject) as Canvas;
-            if (c != null)
+            if (this.canvas == null)
+            {
+                this.canvas = AssociatedObject.Template.FindName("PART_CANVAS", AssociatedObject) as Canvas;
+            }
+
+            var sw = new Stopwatch();
+            sw.Start();
+
+            if (canvas != null)
             {
                 var pt = e.GetPosition((UIElement) sender);
                 var result = VisualTreeHelper.HitTest(AssociatedObject, pt);
+                VisualTreeHelper.HitTest(AssociatedObject, Filter, Result, new PointHitTestParameters(pt));
                 if (result?.VisualHit is Path hitPath)
                 {
-                    foreach (var child in c.Children.OfType<Path>())
+                    foreach (var child in canvas.Children.OfType<Path>())
                     {
-                        if (hitPath == child)
-                        {
-                            PathExtensions.SetIsDimmed(child, false);
-                        }
-                        else
-                        {
-                            PathExtensions.SetIsDimmed(child, true);
-                        }
+                        PathExtensions.SetIsDimmed(child, hitPath != child);
                     }
                 }
                 else
                 {
-                    foreach (var child in c.Children.OfType<Path>())
+                    foreach (var child in canvas.Children.OfType<Path>())
                     {
-                        child.Opacity =1;
+                        PathExtensions.SetIsDimmed(child, false);
                     }
                 }
             }
-        }
-    }
-
-    public static class PathExtensions
-    {
-        public static bool GetIsDimmed(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(IsDimmedProperty);
+            sw.Stop();
+            Debug.WriteLine($"-------------------- MouseMove time = {sw.ElapsedMilliseconds}ms");
         }
 
-        public static void SetIsDimmed(DependencyObject obj, bool value)
+        private HitTestResultBehavior Result(HitTestResult result)
         {
-            obj.SetValue(IsDimmedProperty, value);
-        }
-
-        public static readonly DependencyProperty IsDimmedProperty =
-            DependencyProperty.RegisterAttached("IsDimmed", typeof(bool), typeof(PathExtensions), new PropertyMetadata(false));
-
-
-    }
-
-    public class RingChartControl: PieChartControl
-    {
-
-
-        public double InnerRadius
-        {
-            get { return (double)GetValue(InnerRadiusProperty); }
-            set { SetValue(InnerRadiusProperty, value); }
-        }
-
-        public static readonly DependencyProperty InnerRadiusProperty =
-            DependencyProperty.Register(
-                "InnerRadius", 
-                typeof(double), 
-                typeof(RingChartControl), 
-                new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender));
-        
-        protected override void OnRender(DrawingContext drawingContext)
-        {
-            if ((int)InnerRadius == 0)
+            if (result.VisualHit is Path)
             {
-                base.OnRender(drawingContext);
+                return HitTestResultBehavior.Stop;
             }
-            if (this.internalCanvas == null)
-            {
-                return;
-            }
-            this.internalCanvas.Children.Clear();
-
-            var radius = ActualHeight / 2;
-
-            // OUTLINE
-            var pen = new Pen(OutlineBrush, OutlineThickness);
-            var center = new Point(ActualWidth / 2, ActualHeight / 2);
-            drawingContext.DrawEllipse(null, pen, center, radius, radius);
-
-            if (InnerRadius > radius - 1)
-            {
-                return;
-            }
-
-            var angle = 0.0;
-
-            foreach (var slice in this.slices)
-            {
-                var lastPoint = ToPoint(angle, radius);
-
-                var path = new Path();
-                var pathGeometry = new PathGeometry();
-                var pathFigure = new PathFigure
-                {
-                    StartPoint = ToPoint(angle, InnerRadius),
-                    IsClosed = false
-                };
-
-                angle += slice.Value;
-                var arcSegment1 = GetArc(radius, angle, slice);
-                var arcSegment2 = GetArc(InnerRadius, angle-slice.Value, slice, SweepDirection.Counterclockwise);
-                var lineSegment1 = new LineSegment(lastPoint, true) { IsSmoothJoin = true };
-                var lineSegment2 = new LineSegment(ToPoint(angle,InnerRadius) , true) { IsSmoothJoin = true };
-                pathFigure.Segments.Add(lineSegment1);
-                pathFigure.Segments.Add(arcSegment1);
-                pathFigure.Segments.Add(lineSegment2);
-                pathFigure.Segments.Add(arcSegment2);
-                pathGeometry.Figures.Add(pathFigure);
-
-                path.ToolTip = $"{Math.Round(slice.Value / 360.0 * 100, 1, MidpointRounding.AwayFromZero)}%";
-                path.Data = pathGeometry;
-
-                SetStyle(path, slice);
-                this.internalCanvas.Children.Add(path);
-            }
+            return HitTestResultBehavior.Continue;
         }
 
-        private ArcSegment GetArc(double radius, double angle, PieSliceVal slice, SweepDirection direction = SweepDirection.Clockwise)
+        private HitTestFilterBehavior Filter(DependencyObject potentialHitTestTarget)
         {
-            var arcSegment = new ArcSegment();
-            var endOfArc = ToPoint(angle, radius);
-            arcSegment.IsLargeArc = slice.Value >= 180.0;
-            arcSegment.Point = endOfArc;
-            arcSegment.Size = new Size(radius, radius);
-            arcSegment.SweepDirection = direction;
-            arcSegment.IsSmoothJoin = true;
-            return arcSegment;
+            if (potentialHitTestTarget is Path)
+            {
+                return HitTestFilterBehavior.Stop;
+            }
+            return HitTestFilterBehavior.ContinueSkipSelfAndChildren;
         }
-
     }
 }

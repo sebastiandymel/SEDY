@@ -13,6 +13,8 @@
     mc:Ignorable="d">
     <Window.Resources>
         <Style x:Key="Style.Path.Base" TargetType="{x:Type Path}">
+            <Setter Property="Stroke" Value="White"/>
+            <Setter Property="StrokeThickness" Value="2"/>
             <Setter Property="RenderTransformOrigin" Value="0.5, 0.5" />
             <Setter Property="RenderTransform">
                 <Setter.Value>
@@ -95,56 +97,47 @@
                     <local:SliceStyleSelector>
                         <local:IndexBasedSliceStyle Index="0" IsDefault="True">
                             <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
-                                <Setter Property="Stroke" Value="Black" />
                                 <Setter Property="Fill" Value="Red" />
                             </Style>
                         </local:IndexBasedSliceStyle>
                         <local:IndexBasedSliceStyle Index="1">
                             <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
-                                <Setter Property="Stroke" Value="Black" />
                                 <Setter Property="Fill" Value="Blue" />
                                 <Setter Property="Opacity" Value="0.3" />
                             </Style>
                         </local:IndexBasedSliceStyle>
                         <local:IndexBasedSliceStyle Index="2">
                             <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
-                                <Setter Property="Stroke" Value="Black" />
                                 <Setter Property="Fill" Value="Green" />
                             </Style>
                         </local:IndexBasedSliceStyle>
                         <local:IndexBasedSliceStyle Index="3">
                             <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
-                                <Setter Property="Stroke" Value="Black" />
                                 <Setter Property="Fill" Value="Orange" />
                             </Style>
                         </local:IndexBasedSliceStyle>
                         <local:IndexBasedSliceStyle Index="4">
                             <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
-                                <Setter Property="Stroke" Value="Black" />
                                 <Setter Property="Fill" Value="Gray" />
                             </Style>
                         </local:IndexBasedSliceStyle>
                         <local:IndexBasedSliceStyle Index="5">
                             <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
-                                <Setter Property="Stroke" Value="Black" />
                                 <Setter Property="Fill" Value="DarkCyan" />
                             </Style>
                         </local:IndexBasedSliceStyle>
                         <local:IndexBasedSliceStyle Index="6">
                             <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
-                                <Setter Property="Stroke" Value="Black" />
                                 <Setter Property="Fill" Value="DeepSkyBlue" />
                             </Style>
                         </local:IndexBasedSliceStyle>
                         <local:IndexBasedSliceStyle Index="7">
                             <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
-                                <Setter Property="Stroke" Value="Black" />
                                 <Setter Property="Fill" Value="AntiqueWhite" />
                             </Style>
                         </local:IndexBasedSliceStyle>
                         <local:IndexBasedSliceStyle Index="8">
                             <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
-                                <Setter Property="Stroke" Value="Black" />
                                 <Setter Property="Fill" Value="Lime" />
                             </Style>
                         </local:IndexBasedSliceStyle>
@@ -233,10 +226,9 @@
     </Window.Resources>
     <WrapPanel>
         <local:PieChartControl
-            Width="100"
-            Height="100"
-            Margin="40"
-            OutlineThickness="5">
+            Width="200"
+            Height="200"
+            Margin="40">
             <local:PieChartControl.ItemsSource>
                 <x:Array Type="{x:Type core:Double}">
                     <core:Double>30.0</core:Double>
@@ -252,11 +244,10 @@
             </local:PieChartControl.ItemsSource>
         </local:PieChartControl>
 
-
         <StackPanel>
             <local:RingChartControl
-                Width="100"
-                Height="120"
+                Width="220"
+                Height="220"
                 Margin="40"
                 InnerRadius="{Binding ElementName=slider, Path=Value}"
                 OutlineThickness="5">
@@ -280,12 +271,9 @@
                 Width="200"
                 Height="30"
                 Value="30"
-                Maximum="50"
+                Maximum="200"
                 Minimum="0" />
         </StackPanel>
-
-
-
 
         <Grid>
             <Grid.ColumnDefinitions>

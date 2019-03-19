@@ -21,8 +21,8 @@ namespace PieChart
                 }
                 return Styles.FirstOrDefault(x => x.IsDefault)?.Style;
             }
-
             return base.SelectStyle(item, container);
         }
     }
+
 }

@@ -59,7 +59,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="IndexBasedSliceStyle.cs" />
+    <Compile Include="PathExtensions.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="RingChartControl.cs" />
     <Compile Include="SliceStyleSelector.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
