@@ -169,22 +169,28 @@
                                OutlineThickness="5"
                                />
 
-        <local:PieChartControl Height="150"
-                               Width="150"
-                               Margin="40"
-                               OutlineThickness="5"
-                               >
-            <i:Interaction.Behaviors>
-                <local:DimOtherBehavior/>
-            </i:Interaction.Behaviors>
-            <local:PieChartControl.ItemsSource>
-                <x:Array Type="{x:Type core:Double}">
-                    <core:Double>90.0</core:Double>
-                    <core:Double>60.0</core:Double>
-                    <core:Double>30.0</core:Double>
-                </x:Array>
-            </local:PieChartControl.ItemsSource>
-        </local:PieChartControl>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+                <Button Content="Add" Command="{Binding Add}"/>
+                <Button Content="Clear all" Command="{Binding Remove}"/>
+                <TextBox Text="{Binding SliceValue, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+            <local:PieChartControl Grid.Column="1" Height="150"
+                                   Width="150"
+                                   Margin="40"
+                                   ItemsSource="{Binding Slices}"
+                                   OutlineThickness="5"
+            >
+                <i:Interaction.Behaviors>
+                    <local:DimOtherBehavior/>
+                </i:Interaction.Behaviors>
+            </local:PieChartControl>
+        </Grid>
+       
 
         <local:PieChartControl Height="150"
                                Width="150"

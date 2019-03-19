@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -66,7 +68,31 @@ namespace PieChart
 
         private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            if (e.OldValue is ObservableCollection<IPieSlice> oldobservable)
+            {
+                ((PieChartControl)d).UnSubscribe(oldobservable);
+            }
+            if (e.NewValue is ObservableCollection<IPieSlice> observable)
+            {
+                ((PieChartControl) d).Subscribe(observable);
+            }
+
             ((PieChartControl)d).Update();
+        }
+
+        private void Subscribe(ObservableCollection<IPieSlice> observable)
+        {
+            observable.CollectionChanged += OnItemsChanged;
+        }
+
+        private void UnSubscribe(ObservableCollection<IPieSlice> observable)
+        {
+            observable.CollectionChanged -= OnItemsChanged;
+        }
+
+        private void OnItemsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            Update();
         }
 
         #endregion ItemsSource
@@ -213,6 +239,8 @@ namespace PieChart
                         });
                     }
                 }
+
+                InvalidateVisual();
             }
         }
 
