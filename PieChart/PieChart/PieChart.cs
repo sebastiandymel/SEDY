@@ -140,7 +140,45 @@ namespace PieChart
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         #endregion ToolTip Formatting String
-        
+
+
+
+        public double? PieSum
+        {
+            get { return (double?)GetValue(PieSumProperty); }
+            set { SetValue(PieSumProperty, value); }
+        }
+
+        public static readonly DependencyProperty PieSumProperty =
+            DependencyProperty.Register(
+                "PieSum", 
+                typeof(double?), 
+                typeof(PieChartControl), new PropertyMetadata(null, OnPieSumChanged));
+
+        private static void OnPieSumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((PieChartControl)d).UpdateItems();
+        }
+
+
+
+        public bool SortDescending
+        {
+            get { return (bool)GetValue(SortDescendingProperty); }
+            set { SetValue(SortDescendingProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SortDescending.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SortDescendingProperty =
+            DependencyProperty.Register("SortDescending", typeof(bool), typeof(PieChartControl), new PropertyMetadata(false, OnSortChanged));
+
+        private static void OnSortChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((PieChartControl)d).UpdateItems();
+        }
+
+
+
         #endregion Dependency properties
 
         protected override void OnRender(DrawingContext drawingContext)
@@ -175,7 +213,7 @@ namespace PieChart
                 var pathGeometry = new PathGeometry();
                 var pathFigure = new PathFigure {StartPoint = center, IsClosed = true};
 
-                angle += slice.Value;
+                angle += Math.Min(359, slice.Value);
                 var arcSegment = new ArcSegment();
                 var endOfArc = ToPoint(angle, radius);
                 arcSegment.IsLargeArc = slice.Value >= 180.0;
@@ -233,8 +271,12 @@ namespace PieChart
             {
                 if (ItemsSource is IEnumerable<double> doubleCollection)
                 {
+                    if (SortDescending)
+                    {
+                        doubleCollection = doubleCollection.OrderByDescending(x => x);
+                    }
                     var count = 0;
-                    var sum = doubleCollection.Sum();
+                    var sum = PieSum.HasValue ? PieSum.Value : doubleCollection.Sum();
                     foreach (var item in doubleCollection)
                     {
                         this.slices.Add(new PieSliceVal
@@ -246,12 +288,17 @@ namespace PieChart
                 }
                 else if (ItemsSource is IEnumerable<IPieSlice> pieSlices)
                 {
+                    if (SortDescending)
+                    {
+                        pieSlices = pieSlices.OrderByDescending(x => x.Value);
+                    }
                     var count = 0;
+                    var sum = PieSum.HasValue ? PieSum.Value : pieSlices.Sum(x => x.Value);
                     foreach (var item in pieSlices)
                     {
                         this.slices.Add(new PieSliceVal
                         {
-                            Value = item.Value,
+                            Value = item.Value * 360/sum,
                             Index = count++
                         });
                     }

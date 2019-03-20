@@ -13,8 +13,8 @@
     mc:Ignorable="d">
     <Window.Resources>
         <Style x:Key="Style.Path.Base" TargetType="{x:Type Path}">
-            <Setter Property="Stroke" Value="White"/>
-            <Setter Property="StrokeThickness" Value="2"/>
+            <Setter Property="Stroke" Value="White" />
+            <Setter Property="StrokeThickness" Value="2" />
             <Setter Property="RenderTransformOrigin" Value="0.5, 0.5" />
             <Setter Property="RenderTransform">
                 <Setter.Value>
@@ -68,16 +68,16 @@
                         <Setter Property="Effect">
                             <Setter.Value>
                                 <DropShadowEffect
-                        BlurRadius="6"
-                        Direction="270"
-                        ShadowDepth="5"
-                        Color="Black" />
+                                    BlurRadius="6"
+                                    Direction="270"
+                                    ShadowDepth="5"
+                                    Color="Black" />
                             </Setter.Value>
                         </Setter>
                     </Trigger.Setters>
                 </Trigger>
                 <Trigger Property="local:PathExtensions.IsDimmed" Value="True">
-                    <Setter Property="Opacity" Value="0.2"/>
+                    <Setter Property="Opacity" Value="0.2" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -133,12 +133,27 @@
                         </local:IndexBasedSliceStyle>
                         <local:IndexBasedSliceStyle Index="7">
                             <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
-                                <Setter Property="Fill" Value="AntiqueWhite" />
+                                <Setter Property="Fill" Value="Purple" />
                             </Style>
                         </local:IndexBasedSliceStyle>
                         <local:IndexBasedSliceStyle Index="8">
                             <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
                                 <Setter Property="Fill" Value="Lime" />
+                            </Style>
+                        </local:IndexBasedSliceStyle>
+                        <local:IndexBasedSliceStyle Index="9">
+                            <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
+                                <Setter Property="Fill" Value="Bisque" />
+                            </Style>
+                        </local:IndexBasedSliceStyle>
+                        <local:IndexBasedSliceStyle Index="10">
+                            <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
+                                <Setter Property="Fill" Value="MediumSeaGreen" />
+                            </Style>
+                        </local:IndexBasedSliceStyle>
+                        <local:IndexBasedSliceStyle Index="11">
+                            <Style BasedOn="{StaticResource Style.Path.Base}" TargetType="{x:Type Path}">
+                                <Setter Property="Fill" Value="LightGoldenrodYellow" />
                             </Style>
                         </local:IndexBasedSliceStyle>
                     </local:SliceStyleSelector>
@@ -247,11 +262,11 @@
         <StackPanel>
             <local:RingChartControl
                 Width="220"
-                ToolTipFormattingString="Percentage completed: {0}"
                 Height="220"
                 Margin="40"
                 InnerRadius="{Binding ElementName=slider, Path=Value}"
-                OutlineThickness="5">
+                OutlineThickness="5"
+                ToolTipFormattingString="Percentage completed: {0}">
                 <local:RingChartControl.ItemsSource>
                     <x:Array Type="{x:Type core:Double}">
                         <core:Double>30.0</core:Double>
@@ -267,24 +282,26 @@
                 </local:RingChartControl.ItemsSource>
             </local:RingChartControl>
 
+            <TextBlock Text="Inner raius:" />
             <Slider
                 x:Name="slider"
-                Width="200"
                 Height="30"
-                Value="30"
                 Maximum="200"
-                Minimum="0" />
+                Minimum="0"
+                Value="30" />
         </StackPanel>
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="140" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <StackPanel VerticalAlignment="Center">
+            <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
+                <TextBlock Text="Data driven:" />
                 <Button Command="{Binding Add}" Content="Add" />
-                <Button Command="{Binding Remove}" Content="Clear all" />
                 <TextBox Text="{Binding SliceValue, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Command="{Binding Remove}" Content="Clear all" />
+                <CheckBox x:Name="sort" Content="Sort descending" />
             </StackPanel>
             <local:PieChartControl
                 Grid.Column="1"
@@ -292,7 +309,8 @@
                 Height="150"
                 Margin="40"
                 ItemsSource="{Binding Slices}"
-                OutlineThickness="5">
+                OutlineThickness="5"
+                SortDescending="{Binding ElementName=sort, Path=IsChecked}">
                 <i:Interaction.Behaviors>
                     <local:DimOtherBehavior />
                 </i:Interaction.Behaviors>
