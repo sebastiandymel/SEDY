@@ -58,11 +58,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="IndexBasedSliceStyle.cs" />
+    <Compile Include="Converter\CommaSeparatedStringToPieSliceTypeConverter.cs" />
+    <Compile Include="DimOtherBehavior.cs" />
+    <Compile Include="Controls\IPieSlice.cs" />
+    <Compile Include="Controls\PieSlice.cs" />
+    <Compile Include="Converter\PieSlices.cs" />
+    <Compile Include="StyleSelectors\FixedColorStyleSelector.cs" />
+    <Compile Include="StyleSelectors\IndexBasedSliceStyle.cs" />
     <Compile Include="PathExtensions.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="RingChartControl.cs" />
-    <Compile Include="SliceStyleSelector.cs" />
+    <Compile Include="Controls\RingChartControl.cs" />
+    <Compile Include="StyleSelectors\SliceStyleSelector.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -77,7 +83,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PieChart.cs" />
+    <Compile Include="Controls\PieChartControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

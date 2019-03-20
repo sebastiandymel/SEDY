@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
     Width="800"
-    Height="650"
+    Height="950"
     mc:Ignorable="d">
     <Window.Resources>
         <Style x:Key="Style.Path.Base" TargetType="{x:Type Path}">
@@ -81,6 +81,44 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <local:FixedColorStyleSelector x:Key="FixedColorSelector">
+            <local:FixedColorStyleSelector.BaseStyle>
+                <Style TargetType="{x:Type Path}">
+                    <Setter Property="Stroke" Value="White" />
+                    <Setter Property="StrokeThickness" Value="2" />
+                    <Setter Property="RenderTransformOrigin" Value="0.5, 0.5" />
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect
+                                BlurRadius="3"
+                                Direction="270"
+                                ShadowDepth="2"
+                                Color="Black" />
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.Setters>
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect
+                                            BlurRadius="6"
+                                            Direction="270"
+                                            ShadowDepth="5"
+                                            Color="Black" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Stroke" Value="Black"/>
+                            </Trigger.Setters>
+                        </Trigger>
+                        <Trigger Property="local:PathExtensions.IsDimmed" Value="True">
+                            <Setter Property="Opacity" Value="0.2" />                            
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </local:FixedColorStyleSelector.BaseStyle>
+        </local:FixedColorStyleSelector>
+
         <Style TargetType="{x:Type local:PieChartControl}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -237,37 +275,14 @@
             <Setter Property="OutlineThickness" Value="2" />
             <Setter Property="OutlineBrush" Value="Black" />
         </Style>
-
     </Window.Resources>
-    <WrapPanel>
-        <local:PieChartControl
-            Width="200"
-            Height="200"
-            Margin="40">
-            <local:PieChartControl.ItemsSource>
-                <x:Array Type="{x:Type core:Double}">
-                    <core:Double>30.0</core:Double>
-                    <core:Double>10.0</core:Double>
-                    <core:Double>50.0</core:Double>
-                    <core:Double>10.0</core:Double>
-                    <core:Double>5.0</core:Double>
-                    <core:Double>60.0</core:Double>
-                    <core:Double>30.0</core:Double>
-                    <core:Double>10.0</core:Double>
-                    <core:Double>40.0</core:Double>
-                </x:Array>
-            </local:PieChartControl.ItemsSource>
-        </local:PieChartControl>
-
-        <StackPanel>
-            <local:RingChartControl
-                Width="220"
-                Height="220"
-                Margin="40"
-                InnerRadius="{Binding ElementName=slider, Path=Value}"
-                OutlineThickness="5"
-                ToolTipFormattingString="Percentage completed: {0}">
-                <local:RingChartControl.ItemsSource>
+    <ScrollViewer>
+        <WrapPanel>
+            <local:PieChartControl
+                Width="200"
+                Height="200"
+                Margin="40">
+                <local:PieChartControl.ItemsSource>
                     <x:Array Type="{x:Type core:Double}">
                         <core:Double>30.0</core:Double>
                         <core:Double>10.0</core:Double>
@@ -279,112 +294,158 @@
                         <core:Double>10.0</core:Double>
                         <core:Double>40.0</core:Double>
                     </x:Array>
-                </local:RingChartControl.ItemsSource>
-            </local:RingChartControl>
+                </local:PieChartControl.ItemsSource>
+            </local:PieChartControl>
 
-            <TextBlock Text="Inner raius:" />
-            <Slider
-                x:Name="slider"
-                Height="30"
-                Maximum="200"
-                Minimum="0"
-                Value="30" />
-        </StackPanel>
+            <StackPanel>
+                <local:RingChartControl
+                    Width="220"
+                    Height="220"
+                    Margin="40"
+                    InnerRadius="{Binding ElementName=slider, Path=Value}"
+                    OutlineThickness="5"
+                    ToolTipFormattingString="Percentage completed: {0}">
+                    <local:RingChartControl.ItemsSource>
+                        <x:Array Type="{x:Type core:Double}">
+                            <core:Double>30.0</core:Double>
+                            <core:Double>10.0</core:Double>
+                            <core:Double>50.0</core:Double>
+                            <core:Double>10.0</core:Double>
+                            <core:Double>5.0</core:Double>
+                            <core:Double>60.0</core:Double>
+                            <core:Double>30.0</core:Double>
+                            <core:Double>10.0</core:Double>
+                            <core:Double>40.0</core:Double>
+                        </x:Array>
+                    </local:RingChartControl.ItemsSource>
+                </local:RingChartControl>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="140" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
-                <TextBlock Text="Data driven:" />
-                <Button Command="{Binding Add}" Content="Add" />
-                <TextBox Text="{Binding SliceValue, UpdateSourceTrigger=PropertyChanged}" />
-                <Button Command="{Binding Remove}" Content="Clear all" />
-                <CheckBox x:Name="sort" Content="Sort descending" />
+                <TextBlock Text="Inner radius:" />
+                <Slider
+                    x:Name="slider"
+                    Height="30"
+                    Maximum="200"
+                    Minimum="0"
+                    Value="30" />
             </StackPanel>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="Data driven:" />
+                    <Button Command="{Binding Add}" Content="Add" />
+                    <TextBox Text="{Binding SliceValue, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Command="{Binding Remove}" Content="Clear all" />
+                    <CheckBox x:Name="sort" Content="Sort descending" />
+                </StackPanel>
+                <local:PieChartControl
+                    Grid.Column="1"
+                    Width="150"
+                    Height="150"
+                    Margin="40"
+                    ItemsSource="{Binding Slices}"
+                    OutlineThickness="5"
+                    SortDescending="{Binding ElementName=sort, Path=IsChecked}">
+                    <i:Interaction.Behaviors>
+                        <local:DimOtherBehavior />
+                    </i:Interaction.Behaviors>
+                </local:PieChartControl>
+            </Grid>
+
+
             <local:PieChartControl
-                Grid.Column="1"
                 Width="150"
                 Height="150"
                 Margin="40"
-                ItemsSource="{Binding Slices}"
-                OutlineThickness="5"
-                SortDescending="{Binding ElementName=sort, Path=IsChecked}">
+                OutlineThickness="5">
+                <local:PieChartControl.ItemsSource>
+                    <x:Array Type="{x:Type core:Double}">
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                    </x:Array>
+                </local:PieChartControl.ItemsSource>
+
+            </local:PieChartControl>
+
+
+            <local:PieChartControl
+                Width="100"
+                Height="100"
+                Margin="40"
+                ItemsSource="10,20,30,40"
+                OutlineThickness="5" />
+
+            <local:RingChartControl
+                Width="400"
+                Height="400"
+                Margin="40"
+                InnerRadius="100"
+                SliceStyleSelector="{StaticResource FixedColorSelector}">
                 <i:Interaction.Behaviors>
                     <local:DimOtherBehavior />
                 </i:Interaction.Behaviors>
-            </local:PieChartControl>
-        </Grid>
+                <local:PieChartControl.ItemsSource>
+                    <x:Array Type="{x:Type core:Double}">
+                        <core:Double>190.0</core:Double>
+                        <core:Double>190.0</core:Double>
+                        <core:Double>190.0</core:Double>
+                        <core:Double>190.0</core:Double>
+                        <core:Double>190.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                        <core:Double>90.0</core:Double>
+                    </x:Array>
+                </local:PieChartControl.ItemsSource>
+            </local:RingChartControl>
 
-
-        <local:PieChartControl
-            Width="150"
-            Height="150"
-            Margin="40"
-            OutlineThickness="5">
-            <local:PieChartControl.ItemsSource>
-                <x:Array Type="{x:Type core:Double}">
-                    <core:Double>90.0</core:Double>
-                    <core:Double>90.0</core:Double>
-                    <core:Double>90.0</core:Double>
-                    <core:Double>90.0</core:Double>
-                </x:Array>
-            </local:PieChartControl.ItemsSource>
-
-        </local:PieChartControl>
-
-        <local:PieChartControl
-            Width="150"
-            Height="150"
-            Margin="40"
-            OutlineThickness="5">
-            <local:PieChartControl.ItemsSource>
-                <x:Array Type="{x:Type core:Double}">
-                    <core:Double>90.0</core:Double>
-                    <core:Double>270.0</core:Double>
-                </x:Array>
-            </local:PieChartControl.ItemsSource>
-        </local:PieChartControl>
-
-        <local:PieChartControl
-            Width="200"
-            Height="200"
-            Margin="40"
-            OutlineThickness="0">
-            <local:PieChartControl.ItemsSource>
-                <x:Array Type="{x:Type core:Double}">
-                    <core:Double>90.0</core:Double>
-                    <core:Double>90.0</core:Double>
-                    <core:Double>90.0</core:Double>
-                    <core:Double>90.0</core:Double>
-                </x:Array>
-            </local:PieChartControl.ItemsSource>
-        </local:PieChartControl>
-
-
-        <local:PieChartControl
-            Width="100"
-            Height="100"
-            Margin="40"
-            ItemsSource="10,20,30,40"
-            OutlineThickness="5" />
-
-        <local:PieChartControl
-            Width="200"
-            Height="200"
-            Margin="40"
-            OutlineBrush="Black"
-            OutlineThickness="2">
-            <local:PieChartControl.ItemsSource>
-                <x:Array Type="{x:Type core:Double}">
-                    <core:Double>90.0</core:Double>
-                    <core:Double>90.0</core:Double>
-                    <core:Double>90.0</core:Double>
-                    <core:Double>90.0</core:Double>
-                </x:Array>
-            </local:PieChartControl.ItemsSource>
-        </local:PieChartControl>
-
-    </WrapPanel>
+        </WrapPanel>
+    </ScrollViewer>
 </Window>

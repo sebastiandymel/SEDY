@@ -4,13 +4,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Interactivity;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -337,152 +333,6 @@ namespace PieChart
             public double Value;
             public string Name;
             public string ToolTip;
-        }
-    }
-
-    public interface IPieSlice
-    {
-        double Value { get; }
-        string Name { get; }
-        string ToolTip { get; }
-    }
-
-    public class PieSlice : IPieSlice
-    {
-        public double Value { get; set; }
-
-        public string Name { get; set; }
-
-        public string ToolTip { get; set; }
-    }
-
-    public class CommaSeparatedStringToPieSliceTypeConverter: TypeConverter
-    {
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            return sourceType == typeof(string);
-        }
-
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
-        {
-            return destinationType == typeof(IEnumerable);
-        }
-
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
-        {
-           if (value is IEnumerable<IPieSlice> splices)
-            {
-                return string.Join(",", splices.Select(x => x.Value));
-            }
-            return null;
-        }
-
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            return new PieSlices(value as string);
-        }
-    }
-    public class PieSlices : IEnumerable<IPieSlice>
-    {
-        private List<IPieSlice> slices;
-
-        public PieSlices()
-        {
-        }
-
-        public PieSlices(string input)
-        {
-            var splitted = input.Split(',');
-            this.slices= splitted.Select(x => new PieSlice { Value = double.Parse(x) }).ToList<IPieSlice>();
-        }
-
-        public IEnumerator<IPieSlice> GetEnumerator()
-        {
-            return this.slices.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.slices.GetEnumerator();
-        }
-    }
-
-    public class DimOtherBehavior : Behavior<PieChartControl>
-    {
-
-        protected override void OnAttached()
-        {
-            base.OnAttached();
-            AssociatedObject.MouseMove += OnMouseMove;
-            AssociatedObject.MouseLeave += OnMouseLeave;
-        }
-
-        public double DimmedOpacity { get; set; } = 0.2;
-
-        private void OnMouseLeave(object sender, MouseEventArgs e)
-        {
-            var c = AssociatedObject.Template.FindName("PART_CANVAS", AssociatedObject) as Canvas;
-            if (c != null)
-            {
-                foreach (var child in c.Children.OfType<Path>())
-                {
-                    PathExtensions.SetIsDimmed(child, false);
-                }
-            }
-        }
-
-        private Canvas canvas;
-
-        private void OnMouseMove(object sender, MouseEventArgs e)
-        {
-            if (this.canvas == null)
-            {
-                this.canvas = AssociatedObject.Template.FindName("PART_CANVAS", AssociatedObject) as Canvas;
-            }
-
-            var sw = new Stopwatch();
-            sw.Start();
-
-            if (canvas != null)
-            {
-                var pt = e.GetPosition((UIElement) sender);
-                var result = VisualTreeHelper.HitTest(AssociatedObject, pt);
-                VisualTreeHelper.HitTest(AssociatedObject, Filter, Result, new PointHitTestParameters(pt));
-                if (result?.VisualHit is Path hitPath)
-                {
-                    foreach (var child in canvas.Children.OfType<Path>())
-                    {
-                        PathExtensions.SetIsDimmed(child, hitPath != child);
-                    }
-                }
-                else
-                {
-                    foreach (var child in canvas.Children.OfType<Path>())
-                    {
-                        PathExtensions.SetIsDimmed(child, false);
-                    }
-                }
-            }
-            sw.Stop();
-            Debug.WriteLine($"-------------------- MouseMove time = {sw.ElapsedMilliseconds}ms");
-        }
-
-        private HitTestResultBehavior Result(HitTestResult result)
-        {
-            if (result.VisualHit is Path)
-            {
-                return HitTestResultBehavior.Stop;
-            }
-            return HitTestResultBehavior.Continue;
-        }
-
-        private HitTestFilterBehavior Filter(DependencyObject potentialHitTestTarget)
-        {
-            if (potentialHitTestTarget is Path)
-            {
-                return HitTestFilterBehavior.Stop;
-            }
-            return HitTestFilterBehavior.ContinueSkipSelfAndChildren;
         }
     }
 }

@@ -24,5 +24,4 @@ namespace PieChart
             return base.SelectStyle(item, container);
         }
     }
-
 }
