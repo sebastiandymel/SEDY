@@ -76,7 +76,8 @@ namespace PieChart
                 pathFigure.Segments.Add(arcSegment2);
                 pathGeometry.Figures.Add(pathFigure);
 
-                path.ToolTip = $"{Math.Round(slice.Value / 360.0 * 100, 1, MidpointRounding.AwayFromZero)}%";
+                var percentage = $"{Math.Round(slice.Value / 360.0 * 100, 1, MidpointRounding.AwayFromZero)}%";
+                path.ToolTip = !string.IsNullOrEmpty(ToolTipFormattingString) ? string.Format(ToolTipFormattingString, percentage) : percentage;
                 path.Data = pathGeometry;
 
                 SetStyle(path, slice);

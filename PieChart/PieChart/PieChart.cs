@@ -22,7 +22,6 @@ namespace PieChart
         protected Canvas internalCanvas;
         private const string PART_CANVAS = "PART_CANVAS";
         
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -125,6 +124,23 @@ namespace PieChart
 
         #endregion Outline Stroke
 
+        #region ToolTip Formatting String
+        
+        public string ToolTipFormattingString
+        {
+            get { return (string)GetValue(ToolTipFormattingStringProperty); }
+            set { SetValue(ToolTipFormattingStringProperty, value); }
+        }
+
+        public static readonly DependencyProperty ToolTipFormattingStringProperty =
+            DependencyProperty.Register(
+                "ToolTipFormattingString", 
+                typeof(string), 
+                typeof(PieChartControl), 
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        #endregion ToolTip Formatting String
+        
         #endregion Dependency properties
 
         protected override void OnRender(DrawingContext drawingContext)
@@ -173,7 +189,8 @@ namespace PieChart
                 pathFigure.Segments.Add(arcSegment);
                 pathGeometry.Figures.Add(pathFigure);
 
-                path.ToolTip = $"{Math.Round(slice.Value / 360.0 * 100, 1, MidpointRounding.AwayFromZero)}%";
+                var percentage = $"{Math.Round(slice.Value / 360.0 * 100, 1, MidpointRounding.AwayFromZero)}%";
+                path.ToolTip = !string.IsNullOrEmpty(ToolTipFormattingString) ? string.Format(ToolTipFormattingString, percentage) : percentage;
                 path.Data = pathGeometry;
                 
                 SetStyle(path, slice);

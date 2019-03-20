@@ -247,6 +247,7 @@
         <StackPanel>
             <local:RingChartControl
                 Width="220"
+                ToolTipFormattingString="Percentage completed: {0}"
                 Height="220"
                 Margin="40"
                 InnerRadius="{Binding ElementName=slider, Path=Value}"
