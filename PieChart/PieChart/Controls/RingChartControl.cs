@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -7,6 +10,48 @@ namespace PieChart
 {
     public class RingChartControl: PieChartControl
     {
+        #region Handle MOUSE MOVE
+        private Dictionary<Path, double> pathToPercentage = new Dictionary<Path, double>();
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            var mousePoint = e.GetPosition(this);
+            Path hit = null;
+            HitTestResultCallback callback = r =>
+            {
+                if (r.VisualHit is Path p)
+                {
+                    hit = p;
+                    return HitTestResultBehavior.Stop;
+                }
+                return HitTestResultBehavior.Continue;
+            };
+            VisualTreeHelper.HitTest(this.internalCanvas, Filter, callback, new PointHitTestParameters(mousePoint));
+            HoveredSlicePercentage = hit != null && this.pathToPercentage.TryGetValue(hit, out var percentage)
+                ? (double?) percentage
+                : null;
+        }
+
+        protected override void OnMouseLeave(MouseEventArgs e)
+        {
+            base.OnMouseLeave(e);
+            HoveredSlicePercentage = null;
+        }
+
+        private static HitTestFilterBehavior Filter(DependencyObject potentialHitTestTarget)
+        {
+            if (potentialHitTestTarget is Path)
+            {
+                return HitTestFilterBehavior.ContinueSkipChildren;
+            }
+            return HitTestFilterBehavior.Continue;
+        }
+        #endregion Handle MOUSE MOVE
+
+        #region Dependency Properties
+
         public double InnerRadius
         {
             get { return (double)GetValue(InnerRadiusProperty); }
@@ -19,7 +64,22 @@ namespace PieChart
                 typeof(double), 
                 typeof(RingChartControl), 
                 new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender));
-        
+
+
+
+        public double? HoveredSlicePercentage
+        {
+            get { return (double?)GetValue(HoveredSlicePercentageProperty); }
+            set { SetValue(HoveredSlicePercentageProperty, value); }
+        }
+
+        public static readonly DependencyProperty HoveredSlicePercentageProperty =
+            DependencyProperty.Register("HoveredSlicePercentage", typeof(double?), typeof(RingChartControl), new PropertyMetadata(null));
+
+
+
+        #endregion Dependency Properties
+
         protected override void OnRender(DrawingContext drawingContext)
         {
             if ((int)InnerRadius == 0)
@@ -31,11 +91,11 @@ namespace PieChart
                 return;
             }
             this.internalCanvas.Children.Clear();
+            this.pathToPercentage.Clear();
 
             var radius = ActualHeight / 2;
             var center = new Point(ActualWidth / 2, ActualHeight / 2);
 
-            // OUTLINE
             if (OutlineThickness > 0)
             {
                 var pen = new Pen(OutlineBrush, OutlineThickness);                
@@ -76,12 +136,13 @@ namespace PieChart
                 pathFigure.Segments.Add(arcSegment2);
                 pathGeometry.Figures.Add(pathFigure);
 
-                var percentage = $"{Math.Round(slice.Value / 360.0 * 100, 1, MidpointRounding.AwayFromZero)}%";
-                path.ToolTip = !string.IsNullOrEmpty(ToolTipFormattingString) ? string.Format(ToolTipFormattingString, percentage) : percentage;
+                var percentage = Math.Round(slice.Value / 360.0 * 100, 1, MidpointRounding.AwayFromZero);
+                path.ToolTip = !string.IsNullOrEmpty(ToolTipFormattingString) ? string.Format(ToolTipFormattingString, percentage) : percentage.ToString();
                 path.Data = pathGeometry;
-
                 SetStyle(path, slice);
+
                 this.internalCanvas.Children.Add(path);
+                this.pathToPercentage[path] = percentage;
             }
         }
 
