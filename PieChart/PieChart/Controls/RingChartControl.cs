@@ -52,6 +52,8 @@ namespace PieChart
 
         #region Dependency Properties
 
+        #region Inner Radius
+
         public double InnerRadius
         {
             get { return (double)GetValue(InnerRadiusProperty); }
@@ -65,7 +67,9 @@ namespace PieChart
                 typeof(RingChartControl), 
                 new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender));
 
+        #endregion Inner Radius
 
+        #region Hovered Slice Percentage
 
         public double? HoveredSlicePercentage
         {
@@ -74,9 +78,13 @@ namespace PieChart
         }
 
         public static readonly DependencyProperty HoveredSlicePercentageProperty =
-            DependencyProperty.Register("HoveredSlicePercentage", typeof(double?), typeof(RingChartControl), new PropertyMetadata(null));
+            DependencyProperty.Register(
+                "HoveredSlicePercentage", 
+                typeof(double?), 
+                typeof(RingChartControl), 
+                new PropertyMetadata(null));
 
-
+        #endregion Hovered Slice Percentage
 
         #endregion Dependency Properties
 
