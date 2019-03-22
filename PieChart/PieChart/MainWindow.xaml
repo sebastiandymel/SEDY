@@ -337,18 +337,27 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel VerticalAlignment="Center" Margin="20,0,0,0">
                     <TextBlock Text="Data driven:" />
-                    <Button Command="{Binding Add}" Content="Add" />
-                    <TextBox Text="{Binding SliceValue, UpdateSourceTrigger=PropertyChanged}" />
-                    <Button Command="{Binding Remove}" Content="Clear all" />
-                    <CheckBox x:Name="sort" Content="Sort descending" />
+                    <Button Command="{Binding Add}"
+                            Content="Add"
+                            Margin="0,8,0,0"
+                            />
+                    <TextBox Margin="0,8,0,0" Text="{Binding SliceValue, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Command="{Binding Remove}"
+                            Content="Clear all"
+                            Margin="0,8,0,0"
+                            />
+                    <CheckBox x:Name="sort"
+                              Content="Sort descending"
+                              Margin="0,8,0,0"
+                              />
                 </StackPanel>
                 <local:PieChartControl Grid.Column="1"
                                        Height="150"
                                        Width="150"
                                        ItemsSource="{Binding Slices}"
                                        Margin="40"
-                                       SliceStyleSelector="{StaticResource FixedColorSelector}"
                                        OutlineThickness="5"
+                                       SliceStyleSelector="{StaticResource FixedColorSelector}"
                                        SortDescending="{Binding ElementName=sort,
                                                                 Path=IsChecked}"
                                        >
