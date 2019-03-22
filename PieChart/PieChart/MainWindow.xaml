@@ -347,6 +347,7 @@
                                        Width="150"
                                        ItemsSource="{Binding Slices}"
                                        Margin="40"
+                                       SliceStyleSelector="{StaticResource FixedColorSelector}"
                                        OutlineThickness="5"
                                        SortDescending="{Binding ElementName=sort,
                                                                 Path=IsChecked}"

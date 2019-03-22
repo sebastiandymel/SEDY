@@ -11,15 +11,12 @@ namespace PieChart
 {
     public class DimOtherBehavior : Behavior<PieChartControl>
     {
-
         protected override void OnAttached()
         {
             base.OnAttached();
             AssociatedObject.MouseMove += OnMouseMove;
             AssociatedObject.MouseLeave += OnMouseLeave;
         }
-
-        public double DimmedOpacity { get; set; } = 0.2;
 
         private void OnMouseLeave(object sender, MouseEventArgs e)
         {
@@ -48,13 +45,23 @@ namespace PieChart
             if (canvas != null)
             {
                 var pt = e.GetPosition((UIElement) sender);
-                var result = VisualTreeHelper.HitTest(AssociatedObject, pt);
-                VisualTreeHelper.HitTest(AssociatedObject, Filter, Result, new PointHitTestParameters(pt));
-                if (result?.VisualHit is Path hitPath)
+                Path hit = null;
+                HitTestResultCallback callback = r =>
+                {
+                    if (r.VisualHit is Path p)
+                    {
+                        hit = p;
+                        return HitTestResultBehavior.Stop;
+                    }
+                    return HitTestResultBehavior.Continue;
+                };
+                VisualTreeHelper.HitTest(AssociatedObject, Filter, callback, new PointHitTestParameters(pt));
+
+                if (hit != null)
                 {
                     foreach (var child in canvas.Children.OfType<Path>())
                     {
-                        PathExtensions.SetIsDimmed(child, hitPath != child);
+                        PathExtensions.SetIsDimmed(child, hit != child);
                     }
                 }
                 else
@@ -65,26 +72,18 @@ namespace PieChart
                     }
                 }
             }
+
             sw.Stop();
             Debug.WriteLine($"-------------------- MouseMove time = {sw.ElapsedMilliseconds}ms");
         }
 
-        private HitTestResultBehavior Result(HitTestResult result)
-        {
-            if (result.VisualHit is Path)
-            {
-                return HitTestResultBehavior.Stop;
-            }
-            return HitTestResultBehavior.Continue;
-        }
-
-        private HitTestFilterBehavior Filter(DependencyObject potentialHitTestTarget)
+        private static HitTestFilterBehavior Filter(DependencyObject potentialHitTestTarget)
         {
             if (potentialHitTestTarget is Path)
             {
-                return HitTestFilterBehavior.Stop;
+                return HitTestFilterBehavior.ContinueSkipChildren;
             }
-            return HitTestFilterBehavior.ContinueSkipSelfAndChildren;
+            return HitTestFilterBehavior.Continue;
         }
     }
 }

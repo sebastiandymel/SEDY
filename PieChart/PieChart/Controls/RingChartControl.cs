@@ -113,7 +113,6 @@ namespace PieChart
                     drawingContext.DrawEllipse(null, pen, center, InnerRadius, InnerRadius);
                 }
             }
-
             if (InnerRadius > radius - OutlineThickness)
             {
                 return;
@@ -144,7 +143,7 @@ namespace PieChart
                 pathFigure.Segments.Add(arcSegment2);
                 pathGeometry.Figures.Add(pathFigure);
 
-                var percentage = Math.Round(slice.Value / 360.0 * 100, 1, MidpointRounding.AwayFromZero);
+                var percentage = CalcPercentage(slice.Value);
                 path.ToolTip = !string.IsNullOrEmpty(ToolTipFormattingString) ? string.Format(ToolTipFormattingString, percentage) : percentage.ToString();
                 path.Data = pathGeometry;
                 SetStyle(path, slice);
@@ -152,18 +151,6 @@ namespace PieChart
                 this.internalCanvas.Children.Add(path);
                 this.pathToPercentage[path] = percentage;
             }
-        }
-
-        private ArcSegment GetArc(double radius, double angle, PieSliceVal slice, SweepDirection direction = SweepDirection.Clockwise)
-        {
-            var arcSegment = new ArcSegment();
-            var endOfArc = ToPoint(angle, radius);
-            arcSegment.IsLargeArc = slice.Value >= 180.0;
-            arcSegment.Point = endOfArc;
-            arcSegment.Size = new Size(radius, radius);
-            arcSegment.SweepDirection = direction;
-            arcSegment.IsSmoothJoin = true;
-            return arcSegment;
         }
 
     }

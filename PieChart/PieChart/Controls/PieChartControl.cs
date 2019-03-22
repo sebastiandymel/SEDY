@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -137,8 +138,6 @@ namespace PieChart
 
         #endregion ToolTip Formatting String
 
-
-
         public double? PieSum
         {
             get { return (double?)GetValue(PieSumProperty); }
@@ -210,26 +209,34 @@ namespace PieChart
                 var pathFigure = new PathFigure {StartPoint = center, IsClosed = true};
 
                 angle += Math.Min(359, slice.Value);
-                var arcSegment = new ArcSegment();
-                var endOfArc = ToPoint(angle, radius);
-                arcSegment.IsLargeArc = slice.Value >= 180.0;
-                arcSegment.Point = endOfArc;
-                arcSegment.Size = new Size(radius, radius);
-                arcSegment.SweepDirection = SweepDirection.Clockwise;
-                arcSegment.IsSmoothJoin = true;
-
+                var arcSegment = GetArc(radius, angle, slice);
                 var lineSegment = new LineSegment(lastPoint, true) { IsSmoothJoin = true };
                 pathFigure.Segments.Add(lineSegment);
                 pathFigure.Segments.Add(arcSegment);
                 pathGeometry.Figures.Add(pathFigure);
-
-                var percentage = $"{Math.Round(slice.Value / 360.0 * 100, 1, MidpointRounding.AwayFromZero)}%";
-                path.ToolTip = !string.IsNullOrEmpty(ToolTipFormattingString) ? string.Format(ToolTipFormattingString, percentage) : percentage;
                 path.Data = pathGeometry;
+                path.ToolTip = !string.IsNullOrEmpty(ToolTipFormattingString) ? string.Format(ToolTipFormattingString, CalcPercentage(slice.Value)) : CalcPercentage(slice.Value).ToString(CultureInfo.InvariantCulture);
                 
                 SetStyle(path, slice);
                 this.internalCanvas.Children.Add(path);
             }
+        }
+
+        protected static double CalcPercentage(double sliceValue)
+        {
+            return Math.Round(sliceValue / 360.0 * 100, 1, MidpointRounding.AwayFromZero);
+    }
+        
+        protected ArcSegment GetArc(double radius, double angle, PieSliceVal slice, SweepDirection direction = SweepDirection.Clockwise)
+        {
+            var arcSegment = new ArcSegment();
+            var endOfArc = ToPoint(angle, radius);
+            arcSegment.IsLargeArc = slice.Value >= 180.0;
+            arcSegment.Point = endOfArc;
+            arcSegment.Size = new Size(radius, radius);
+            arcSegment.SweepDirection = direction;
+            arcSegment.IsSmoothJoin = true;
+            return arcSegment;
         }
 
 
