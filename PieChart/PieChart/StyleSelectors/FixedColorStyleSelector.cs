@@ -7,8 +7,9 @@ namespace PieChart
 {
     public class FixedColorStyleSelector : StyleSelector
     {
+        #region COLORS
         // https://stackoverflow.com/questions/309149/generate-distinctly-different-rgb-colors-in-graphs
-        private static string[] indexcolors = new string[]{
+        private static string[] indexcolors = {
         "#000000", "#FFFF00", "#1CE6FF", "#FF34FF", "#FF4A46", "#008941", "#006FA6", "#A30059",
         "#FFDBE5", "#7A4900", "#0000A6", "#63FFAC", "#B79762", "#004D43", "#8FB0FF", "#997D87",
         "#5A0007", "#809693", "#FEFFE6", "#1B4400", "#4FC601", "#3B5DFF", "#4A3B53", "#FF2F80",
@@ -139,7 +140,7 @@ namespace PieChart
         "#3D7397", "#CAE8CE", "#D60034", "#AA6746", "#9E5585", "#BA6200"
 
     };
-
+        #endregion COLORS
 
         public Style BaseStyle { get; set; }
 
@@ -147,19 +148,19 @@ namespace PieChart
         {
             if (item is int index)
             {
-                var style = new Style();
-                style.TargetType = typeof(Path);
+                var style = new Style
+                {
+                    TargetType = typeof(Path)
+                };
                 style.Setters.Add(new Setter
                 {
-                    Property=Path.FillProperty,
+                    Property= Path.FillProperty,
                     Value = new SolidColorBrush { Color = (Color)ColorConverter.ConvertFromString(indexcolors[index])}
                 });
-                
                 if (BaseStyle != null)
                 {
                     style.BasedOn = BaseStyle;
                 }
-                
                 return style;
             }
             return base.SelectStyle(item, container);

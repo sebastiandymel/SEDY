@@ -14,14 +14,14 @@
     <Window.Resources>
         <Style x:Key="Style.Path.Base" TargetType="{x:Type Path}">
             <Setter Property="Stroke" Value="White" />
-            <Setter Property="StrokeThickness" Value="2" />
+            <Setter Property="StrokeThickness" Value="3" />
             <Setter Property="RenderTransformOrigin" Value="0.5, 0.5" />
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <ScaleTransform />
                 </Setter.Value>
             </Setter>
-            <Setter Property="Effect">
+            <!--<Setter Property="Effect">
                 <Setter.Value>
                     <DropShadowEffect BlurRadius="3"
                                       Direction="270"
@@ -29,7 +29,7 @@
                                       Color="Black"
                                       />
                 </Setter.Value>
-            </Setter>
+            </Setter>-->
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Trigger.EnterActions>
@@ -198,13 +198,14 @@
                 </Setter.Value>
             </Setter>
             <Setter Property="OutlineThickness" Value="2" />
-            <Setter Property="OutlineBrush" Value="Black" />
+            <Setter Property="OutlineBrush" Value="White" />
         </Style>
         <Style TargetType="{x:Type local:RingChartControl}">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate>
+                    <ControlTemplate TargetType="{x:Type local:RingChartControl}">
                         <Canvas Name="PART_CANVAS"
+                                Background="{TemplateBinding Background}"
                                 Height="{TemplateBinding Height}"
                                 Width="{TemplateBinding Width}"
                                 />
