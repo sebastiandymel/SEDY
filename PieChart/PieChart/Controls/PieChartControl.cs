@@ -222,7 +222,7 @@ namespace PieChart
         protected static double CalcPercentage(double sliceValue)
         {
             return Math.Round(sliceValue / 360.0 * 100, 1, MidpointRounding.AwayFromZero);
-    }
+        }
         
         protected ArcSegment GetArc(double radius, double angle, PieSliceVal slice, SweepDirection direction = SweepDirection.Clockwise)
         {
@@ -303,8 +303,8 @@ namespace PieChart
                         });
                     }
                 }
-                InvalidateVisual();
             }
+            InvalidateVisual();
         }
 
         protected Brush GetFillBySlice(PieSliceVal slice)
