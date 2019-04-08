@@ -21,15 +21,6 @@
                     <ScaleTransform />
                 </Setter.Value>
             </Setter>
-            <!--<Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect BlurRadius="3"
-                                      Direction="270"
-                                      ShadowDepth="2"
-                                      Color="Black"
-                                      />
-                </Setter.Value>
-            </Setter>-->
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Trigger.EnterActions>
@@ -387,7 +378,10 @@
                                    Width="100"
                                    ItemsSource="10,20,30,40,50,60"
                                    Margin="40"
-                                   OutlineThickness="5"
+                                   Background="White"
+                                   PieSum="500"
+                                   OutlineBrush="Black"
+                                   OutlineThickness="2"
                                    />
 
             <local:RingChartControl Height="400"

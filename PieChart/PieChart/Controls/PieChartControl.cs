@@ -195,7 +195,7 @@ namespace PieChart
             {
                 var pen = new Pen(OutlineBrush, OutlineThickness);
                 
-                drawingContext.DrawEllipse(null, pen, center, radius, radius);
+                drawingContext.DrawEllipse(Background, pen, center, radius, radius);
             }
 
             var angle = 0.0;
@@ -209,8 +209,8 @@ namespace PieChart
                 var pathFigure = new PathFigure {StartPoint = center, IsClosed = true};
 
                 angle += Math.Min(359, slice.Value);
-                var arcSegment = GetArc(radius, angle, slice);
                 var lineSegment = new LineSegment(lastPoint, true) { IsSmoothJoin = true };
+                var arcSegment = GetArc(radius, angle, slice);
                 pathFigure.Segments.Add(lineSegment);
                 pathFigure.Segments.Add(arcSegment);
                 pathGeometry.Figures.Add(pathFigure);
