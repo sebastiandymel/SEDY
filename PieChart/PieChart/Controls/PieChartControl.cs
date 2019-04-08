@@ -208,7 +208,7 @@ namespace PieChart
                 var pathGeometry = new PathGeometry();
                 var pathFigure = new PathFigure {StartPoint = center, IsClosed = true};
 
-                angle += Math.Min(359, slice.Value);
+                angle = Math.Min(359, slice.Value + angle);
                 var lineSegment = new LineSegment(lastPoint, true) { IsSmoothJoin = true };
                 var arcSegment = GetArc(radius, angle, slice);
                 pathFigure.Segments.Add(lineSegment);
