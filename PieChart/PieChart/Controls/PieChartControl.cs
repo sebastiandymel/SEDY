@@ -184,22 +184,19 @@ namespace PieChart
             {
                 return;
             }
-
             this.internalCanvas.Children.Clear();
-
             var radius = ActualHeight / 2;
             var center = new Point(ActualWidth / 2, ActualHeight / 2);
 
-            // OUTLINE
+            // DRAW OUTLINE
             if (OutlineThickness > 0)
             {
                 var pen = new Pen(OutlineBrush, OutlineThickness);
-                
                 drawingContext.DrawEllipse(Background, pen, center, radius, radius);
             }
 
+            // DRAW SLICES
             var angle = 0.0;
-
             foreach (var slice in this.slices)
             {
                 var lastPoint = ToPoint(angle, radius);
