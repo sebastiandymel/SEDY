@@ -38,10 +38,6 @@ namespace PieChart
             {
                 this.canvas = AssociatedObject.Template.FindName("PART_CANVAS", AssociatedObject) as Canvas;
             }
-
-            var sw = new Stopwatch();
-            sw.Start();
-
             if (canvas != null)
             {
                 var pt = e.GetPosition((UIElement) sender);
@@ -72,9 +68,6 @@ namespace PieChart
                     }
                 }
             }
-
-            sw.Stop();
-            Debug.WriteLine($"-------------------- MouseMove time = {sw.ElapsedMilliseconds}ms");
         }
 
         private static HitTestFilterBehavior Filter(DependencyObject potentialHitTestTarget)

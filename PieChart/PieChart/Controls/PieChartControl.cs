@@ -62,13 +62,13 @@ namespace PieChart
 
         private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.OldValue is ObservableCollection<IPieSlice> oldobservable)
+            if (e.OldValue is INotifyCollectionChanged oldObservable)
             {
-                ((PieChartControl)d).UnSubscribe(oldobservable);
+                ((PieChartControl)d).UnSubscribe(oldObservable);
             }
-            if (e.NewValue is ObservableCollection<IPieSlice> observable)
+            if (e.NewValue is INotifyCollectionChanged newObservable)
             {
-                ((PieChartControl) d).Subscribe(observable);
+                ((PieChartControl) d).Subscribe(newObservable);
             }
             ((PieChartControl)d).UpdateItems();
         }
