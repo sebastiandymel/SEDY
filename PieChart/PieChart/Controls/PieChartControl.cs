@@ -259,7 +259,7 @@ namespace PieChart
                 pathFigure.Segments.Add(arcSegment);
                 pathGeometry.Figures.Add(pathFigure);
                 path.Data = pathGeometry;
-                path.ToolTip = !string.IsNullOrEmpty(ToolTipFormattingString) ? string.Format(ToolTipFormattingString, CalcPercentage(slice.Value)) : CalcPercentage(slice.Value).ToString(CultureInfo.InvariantCulture);
+                path.ToolTip = GetToolTip(slice);
                 
                 SetStyle(path, slice);
                 this.internalCanvas.Children.Add(path);
@@ -303,6 +303,11 @@ namespace PieChart
                 path.Stroke = GetStrokeBySlice(slice);
                 path.Fill = GetFillBySlice(slice);
             }
+        }
+
+        private string GetToolTip(PieSliceVal slice)
+        {
+            return !string.IsNullOrEmpty(ToolTipFormattingString) ? string.Format(ToolTipFormattingString, CalcPercentage(slice.Value)) : CalcPercentage(slice.Value).ToString(CultureInfo.InvariantCulture);
         }
 
         private Style GetStyle(PieSliceVal slice, Path path)
