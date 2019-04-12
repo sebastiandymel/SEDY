@@ -247,12 +247,11 @@ namespace PieChart
             foreach (var slice in this.slices)
             {
                 var lastPoint = ToPoint(angle, radius);
+                angle = Math.Min(359, slice.Value + angle);
 
                 var path = new Path();
                 var pathGeometry = new PathGeometry();
                 var pathFigure = new PathFigure {StartPoint = center, IsClosed = true};
-
-                angle = Math.Min(359, slice.Value + angle);
                 var lineSegment = new LineSegment(lastPoint, true) { IsSmoothJoin = true };
                 var arcSegment = GetArc(radius, angle, slice);
                 pathFigure.Segments.Add(lineSegment);
