@@ -27,7 +27,7 @@ namespace PieChart
         }
 
         #region Dependency properties
-
+        
         #region Slice Style Selector
 
         public StyleSelector SliceStyleSelector
@@ -138,6 +138,8 @@ namespace PieChart
 
         #endregion ToolTip Formatting String
 
+        #region Pie Sum
+
         public double? PieSum
         {
             get { return (double?)GetValue(PieSumProperty); }
@@ -155,7 +157,9 @@ namespace PieChart
             ((PieChartControl)d).UpdateItems();
         }
 
+        #endregion Pie Sum
 
+        #region Sort
 
         public bool SortDescending
         {
@@ -172,7 +176,7 @@ namespace PieChart
             ((PieChartControl)d).UpdateItems();
         }
 
-
+        #endregion Sort
 
         #endregion Dependency properties
 
@@ -235,8 +239,7 @@ namespace PieChart
             arcSegment.IsSmoothJoin = true;
             return arcSegment;
         }
-
-
+        
         protected Point ToPoint(double a, double r)
         {
             var center = new Point(ActualWidth / 2, ActualHeight / 2);
@@ -247,7 +250,7 @@ namespace PieChart
 
         protected void SetStyle(Path path, PieSliceVal slice)
         {
-            var style = GetStyle(slice);
+            var style = GetStyle(slice, path);
             if (style != null)
             {
                 path.Style = style;
@@ -259,9 +262,9 @@ namespace PieChart
             }
         }
 
-        private Style GetStyle(PieSliceVal slice)
+        private Style GetStyle(PieSliceVal slice, Path path)
         {
-            return SliceStyleSelector?.SelectStyle(slice.Index, this);
+            return SliceStyleSelector?.SelectStyle(slice.Index, path);
         }
 
         private void UpdateItems()
