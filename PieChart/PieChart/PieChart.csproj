@@ -59,13 +59,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\CommaSeparatedStringToPieSliceTypeConverter.cs" />
-    <Compile Include="DimOtherBehavior.cs" />
+    <Compile Include="Behaviors\DimOtherBehavior.cs" />
     <Compile Include="Controls\IPieSlice.cs" />
     <Compile Include="Controls\PieSlice.cs" />
     <Compile Include="Converter\PieSlices.cs" />
     <Compile Include="StyleSelectors\FixedColorStyleSelector.cs" />
     <Compile Include="StyleSelectors\IndexBasedSliceStyle.cs" />
-    <Compile Include="PathExtensions.cs" />
+    <Compile Include="Behaviors\PathExtensions.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Controls\RingChartControl.cs" />
     <Compile Include="StyleSelectors\SliceStyleSelector.cs" />

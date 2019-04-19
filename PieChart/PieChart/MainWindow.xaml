@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:PieChart"
         mc:Ignorable="d"
         Title="MainWindow"
-        Height="950"
+        Height="1080"
         Width="800"
         >
     <Window.Resources>
@@ -376,12 +376,12 @@
 
             <local:PieChartControl Height="100"
                                    Width="100"
-                                   ItemsSource="10,20,30,40,50,60"
+                                   ItemsSource="10,20,30,40,50,60,70,80"
                                    Margin="40"
                                    Background="White"
                                    PieSum="500"
                                    OutlineBrush="Black"
-                                   OutlineThickness="2"
+                                   OutlineThickness="3"
                                    />
 
             <local:RingChartControl Height="400"
