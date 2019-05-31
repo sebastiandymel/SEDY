@@ -453,6 +453,12 @@
                         <core:Double>80</core:Double>
                         <core:Double>90</core:Double>
                         <core:Double>100</core:Double>
+                        <core:Double>100</core:Double>
+                        <core:Double>10</core:Double>
+                        <core:Double>20</core:Double>
+                        <core:Double>30</core:Double>
+                        <core:Double>50</core:Double>
+                        <core:Double>60</core:Double>
                     </x:Array>
                 </local:PieChartControl.ItemsSource>
             </local:RingChartControl>
