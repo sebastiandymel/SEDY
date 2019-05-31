@@ -16,7 +16,8 @@
         {
             return new[] 
             {
-                "Phoenix.Application.Resources.StyleLibrary.*.dll",
+               // "Phoenix.Application.Resources.StyleLibrary.*.dll",
+                "Phoenix.Application.Resources.StringLibrary.*.dll",
                 "MaterialDesignThemes*.dll",
                 "DymmyStyleLibrary.dll",
                 "LargeLibrary.dll"

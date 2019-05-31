@@ -257,7 +257,7 @@ namespace PieChart
                 pathFigure.Segments.Add(lineSegment);
                 pathFigure.Segments.Add(arcSegment);
                 pathGeometry.Figures.Add(pathFigure);
-                //path.Data = pathGeometry;
+                path.Data = pathGeometry;
                 path.ToolTip = GetToolTip(slice);
                 
                 SetStyle(path, slice);

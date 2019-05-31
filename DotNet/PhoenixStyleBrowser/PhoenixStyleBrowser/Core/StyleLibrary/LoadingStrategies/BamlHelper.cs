@@ -19,6 +19,17 @@ namespace PhoenixStyleBrowser
             var result = new ResourceDictionary();
             var bamlStreams = new List<Stream>();
 
+            AppDomain.CurrentDomain.AssemblyResolve += (s, e) =>
+            {
+                var name = e.Name.Split(',')[0];
+                var dir = Path.GetDirectoryName(path);
+                var pathToLoad = Path.Combine(dir, name + ".dll");
+                if (File.Exists(pathToLoad))
+                {
+                    return Assembly.LoadFile(pathToLoad);
+                }
+                return Assembly.Load(e.Name);
+            };
             var assembly = Assembly.LoadFile(path);
             var stream = assembly.GetManifestResourceStream(assembly.GetName().Name + ".g.resources");
 
