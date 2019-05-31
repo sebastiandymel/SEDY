@@ -28,7 +28,7 @@ namespace PhoenixStyleBrowser
                 {
                     return Assembly.LoadFile(pathToLoad);
                 }
-                return Assembly.Load(e.Name);
+                return null;
             };
             var assembly = Assembly.LoadFile(path);
             var stream = assembly.GetManifestResourceStream(assembly.GetName().Name + ".g.resources");
