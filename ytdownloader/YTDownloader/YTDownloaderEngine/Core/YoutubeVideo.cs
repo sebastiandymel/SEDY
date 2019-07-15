@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace YTDownloader.Engine
 {
-    public class YoutubeVideo<T>
+    public class YoutubeVideo<T> : IYoutubeVideo<T>
     {
         private readonly Func<YoutubeVideo<T>, DownloadJob, T> downloadJobFactory;
 
@@ -20,7 +20,7 @@ namespace YTDownloader.Engine
         public ObservableCollection<T> AvailableDownloads { get; } = new ObservableCollection<T>();
 
         public async Task FindDownaloads()
-        {            
+        {
             var resolver = new YoutubeVideoFinder();
             var downloads = await resolver.GetAvailableDownloadsByUrl(BaseUrl);
             Name = downloads.Title;

@@ -22,7 +22,7 @@ namespace YTDownloader
                 url = value;
                 OnPropertyChanged();
             } }
-        public ObservableCollection<YoutubeVideo<DownloadItem>> Items { get; } = new ObservableCollection<YoutubeVideo<DownloadItem>>();
+        public ObservableCollection<IYoutubeVideo<DownloadItem>> Items { get; } = new ObservableCollection<IYoutubeVideo<DownloadItem>>();
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
         private void OnPropertyChanged([CallerMemberName] string name = null)
         {

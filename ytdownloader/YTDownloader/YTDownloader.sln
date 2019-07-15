@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTDownloader.Mobile.iOS", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTDownloader.Mobile", "YTDownloader.Mobile\YTDownloader.Mobile\YTDownloader.Mobile.csproj", "{3AB4F922-B139-429A-8A2F-6DB120A9FE9F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BL", "BL", "{026BB21B-6EFA-49E6-8822-CD8CF913EF5B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{830F2877-8C04-4492-B92D-A92110FA5738}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{75E2B767-5855-4097-A336-ED921B2938A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +96,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F07B616E-D9EE-4A83-A9CE-FF7E9DE5A0C7} = {830F2877-8C04-4492-B92D-A92110FA5738}
+		{AEEFDF57-F517-43EE-8F38-DE3512CE922A} = {026BB21B-6EFA-49E6-8822-CD8CF913EF5B}
+		{9F4C2582-F896-47B2-A9C5-13D154A1371D} = {75E2B767-5855-4097-A336-ED921B2938A9}
+		{195EE05F-CC34-4AD9-B3A6-2C5108EAAA79} = {75E2B767-5855-4097-A336-ED921B2938A9}
+		{3AB4F922-B139-429A-8A2F-6DB120A9FE9F} = {75E2B767-5855-4097-A336-ED921B2938A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {058148FB-EAFD-41E1-94C7-BD94F84E785D}
