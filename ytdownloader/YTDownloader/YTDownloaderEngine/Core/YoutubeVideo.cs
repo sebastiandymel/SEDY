@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace YTDownloader.Engine
@@ -19,11 +20,11 @@ namespace YTDownloader.Engine
         public ObservableCollection<T> AvailableDownloads { get; } = new ObservableCollection<T>();
 
         public async Task FindDownaloads()
-        {
+        {            
             var resolver = new YoutubeVideoFinder();
             var downloads = await resolver.GetAvailableDownloadsByUrl(BaseUrl);
             Name = downloads.Title;
-            foreach (var item in downloads.Jobs)
+            foreach (var item in downloads.Jobs.OrderByDescending(j => j.VideoQuality))
             {
                 AvailableDownloads.Add(this.downloadJobFactory(this, item));
             }

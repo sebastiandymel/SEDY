@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using YTDownloader.Engine;
 
 namespace YTDownloader
 {
@@ -24,21 +23,7 @@ namespace YTDownloader
         public MainWindow()
         {
             InitializeComponent();
-        }
-  
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txtUrl.Text))
-            {
-                var btn = (Button)sender;
-                btn.IsEnabled = false;
-                var youtubeVideo = new YoutubeVideo<DownloadItem>(
-                    (i,j) => new DownloadItem(j, i.Name),  
-                    txtUrl.Text);
-                await youtubeVideo.FindDownaloads();
-                this.videos.Items.Add(youtubeVideo);
-                btn.IsEnabled = true;
-            }
+            DataContext = new MainViewModel();
         }
     }
 }
