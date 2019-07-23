@@ -135,16 +135,51 @@
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-                                <Image
+                                <local:ImageWithPopup
                                     Grid.RowSpan="3"
                                     Grid.Column="1"
                                     Width="130"
                                     Margin="8,0,0,0"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom"
-                                    RenderOptions.BitmapScalingMode="Fant"
-                                    Source="{Binding ThumbnailImage}"
-                                    Stretch="Uniform" />
+                                    Content="{Binding ThumbnailImage}">
+                                    <local:ImageWithPopup.Template>
+                                        <ControlTemplate TargetType="{x:Type ContentControl}">
+                                            <Grid>
+                                                <Image
+                                                    RenderOptions.BitmapScalingMode="Fant"
+                                                    Source="{TemplateBinding Content}"
+                                                    Stretch="Uniform" />
+
+                                                <Popup
+                                                    x:Name="PART_POPUP"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    AllowsTransparency="True"
+                                                    Placement="Left"                                                    
+                                                    PopupAnimation="Scroll"
+                                                    >
+                                                    <Border Background="White">
+                                                        <Image
+                                                            Width="480"
+                                                            Margin="4"
+                                                            RenderOptions.BitmapScalingMode="Fant"
+                                                            Source="{Binding ThumbnailImage2}"
+                                                            Stretch="Uniform" />
+                                                        <Border.Effect>
+                                                            <DropShadowEffect
+                                                                BlurRadius="8"
+                                                                Direction="270"
+                                                                ShadowDepth="5"
+                                                                Color="Black" />
+                                                        </Border.Effect>
+                                                    </Border>
+                                                </Popup>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </local:ImageWithPopup.Template>
+
+                                </local:ImageWithPopup>
                             </Grid>
                         </Border>
                     </DataTemplate>

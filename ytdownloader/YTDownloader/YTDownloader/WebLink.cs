@@ -1,5 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Navigation;
 
 namespace YTDownloader
@@ -31,6 +36,38 @@ namespace YTDownloader
             }
             
             e.Handled = true;
+        }
+    }
+
+    public class ImageWithPopup: ContentControl
+    {
+        public ImageWithPopup()
+        {
+            MouseDown += OnImageMouseDown;            
+        }
+
+        private void OnImageMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (EmbededPopup != null)
+            {                
+                EmbededPopup.IsOpen = true;
+                EmbededPopup.Focus();
+                EmbededPopup.LostFocus += OnFocusLost;
+            }
+        }
+
+        private void OnFocusLost(object sender, RoutedEventArgs e)
+        {
+            EmbededPopup.LostFocus -= OnFocusLost;
+            EmbededPopup.IsOpen = false;
+        }
+
+        private Popup EmbededPopup
+        {
+            get
+            {
+                return Template.FindName("PART_POPUP", this) as Popup;
+            }
         }
     }
 }

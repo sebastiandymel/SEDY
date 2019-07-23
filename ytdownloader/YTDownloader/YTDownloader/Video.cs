@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -14,14 +16,16 @@ namespace YTDownloader
         }
 
         public ImageSource ThumbnailImage { get; set; }
-        
+        public ImageSource ThumbnailImage2 { get; set; }
+
         public override async Task FindDownaloads()
         {
             await base.FindDownaloads();
-            SetImage();
+            SetImage(() => ThumbnailImage);
+            SetImage(() => ThumbnailImage2);
         }
 
-        private void SetImage()
+        private void SetImage(Expression<Func<ImageSource>> set)
         {
             if (ThumbnailUrl != null)
             {
@@ -29,7 +33,17 @@ namespace YTDownloader
                 bitmap.BeginInit();
                 bitmap.UriSource = new Uri(ThumbnailUrl, UriKind.Absolute);
                 bitmap.EndInit();
-                ThumbnailImage = bitmap;
+
+
+                var memberSelectorExpression = set.Body as MemberExpression;
+                if (memberSelectorExpression != null)
+                {
+                    var property = memberSelectorExpression.Member as PropertyInfo;
+                    if (property != null)
+                    {
+                        property.SetValue(this, bitmap, null);
+                    }
+                }
             }
         }
     }
