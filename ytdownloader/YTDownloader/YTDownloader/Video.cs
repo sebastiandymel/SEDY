@@ -5,17 +5,21 @@ using System.Windows.Media.Imaging;
 using YTDownloader.Engine;
 
 namespace YTDownloader
-
 {
     public class Video : YoutubeVideo<DownloadItem>
     {
         public Video(Func<YoutubeVideo<DownloadItem>, DownloadJob, DownloadItem> downloadJobFactory, string baseurl) : 
             base(downloadJobFactory, baseurl)
-        {
-            
+        {            
         }
 
         public ImageSource ThumbnailImage { get; set; }
+        
+        public override async Task FindDownaloads()
+        {
+            await base.FindDownaloads();
+            SetImage();
+        }
 
         private void SetImage()
         {
@@ -27,13 +31,6 @@ namespace YTDownloader
                 bitmap.EndInit();
                 ThumbnailImage = bitmap;
             }
-
-        }
-
-        public override async Task FindDownaloads()
-        {
-            await base.FindDownaloads();
-            SetImage();
         }
     }
 }

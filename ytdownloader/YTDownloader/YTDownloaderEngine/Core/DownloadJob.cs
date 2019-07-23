@@ -16,12 +16,14 @@ namespace YTDownloader.Engine
 
         public Quality VideoQuality { get; } 
         public int DownloadProgress { get; private set; }
+        public double CurrentBitRateKbps { get; private set; }
         public event EventHandler DownloadProgressChanged = delegate { };       
 
         public async Task Download(string targetPath)
         {
             DownloadProgress = 0;
             WebClient webClient = new WebClient();
+            this.downloadStartedTime = DateTime.Now;
             webClient.DownloadProgressChanged += OnDownloadProgress;
             await webClient.DownloadFileTaskAsync(this.internalUrl, targetPath);
             webClient.DownloadProgressChanged -= OnDownloadProgress;            
@@ -29,8 +31,13 @@ namespace YTDownloader.Engine
 
         private void OnDownloadProgress(object sender, DownloadProgressChangedEventArgs e)
         {
+            var diff = DateTime.Now - this.downloadStartedTime;
+            var br = (e.BytesReceived / 1024.0) / diff.Seconds;
+            CurrentBitRateKbps = br;
             DownloadProgress = e.ProgressPercentage;
-            DownloadProgressChanged(this, EventArgs.Empty);
+            DownloadProgressChanged(this, EventArgs.Empty);            
         }
+
+        private DateTime downloadStartedTime;
     }
 }
