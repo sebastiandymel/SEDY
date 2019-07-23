@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using YTDownloader.Engine;
 
 namespace YTDownloader
+
 {
     public class Video : YoutubeVideo<DownloadItem>
     {
