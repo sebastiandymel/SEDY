@@ -22,7 +22,7 @@ namespace YTDownloader
                 url = value;
                 OnPropertyChanged();
             } }
-        public ObservableCollection<IYoutubeVideo<DownloadItem>> Items { get; } = new ObservableCollection<IYoutubeVideo<DownloadItem>>();
+        public ObservableCollection<Video> Items { get; } = new ObservableCollection<Video>();
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
         private void OnPropertyChanged([CallerMemberName] string name = null)
         {
@@ -33,7 +33,7 @@ namespace YTDownloader
         {
             this.canExecuteFind = false;
             FindCommand.Refresh();
-            var youtubeVideo = new YoutubeVideo<DownloadItem>(
+            var youtubeVideo = new Video(
                     (i, j) => new DownloadItem(j, i.Name),
                     Url);
             await youtubeVideo.FindDownaloads();

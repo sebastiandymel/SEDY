@@ -17,13 +17,16 @@ namespace YTDownloader.Engine
 
         public string Name { get; private set; }
         public string BaseUrl { get; }
+        public string ThumbnailUrl { get; private set; }
+
         public ObservableCollection<T> AvailableDownloads { get; } = new ObservableCollection<T>();
 
-        public async Task FindDownaloads()
+        public virtual async Task FindDownaloads()
         {
             var resolver = new YoutubeVideoFinder();
             var downloads = await resolver.GetAvailableDownloadsByUrl(BaseUrl);
             Name = downloads.Title;
+            ThumbnailUrl = downloads.Thumbnail;
             foreach (var item in downloads.Jobs.OrderByDescending(j => j.VideoQuality))
             {
                 AvailableDownloads.Add(this.downloadJobFactory(this, item));

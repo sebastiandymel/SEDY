@@ -18,7 +18,7 @@ namespace YTDownloader.Engine
                 var result = new Dictionary<Quality, DownloadJob>();
                 string title = null;
 
-                while (retryCount < 10 && result.Count < 3)
+                while (retryCount < 15 && result.Count < 3)
                 {
                     retryCount++;
                     // http://techattitude.com/programming/extract-download-urls-youtube-video-c/
@@ -69,7 +69,8 @@ namespace YTDownloader.Engine
                 return new DownloadGroup
                 {
                     Title = NormalizeTitle(title),
-                    Jobs = result.Values.ToArray()
+                    Jobs = result.Values.ToArray(),
+                    Thumbnail = GetYouTubeImage(url)
                 };
             });
         }
@@ -82,6 +83,26 @@ namespace YTDownloader.Engine
             }
             return title
                 .Replace("&amp;", "&");
+        }
+
+        private string GetYouTubeImage(string videoUrl)
+        {
+            const string vidPart = "watch?v=";
+            var i = videoUrl.IndexOf(vidPart);
+            if (i == -1)
+            {
+                return null;
+            }
+            i += vidPart.Length;
+            var endi = 0;
+            while (endi < videoUrl.Length - i && videoUrl[endi + i ] != '&')
+            {
+                endi++;
+            }
+            string strVideoCode = videoUrl.Substring(i, endi);
+
+            return $"https://img.youtube.com/vi/{strVideoCode}/hqdefault.jpg";
+
         }
     }
 }

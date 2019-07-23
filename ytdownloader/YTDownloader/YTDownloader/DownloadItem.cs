@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using YTDownloader.Engine;
 
@@ -15,7 +14,7 @@ namespace YTDownloader
         }
         public DownloadJob Job { get; }
         public UiCommand DownloadCommand { get; }
-
+        
         //
         // PRIVATE HELPERS
         // 
@@ -27,7 +26,7 @@ namespace YTDownloader
             await Job.Download($@"C:\temp\{NormalizeToFileName(this.title)}_{Job.VideoQuality}.mp4");
 
             this.isDownloading = false;
-            DownloadCommand.Refresh();
+            DownloadCommand.Refresh();           
         }
 
         private string NormalizeToFileName(string title)

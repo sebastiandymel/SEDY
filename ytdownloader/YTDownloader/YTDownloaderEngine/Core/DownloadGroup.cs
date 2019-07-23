@@ -4,5 +4,6 @@
     {
         internal DownloadJob[] Jobs { get; set; }
         internal string Title { get; set; }
+        internal string Thumbnail { get; set; }
     }
 }
