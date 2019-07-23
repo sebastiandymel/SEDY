@@ -1,13 +1,6 @@
 {
   "DataContextSnapshots": [
-    {
-      "Json": "{\r\n  \"$id\": \"1\",\r\n  \"FindCommand\": {\r\n    \"$id\": \"2\"\r\n  },\r\n  \"Items\": {\r\n    \"$id\": \"3\",\r\n    \"$values\": [\r\n      {\r\n        \"$id\": \"4\",\r\n        \"AvailableDownloads\": {\r\n          \"$id\": \"5\",\r\n          \"$values\": [\r\n            {\r\n              \"$id\": \"6\",\r\n              \"Job\": {\r\n                \"$id\": \"7\",\r\n                \"VideoQuality\": 1000,\r\n                \"DownloadProgress\": 33\r\n              },\r\n              \"DownloadCommand\": {\r\n                \"$id\": \"8\"\r\n              }\r\n            },\r\n            {\r\n              \"$id\": \"9\",\r\n              \"Job\": {\r\n                \"$id\": \"10\"\r\n              },\r\n              \"DownloadCommand\": {\r\n                \"$id\": \"11\"\r\n              }\r\n            }\r\n          ]\r\n        },\r\n        \"BaseUrl\": \"Some Url\",\r\n        \"Name\": \"Some Name\"\r\n      },\r\n      {\r\n        \"$id\": \"12\",\r\n        \"AvailableDownloads\": {\r\n          \"$id\": \"13\",\r\n          \"$values\": [\r\n            {\r\n              \"$id\": \"14\",\r\n              \"Job\": {\r\n                \"$id\": \"15\",\r\n                \"VideoQuality\": 1000,\r\n                \"DownloadProgress\": 12\r\n              },\r\n              \"DownloadCommand\": {\r\n                \"$id\": \"16\"\r\n              }\r\n            },\r\n            {\r\n              \"$id\": \"17\",\r\n              \"Job\": {\r\n                \"$id\": \"18\",\r\n                \"VideoQuality\": 10\r\n              }\r\n            }\r\n          ]\r\n        },\r\n        \"BaseUrl\": \"https://www.youtube.com/watch?v=J0mcYVxJEl0\",\r\n        \"Name\": \"Some another video\"\r\n      }\r\n    ]\r\n  }\r\n}",
-      "CreationDate": "2019-07-15T18:53:13.0236682+02:00",
-      "IsDefault": false,
-      "Id": "fcd396b5-bd48-4d9b-b29c-2a0b41da6a1a",
-      "Name": "Default",
-      "LastUpdate": "2019-07-15T18:56:38.0660026+02:00"
-    }
+    
   ],
   "CurrentApplicationXamlFile": "..\\YTDownloader",
   "LastCalledDesignMethod": null,
