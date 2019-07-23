@@ -13,6 +13,7 @@ namespace YTDownloader
         {
             this.toExecute = toExecute;
             this.canExecute = canExecute;
+            CommandManager.RequerySuggested += (s, e) => CanExecuteChanged(this, EventArgs.Empty);
         }
         public event EventHandler CanExecuteChanged = delegate { };
 

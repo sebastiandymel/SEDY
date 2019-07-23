@@ -18,10 +18,4 @@
     <Resource Include="ytlogo.PNG" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="FAML.Designer.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-    </None>
-  </ItemGroup>
-
 </Project>

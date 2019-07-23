@@ -13,7 +13,7 @@ namespace YTDownloader
 
         public MainViewModel()
         {
-            FindCommand = new UiCommand(ExecuteFind, () => this.canExecuteFind);
+            FindCommand = new UiCommand(ExecuteFind, () => this.canExecuteFind && !string.IsNullOrWhiteSpace(Url));
         }
 
         public UiCommand FindCommand { get; }
