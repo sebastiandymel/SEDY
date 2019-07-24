@@ -13,7 +13,7 @@
     mc:Ignorable="d">
     <Window.Resources>
         <Path
-            x:Key="Path.X"            
+            x:Key="Path.X"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Data="M34.900006,0.5 L0.50000001,35.700003 M0.50000001,0.5 L35.900006,36.700003"
@@ -275,9 +275,9 @@
                                 <local:PathButton
                                     Grid.Row="0"
                                     Grid.Column="1"
-                                    Path="Path.X"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
+                                    Path="Path.X"
                                     Style="{StaticResource Style.PathButton}" />
                             </Grid>
                         </Border>
