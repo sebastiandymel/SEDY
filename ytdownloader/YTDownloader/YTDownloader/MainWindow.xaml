@@ -11,6 +11,91 @@
     d:DataContext="{d:DesignData Source=/DesignData/MainViewModelDesignData.json,
                                  Type=local:MainViewModel}"
     mc:Ignorable="d">
+    <Window.Resources>
+        <Path
+            x:Key="Path.X"            
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Data="M34.900006,0.5 L0.50000001,35.700003 M0.50000001,0.5 L35.900006,36.700003"
+            Fill="#FFF4F4F5"
+            Stretch="Fill"
+            Stroke="Black" />
+
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle
+                            Margin="2"
+                            SnapsToDevicePixels="true"
+                            Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                            StrokeDashArray="1 2"
+                            StrokeThickness="1" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD" />
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070" />
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="LightGray" />
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1" />
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6" />
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B" />
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4" />
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5" />
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383" />
+        <Style x:Key="Style.PathButton" TargetType="{x:Type local:PathButton}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Width" Value="30" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="true">
+                            <ContentPresenter
+                                x:Name="contentPresenter"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Focusable="False"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource Button.MouseOver.Background}" />
+                                <!--<Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Button.MouseOver.Border}" />-->
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource Button.Pressed.Background}" />
+                                <!--<Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Button.Pressed.Border}" />-->
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource Button.Disabled.Background}" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Button.Disabled.Border}" />
+                                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{StaticResource Button.Disabled.Foreground}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -147,6 +232,7 @@
                                         <ControlTemplate TargetType="{x:Type ContentControl}">
                                             <Grid>
                                                 <Image
+                                                    Cursor="Hand"
                                                     RenderOptions.BitmapScalingMode="Fant"
                                                     Source="{TemplateBinding Content}"
                                                     Stretch="Uniform" />
@@ -159,8 +245,13 @@
                                                     Placement="Left"
                                                     PopupAnimation="Scroll"
                                                     StaysOpen="False"
-                                                    VerticalOffset="-5">
-                                                    <Border Margin="12" Background="White">
+                                                    VerticalOffset="-3">
+                                                    <Border
+                                                        Margin="16"
+                                                        Background="White"
+                                                        BorderBrush="Black"
+                                                        BorderThickness="1"
+                                                        CornerRadius="2">
                                                         <Image
                                                             Width="480"
                                                             Margin="4"
@@ -169,9 +260,9 @@
                                                             Stretch="Uniform" />
                                                         <Border.Effect>
                                                             <DropShadowEffect
-                                                                BlurRadius="8"
+                                                                BlurRadius="10"
                                                                 Direction="270"
-                                                                ShadowDepth="5"
+                                                                ShadowDepth="6"
                                                                 Color="Black" />
                                                         </Border.Effect>
                                                     </Border>
@@ -181,6 +272,13 @@
                                     </local:ImageWithPopup.Template>
 
                                 </local:ImageWithPopup>
+                                <local:PathButton
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Path="Path.X"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Style="{StaticResource Style.PathButton}" />
                             </Grid>
                         </Border>
                     </DataTemplate>
