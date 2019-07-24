@@ -156,10 +156,11 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     AllowsTransparency="True"
-                                                    Placement="Left"                                                    
+                                                    Placement="Left"
                                                     PopupAnimation="Scroll"
-                                                    >
-                                                    <Border Background="White">
+                                                    StaysOpen="False"
+                                                    VerticalOffset="-5">
+                                                    <Border Margin="12" Background="White">
                                                         <Image
                                                             Width="480"
                                                             Margin="4"

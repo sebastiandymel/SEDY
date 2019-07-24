@@ -50,16 +50,9 @@ namespace YTDownloader
         {
             if (EmbededPopup != null)
             {                
-                EmbededPopup.IsOpen = true;
-                EmbededPopup.Focus();
-                EmbededPopup.LostFocus += OnFocusLost;
+                EmbededPopup.IsOpen = true;         
+                
             }
-        }
-
-        private void OnFocusLost(object sender, RoutedEventArgs e)
-        {
-            EmbededPopup.LostFocus -= OnFocusLost;
-            EmbededPopup.IsOpen = false;
         }
 
         private Popup EmbededPopup
