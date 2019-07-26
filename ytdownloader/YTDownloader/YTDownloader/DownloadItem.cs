@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using YTDownloader.Engine;
 
 namespace YTDownloader

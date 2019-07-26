@@ -18,15 +18,21 @@ namespace YTDownloader.Engine
         public int DownloadProgress { get; private set; }
         public double CurrentBitRateKbps { get; private set; }
         public event EventHandler DownloadProgressChanged = delegate { };       
+        public bool IsBusy { get; private set; }
+        public event EventHandler IsBusyChanged = delegate { };
 
         public async Task Download(string targetPath)
         {
+            IsBusy = true;
+            IsBusyChanged(this, EventArgs.Empty);
             DownloadProgress = 0;
             WebClient webClient = new WebClient();
             this.downloadStartedTime = DateTime.Now;
             webClient.DownloadProgressChanged += OnDownloadProgress;
             await webClient.DownloadFileTaskAsync(this.internalUrl, targetPath);
-            webClient.DownloadProgressChanged -= OnDownloadProgress;            
+            webClient.DownloadProgressChanged -= OnDownloadProgress;
+            IsBusy = false;
+            IsBusyChanged(this, EventArgs.Empty);
         }
 
         private void OnDownloadProgress(object sender, DownloadProgressChangedEventArgs e)

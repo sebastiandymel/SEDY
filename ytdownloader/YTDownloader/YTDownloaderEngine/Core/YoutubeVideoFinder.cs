@@ -28,7 +28,14 @@ namespace YTDownloader.Engine
                     {
                         tasks[i] = Task.Run(() =>
                         {
-                            title = TryGetVideoLink(url, result, title);
+                            try
+                            {
+                                title = TryGetVideoLink(url, result, title);
+                            }
+                            catch (WebException ex)
+                            {
+                                Debug.WriteLine(ex.Message);
+                            }
                         });
                     }
                     await Task.WhenAll(tasks);

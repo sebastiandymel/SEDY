@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -13,15 +14,15 @@ namespace YTDownloader
         private readonly Action<Video> removeMe;
 
         public Video(
-            Func<YoutubeVideo<DownloadItem>, DownloadJob, DownloadItem> downloadJobFactory, 
+            Func<YoutubeVideo<DownloadItem>, DownloadJob, DownloadItem> downloadJobFactory,
             string baseurl,
-            Action<Video> removeMe) : 
+            Action<Video> removeMe) :
             base(downloadJobFactory, baseurl)
         {
-            RemoveFromListCommand = new UiCommand(RemoveItem, () => true);
+            RemoveFromListCommand = new UiCommand(RemoveItem, () => AvailableDownloads.All(x => x.Job.IsBusy == false));
             this.removeMe = removeMe;
         }
-
+        
         public ImageSource ThumbnailImage { get; private set; }
         public ImageSource ThumbnailImage2 { get; private set; }
         public UiCommand RemoveFromListCommand { get; private set; }
@@ -30,6 +31,15 @@ namespace YTDownloader
             await base.FindDownaloads();
             SetImage(() => ThumbnailImage);
             SetImage(() => ThumbnailImage2);
+            foreach (var ad in AvailableDownloads)
+            {
+                ad.Job.IsBusyChanged += OnJobBusyChanged;
+            }
+        }
+
+        private void OnJobBusyChanged(object sender, EventArgs e)
+        {
+            RemoveFromListCommand.Refresh();
         }
 
         private void SetImage(Expression<Func<ImageSource>> set)
