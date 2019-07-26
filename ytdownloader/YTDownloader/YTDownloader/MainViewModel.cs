@@ -34,7 +34,8 @@ namespace YTDownloader
             FindCommand.Refresh();
             var youtubeVideo = new Video(
                     (i, j) => new DownloadItem(j, i.Name),
-                    Url);
+                    Url,
+                    i => Items.Remove(i));
             await youtubeVideo.FindDownaloads();
             Items.Add(youtubeVideo);
             this.canExecuteFind = true;
