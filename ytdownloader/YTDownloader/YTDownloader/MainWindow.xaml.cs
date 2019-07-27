@@ -25,5 +25,13 @@ namespace YTDownloader
             InitializeComponent();
             DataContext = new MainViewModel();
         }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && ((MainViewModel)DataContext).FindCommand.CanExecute(null))
+            {
+                ((MainViewModel)DataContext).FindCommand.Execute(null);
+            }
+        }
     }
 }

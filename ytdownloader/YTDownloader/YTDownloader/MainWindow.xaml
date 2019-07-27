@@ -71,8 +71,8 @@
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Focusable="False"
-                                RecognizesAccessKey="True"
                                 Opacity="0.5"
+                                RecognizesAccessKey="True"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                         <ControlTemplate.Triggers>
@@ -80,17 +80,17 @@
                                 <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="contentPresenter" Property="Opacity" Value="1"/>
+                                <Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
                                 <Setter TargetName="border" Property="Background" Value="{StaticResource Button.MouseOver.Background}" />
                                 <!--<Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Button.MouseOver.Border}" />-->
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter TargetName="contentPresenter" Property="Opacity" Value="1"/>
+                                <Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
                                 <Setter TargetName="border" Property="Background" Value="{StaticResource Button.Pressed.Background}" />
                                 <!--<Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Button.Pressed.Border}" />-->
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.2"/>
+                                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.2" />
                                 <!--<Setter TargetName="border" Property="Background" Value="{StaticResource Button.Disabled.Background}" />-->
                                 <!--<Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Button.Disabled.Border}" />-->
                                 <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{StaticResource Button.Disabled.Foreground}" />
@@ -113,13 +113,15 @@
                 RenderOptions.BitmapScalingMode="Fant"
                 Source="ytLogo.PNG"
                 Stretch="Uniform" />
-            <TextBox
+            <local:TextBoxWithValidation
                 Width="500"
                 Height="30"
                 Margin="0,16,16,16"
                 FontFamily="Consolas"
                 FontSize="16"
-                Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}" />
+                KeyDown="TextBox_KeyDown"
+                Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}"
+                ValidationError="{Binding ValidationError}" />
             <Button
                 Width="90"
                 Height="30"
@@ -170,7 +172,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <TextBlock
-                                    FontSize="12"
+                                    FontSize="13"
                                     FontWeight="DemiBold"
                                     Text="{Binding Name}"
                                     TextTrimming="CharacterEllipsis"

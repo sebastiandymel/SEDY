@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace YTDownloader
@@ -9,6 +10,7 @@ namespace YTDownloader
     {
         private bool canExecuteFind = true;
         private string url;
+        private string validationError;
 
         public MainViewModel()
         {
@@ -16,11 +18,24 @@ namespace YTDownloader
         }
 
         public UiCommand FindCommand { get; }
-        public string Url { get => url;
-            set {
+        public string Url
+        {
+            get => url;
+            set
+            {
                 url = value;
                 OnPropertyChanged();
-            } }
+            }
+        }
+        public string ValidationError
+        {
+            get => validationError;
+            set
+            {
+                validationError = value;
+                OnPropertyChanged();
+            }
+        }
         public ObservableCollection<Video> Items { get; } = new ObservableCollection<Video>();
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
         private void OnPropertyChanged([CallerMemberName] string name = null)
@@ -30,6 +45,8 @@ namespace YTDownloader
 
         private async Task ExecuteFind()
         {
+            NotifyError(null);
+
             this.canExecuteFind = false;
             FindCommand.Refresh();
             var youtubeVideo = new Video(
@@ -37,9 +54,22 @@ namespace YTDownloader
                     Url,
                     i => Items.Remove(i));
             await youtubeVideo.FindDownaloads();
-            Items.Add(youtubeVideo);
+            if (youtubeVideo.AvailableDownloads.Count == 0)
+            {
+                NotifyError("No video files found. Check link and try again.");
+            }
+            else
+            {
+                Items.Add(youtubeVideo);
+            }
+
             this.canExecuteFind = true;
             FindCommand.Refresh();
+        }
+
+        private void NotifyError(string msg)
+        {
+            ValidationError = msg;
         }
     }
 }
