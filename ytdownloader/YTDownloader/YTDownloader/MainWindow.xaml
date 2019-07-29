@@ -12,6 +12,21 @@
                                  Type=local:MainViewModel}"
     mc:Ignorable="d">
     <Window.Resources>
+        <Storyboard x:Key="Storyboard.ItemAdded">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="main">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0.2"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="X" Storyboard.TargetName="mainTranslate">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-300"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <!--<BackEase EasingMode="EaseInOut" Amplitude="1"/>-->
+                        <ElasticEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>                
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
         <Path
             x:Key="Path.X"
             HorizontalAlignment="Left"
@@ -140,12 +155,13 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
             VerticalScrollBarVisibility="Auto">
-            <ItemsControl
+            <local:CustomItemsControl
                 Margin="12"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Top"
+                VerticalAlignment="Top"    
+                ItemAdded="{StaticResource Storyboard.ItemAdded}"
                 ItemsSource="{Binding Items}">
-                <ItemsControl.ItemTemplate>
+                <local:CustomItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border
                             Width="640"
@@ -155,13 +171,18 @@
                             BorderBrush="Black"
                             BorderThickness="1"
                             CornerRadius="2">
+                            <Border.RenderTransform>
+                                <TransformGroup>
+                                    <TranslateTransform x:Name="mainTranslate"/>
+                                </TransformGroup>
+                            </Border.RenderTransform>
                             <Border.Effect>
                                 <DropShadowEffect
                                     BlurRadius="3"
                                     ShadowDepth="1"
                                     Color="DarkGray" />
                             </Border.Effect>
-                            <Grid>
+                            <Grid x:Name="main">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
@@ -292,8 +313,8 @@
                             </Grid>
                         </Border>
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                </local:CustomItemsControl.ItemTemplate>
+            </local:CustomItemsControl>
         </ScrollViewer>
     </Grid>
 </Window>
