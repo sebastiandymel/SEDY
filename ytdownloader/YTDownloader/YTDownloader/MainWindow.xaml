@@ -27,6 +27,18 @@
                 </EasingDoubleKeyFrame>                
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="Storyboard.ItemRemoved">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="X" Storyboard.TargetName="mainScale">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="3">                   
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Y" Storyboard.TargetName="mainScale">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="3">
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
         <Path
             x:Key="Path.X"
             HorizontalAlignment="Left"
@@ -170,10 +182,11 @@
                             Background="White"
                             BorderBrush="Black"
                             BorderThickness="1"
-                            CornerRadius="2">
+                            CornerRadius="2" RenderTransformOrigin="0.5, 0.5">
                             <Border.RenderTransform>
                                 <TransformGroup>
                                     <TranslateTransform x:Name="mainTranslate"/>
+                                    <ScaleTransform x:Name="mainScale"/>
                                 </TransformGroup>
                             </Border.RenderTransform>
                             <Border.Effect>
