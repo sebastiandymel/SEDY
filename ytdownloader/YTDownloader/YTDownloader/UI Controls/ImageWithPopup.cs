@@ -15,7 +15,11 @@ namespace YTDownloader
 
         private void OnMouseLeftDown(object sender, MouseButtonEventArgs e)
         {
-            Dispatcher.BeginInvoke(new Action(() => EmbededPopup.IsOpen = true));
+            var popup = EmbededPopup;
+            if (popup != null)
+            {
+                Dispatcher.BeginInvoke(new Action(() => popup.IsOpen = true));
+            }
         }
 
         private Popup EmbededPopup
