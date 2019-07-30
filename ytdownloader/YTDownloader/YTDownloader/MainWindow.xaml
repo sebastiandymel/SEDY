@@ -13,29 +13,42 @@
     mc:Ignorable="d">
     <Window.Resources>
         <Storyboard x:Key="Storyboard.ItemAdded">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="main">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0.2"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1"/>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="main" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0.2" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1" />
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="X" Storyboard.TargetName="mainTranslate">
-                <EasingDoubleKeyFrame KeyTime="0" Value="-300"/>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="mainTranslate" Storyboard.TargetProperty="X">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-500" />
                 <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="0">
                     <EasingDoubleKeyFrame.EasingFunction>
                         <!--<BackEase EasingMode="EaseInOut" Amplitude="1"/>-->
                         <ElasticEase EasingMode="EaseOut" />
                     </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>                
+                </EasingDoubleKeyFrame>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="Storyboard.ItemRemoved">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="X" Storyboard.TargetName="mainScale">
-                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="3">                   
-                </EasingDoubleKeyFrame>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="mainTranslate" Storyboard.TargetProperty="X">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="-800" />
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Y" Storyboard.TargetName="mainScale">
-                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="3">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="main" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.4">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="mainScale" Storyboard.TargetProperty="ScaleY">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1.0" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase />
+                    </EasingDoubleKeyFrame.EasingFunction>
                 </EasingDoubleKeyFrame>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
@@ -48,7 +61,6 @@
             Fill="#FFF4F4F5"
             Stretch="Fill"
             Stroke="Black" />
-
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -144,6 +156,7 @@
                 Width="500"
                 Height="30"
                 Margin="0,16,16,16"
+                Padding="2,2,0,0"
                 FontFamily="Consolas"
                 FontSize="16"
                 KeyDown="TextBox_KeyDown"
@@ -170,8 +183,9 @@
             <local:CustomItemsControl
                 Margin="12"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Top"    
+                VerticalAlignment="Top"
                 ItemAdded="{StaticResource Storyboard.ItemAdded}"
+                ItemRemoved="{StaticResource Storyboard.ItemRemoved}"
                 ItemsSource="{Binding Items}">
                 <local:CustomItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -182,13 +196,18 @@
                             Background="White"
                             BorderBrush="Black"
                             BorderThickness="1"
-                            CornerRadius="2" RenderTransformOrigin="0.5, 0.5">
+                            CornerRadius="2"
+                            RenderTransformOrigin="0.5, 0.5">
                             <Border.RenderTransform>
                                 <TransformGroup>
-                                    <TranslateTransform x:Name="mainTranslate"/>
-                                    <ScaleTransform x:Name="mainScale"/>
+                                    <TranslateTransform x:Name="mainTranslate" />
                                 </TransformGroup>
                             </Border.RenderTransform>
+                            <Border.LayoutTransform>
+                                <TransformGroup>
+                                    <ScaleTransform x:Name="mainScale" />
+                                </TransformGroup>
+                            </Border.LayoutTransform>
                             <Border.Effect>
                                 <DropShadowEffect
                                     BlurRadius="3"

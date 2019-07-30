@@ -9,9 +9,11 @@ using YTDownloader.Engine;
 
 namespace YTDownloader
 {
-    public class Video : YoutubeVideo<DownloadItem>
+    public class Video : YoutubeVideo<DownloadItem>, IRemovable
     {
         private readonly Action<Video> removeMe;
+
+        public event EventHandler RemoveRequested = delegate { };
 
         public Video(
             Func<YoutubeVideo<DownloadItem>, DownloadJob, DownloadItem> downloadJobFactory,
@@ -65,7 +67,8 @@ namespace YTDownloader
 
         private async Task RemoveItem()
         {
-            this.removeMe(this);
+            //.removeMe(this);
+            RemoveRequested(this, EventArgs.Empty);
         }
     }
 }
