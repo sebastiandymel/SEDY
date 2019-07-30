@@ -8,6 +8,7 @@
     Title="YOUTUBE VIDEOS DOWLOADER"
     Width="800"
     Height="450"
+    Background="#ffe2e1e0"
     d:DataContext="{d:DesignData Source=/DesignData/MainViewModelDesignData.json,
                                  Type=local:MainViewModel}"
     mc:Ignorable="d">
@@ -194,7 +195,7 @@
                             Margin="12"
                             Padding="8"
                             Background="White"
-                            BorderBrush="Black"
+                            BorderBrush="DarkGray"
                             BorderThickness="1"
                             CornerRadius="2"
                             RenderTransformOrigin="0.5, 0.5">
@@ -210,7 +211,7 @@
                             </Border.LayoutTransform>
                             <Border.Effect>
                                 <DropShadowEffect
-                                    BlurRadius="3"
+                                    BlurRadius="2"
                                     ShadowDepth="1"
                                     Color="DarkGray" />
                             </Border.Effect>
