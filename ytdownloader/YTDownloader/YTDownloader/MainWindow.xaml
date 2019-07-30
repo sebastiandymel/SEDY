@@ -8,9 +8,9 @@
     Title="YOUTUBE VIDEOS DOWLOADER"
     Width="800"
     Height="450"
-    Background="#ffe2e1e0"
     d:DataContext="{d:DesignData Source=/DesignData/MainViewModelDesignData.json,
                                  Type=local:MainViewModel}"
+    Background="#ffe2e1e0"
     mc:Ignorable="d">
     <Window.Resources>
         <Storyboard x:Key="Storyboard.ItemAdded">
