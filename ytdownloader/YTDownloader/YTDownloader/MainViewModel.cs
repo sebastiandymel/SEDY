@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using YTDownloader.Wpf;
 
 namespace YTDownloader
 {
@@ -11,12 +12,15 @@ namespace YTDownloader
         private string url;
         private string validationError;
         private UserConfiguration userConfiguration = new UserConfiguration();
+        private ActivateViewRequest overlay;
 
         public MainViewModel()
         {
             FindCommand = new UiCommand(ExecuteFind, () => this.canExecuteFind && !string.IsNullOrWhiteSpace(Url));
+            OpenSettingsCommand = new UiCommand(OpenSettings, () => true);
         }
 
+        public UiCommand OpenSettingsCommand { get; }
         public UiCommand FindCommand { get; }
         public string Url
         {
@@ -33,6 +37,13 @@ namespace YTDownloader
             set
             {
                 validationError = value;
+                OnPropertyChanged();
+            }
+        }
+        public ActivateViewRequest Overlay
+        {
+            get => this.overlay;
+            set { this.overlay = value;
                 OnPropertyChanged();
             }
         }
@@ -70,6 +81,15 @@ namespace YTDownloader
         private void NotifyError(string msg)
         {
             ValidationError = msg;
+        }
+
+        private async Task OpenSettings()
+        {
+            Overlay = new ActivateViewRequest
+            {
+                Name = "UserSettings",
+                DataContext = new UserSettingsViewModel(this.userConfiguration)
+            };
         }
     }
 }

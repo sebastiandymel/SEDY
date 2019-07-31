@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Res\logo.jpg" />
+    <None Remove="UserSettings.xaml" />
     <None Remove="ytlogo.PNG" />
   </ItemGroup>
 
