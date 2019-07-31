@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,6 +10,13 @@ namespace YTDownloader
 {
     public class ViewHost: ContentControl
     {
+        private static Dictionary<string, Func<FrameworkElement>> registeredViews = new Dictionary<string, Func<FrameworkElement>>();
+
+        public static void Register(string name, Func<FrameworkElement> factory)
+        {
+            registeredViews[name] = factory;
+        }
+
         public ViewHost()
         {
             CloseCommand = new SimpleCommand(() => ActivateViewRequest = null);
@@ -48,13 +56,13 @@ namespace YTDownloader
             }
             else
             {
-                if (ActivateViewRequest.Name == "UserSettings")
+                if (registeredViews.TryGetValue(ActivateViewRequest.Name, out var factory))
                 {
-                    var view = new UserSettings();
+                    var view = factory();
                     view.DataContext = ActivateViewRequest.DataContext;
-                    Content = view;
                     Visibility = Visibility.Visible;
-                }
+                    Content = view;
+                }               
             }
         }
 

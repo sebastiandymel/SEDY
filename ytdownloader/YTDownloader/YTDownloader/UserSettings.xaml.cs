@@ -23,14 +23,4 @@ namespace YTDownloader.Wpf
             InitializeComponent();
         }
     }
-
-    public class UserSettingsViewModel
-    {
-        private readonly UserConfiguration config;
-
-        public UserSettingsViewModel(UserConfiguration config)
-        {
-            this.config = config;
-        }
-    }
 }
