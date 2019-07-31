@@ -148,10 +148,10 @@
         </Grid.RowDefinitions>
         <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
             <Image
-                Height="40"
+                Height="30"
                 Margin="16,0,16,0"
                 RenderOptions.BitmapScalingMode="Fant"
-                Source="ytLogo.PNG"
+                Source="Res\logo.jpg"
                 Stretch="Uniform" />
             <local:TextBoxWithValidation
                 Width="500"
