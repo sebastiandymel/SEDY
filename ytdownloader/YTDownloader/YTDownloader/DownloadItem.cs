@@ -9,10 +9,11 @@ namespace YTDownloader
 {
     public class DownloadItem : INotifyPropertyChanged
     {
-        public DownloadItem(DownloadJob job, string title)
+        public DownloadItem(DownloadJob job, string title, UserConfiguration userConfiguration)
         {
             Job = job;
             this.title = title;
+            this.userConfiguration = userConfiguration;
             DownloadCommand = new UiCommand(Execute, () => !this.isDownloading);
             Job.DownloadProgressChanged += OnProgressChanged;
         }
@@ -26,6 +27,15 @@ namespace YTDownloader
                 OnPropertyChanged();
             }
         }
+        public string PercentageToolTip
+        {
+            get => this.percentageTooltip;
+            set
+            {
+                this.percentageTooltip = value;
+                OnPropertyChanged();
+            }
+        }
 
         #region HELPERS
 
@@ -33,7 +43,7 @@ namespace YTDownloader
         {
             this.isDownloading = true;
             DownloadCommand.Refresh();
-            var targetFile = Path.Combine(this.targetDirectory, $@"{NormalizeToFileName(this.title)}_{Job.VideoQuality}.mp4");
+            var targetFile = Path.Combine(this.userConfiguration.DownloadDir, $@"{NormalizeToFileName(this.title)}_{Job.VideoQuality}.mp4");
             await Job.Download(targetFile);
             this.isDownloading = false;
             DownloadCommand.Refresh();
@@ -54,10 +64,11 @@ namespace YTDownloader
                 .Replace("&amp;", string.Empty);
         }
 
+        private string percentageTooltip;
         private readonly string title;
+        private readonly UserConfiguration userConfiguration;
         private bool isDownloading = false;
         private string charactersToRemoveInFileName = "\"':;.,<>!@#$%^&*()-=+?/\\}{[]";
-        private string targetDirectory = @"C:\Temp";
         private string bitRateKbs;
         private DateTime lastBitrateUpdate;
 
@@ -78,11 +89,13 @@ namespace YTDownloader
                     var rounded = Math.Round(Job.CurrentBitRateKbps, 1, MidpointRounding.AwayFromZero);
                     BitRateKbps = $@"{rounded:#.00} KB/s";
                     this.lastBitrateUpdate = DateTime.Now;
+                    PercentageToolTip = $"{Job.DownloadProgress} %";
                 }
             }
             else
             {
                 BitRateKbps = "";
+                PercentageToolTip = "";
             }
         }
         #endregion HELPERS

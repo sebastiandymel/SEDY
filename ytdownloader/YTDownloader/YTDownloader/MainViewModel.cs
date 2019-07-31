@@ -10,6 +10,7 @@ namespace YTDownloader
         private bool canExecuteFind = true;
         private string url;
         private string validationError;
+        private UserConfiguration userConfiguration = new UserConfiguration();
 
         public MainViewModel()
         {
@@ -49,7 +50,7 @@ namespace YTDownloader
             this.canExecuteFind = false;
             FindCommand.Refresh();
             var youtubeVideo = new Video(
-                    (i, j) => new DownloadItem(j, i.Name),
+                    (i, j) => new DownloadItem(j, i.Name, this.userConfiguration),
                     Url,
                     i => Items.Remove(i));
             await youtubeVideo.FindDownaloads();

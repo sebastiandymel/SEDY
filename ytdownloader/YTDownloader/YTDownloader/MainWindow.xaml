@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:local="clr-namespace:YTDownloader"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="YOUTUBE VIDEOS DOWLOADER"
@@ -147,12 +148,15 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
-            <Image
+
+            <fa:ImageAwesome
                 Height="30"
                 Margin="16,0,16,0"
-                RenderOptions.BitmapScalingMode="Fant"
-                Source="Res\logo.jpg"
-                Stretch="Uniform" />
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Foreground="#ffc4302b"
+                Icon="YoutubeSquare" />
+
             <local:TextBoxWithValidation
                 Width="500"
                 Height="30"
@@ -169,10 +173,13 @@
                 Padding="6"
                 Command="{Binding FindCommand}"
                 Content="FIND" />
-            <Button
-                Width="0"
-                Height="12.8"
-                Content="Button" />
+
+            <local:PathButton Margin="12,0,0,0" Style="{StaticResource Style.PathButton}">
+                <fa:ImageAwesome
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Icon="Cog" />
+            </local:PathButton>
         </StackPanel>
 
         <ScrollViewer
@@ -260,6 +267,8 @@
                                                     Grid.Row="1"
                                                     Grid.Column="1"
                                                     Height="30"
+                                                    ToolTip="{Binding PercentageToolTip}"
+                                                    ToolTipService.ShowDuration="100000"
                                                     Value="{Binding Job.DownloadProgress, Mode=OneWay}" />
                                                 <TextBlock
                                                     Grid.Row="1"
