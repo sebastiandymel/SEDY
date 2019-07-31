@@ -151,7 +151,7 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type local:ViewHost}">
                             <Grid>
-                                <Grid Background="DarkOrange" Opacity="0.6" />
+                                <Grid Background="DarkSlateGray" Opacity="0.6" />
                                 <StackPanel
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
@@ -228,7 +228,8 @@
             <local:PathButton
                 Margin="12,0,0,0"
                 Command="{Binding OpenSettingsCommand}"
-                Style="{StaticResource Style.PathButton}">
+                Style="{StaticResource Style.PathButton}"
+                ToolTip="Change user settings">
                 <fa:ImageAwesome
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"

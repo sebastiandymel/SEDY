@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using YTDownloader.Wpf;
 
 namespace YTDownloader
-
 {
     public class ViewHost: ContentControl
     {
@@ -41,11 +39,8 @@ namespace YTDownloader
             get { return (ICommand)GetValue(CloseCommandProperty); }
             set { SetValue(CloseCommandProperty, value); }
         }
-
         public static readonly DependencyProperty CloseCommandProperty =
             DependencyProperty.Register("CloseCommand", typeof(ICommand), typeof(ViewHost), new PropertyMetadata(null));
-
-
 
         private void Update()
         {

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace YTDownloader.Wpf
         public UserSettingsViewModel(UserConfiguration config)
         {
             this.config = config;
-            DownloadDirectory = @"C:\TEMP";
+            DownloadDirectory = config.DownloadDir;            
             BrowseCommand = new UiCommand(Browse, () => true);
         }
 

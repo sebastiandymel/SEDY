@@ -17,6 +17,9 @@ namespace YTDownloader
         {
             base.OnStartup(e);
 
+            var main = new MainWindow();
+            main.Show();
+
             ViewsRegistration.Run();
         }
     }
