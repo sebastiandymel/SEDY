@@ -279,13 +279,26 @@
                                                     FontSize="12"
                                                     Text="{Binding BitRateKbps}" />
 
-                                                <Button
+                                                <local:PathButton
+                                                    Grid.Column="2"
+                                                    Height="30"
+                                                    Margin="12,0,0,0"
+                                                    Padding="6"
+                                                    ToolTip="Download file"
+                                                    Style="{StaticResource Style.PathButton}"
+                                                    Command="{Binding DownloadCommand}">
+                                                    <fa:ImageAwesome
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Icon="Download" />
+                                                </local:PathButton>
+                                                <!--<Button
                                                     Grid.Column="2"
                                                     Height="30"
                                                     Margin="12,0,0,0"
                                                     Padding="6"
                                                     Command="{Binding DownloadCommand}"
-                                                    Content="Download" />
+                                                    Content="Download" />-->
                                             </Grid>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
