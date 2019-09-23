@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+
+<h1><span data-bind="text: name"></span></h1>
+<h1><span data-bind="text: msg"></span></h1>
+
+<!--
+    =======================================
+    VIEW MODEL
+    =======================================
+-->
+@section Scripts {
+    <script>
+        function ViewModel() {
+            this.name = "Seba BEBA";
+            this.msg = "WWW";
+        };
+        var vm = new ViewModel();
+        ko.applyBindings(vm);
+    </script>
+}
