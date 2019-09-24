@@ -24,17 +24,20 @@ def Analyze(title: str,dirPath: str, regPattern: str):
     shortDate = datetime.today().strftime('%Y-%m-%d')
     f = open(shortDate + "-output.txt", "a")
     f.write('\n' + title + '\n')
-    f.writelines(listOfFiles)
+    if len(listOfFiles):
+        f.writelines(listOfFiles)
+    else:
+        f.write('-- No differences!')
 
 # EXPRESSFIT
 pathToBrandViews = r'C:\\GIT\\Phoenix\\Integration\\Application\UserInterface\\Oasis\\BrandViews'
 Analyze(
-    "### ExpressFit specific ViewModels", 
+    "### ExpressFit specific ViewModels:", 
     pathToBrandViews, 
     "(.*)EF(.*)ViewModel.cs$"
     )
 Analyze(
-    "### ExpressFit specific Views", 
+    "### ExpressFit specific Views:", 
     pathToBrandViews, 
     "(.*)EF(.*)View.xaml$"
     )
@@ -42,24 +45,24 @@ Analyze(
 # GENIE MEDICAL
 pathToGenieMedicalViews = r'C:\\GIT\\Phoenix\\Integration\\Application\UserInterface\\GenieMedical\\GenieMedicalViews'
 Analyze(
-    "### Medical specific ViewModels", 
+    "### Medical specific ViewModels:", 
     pathToGenieMedicalViews, 
     "(.*)Medical(.*)View.xaml$"
     )
 Analyze(
-    "### Medical specific Views", 
+    "### Medical specific Views:", 
     pathToGenieMedicalViews, 
     "(.*)Medical(.*)ViewModel.cs$"
     )
 
 # HEAR SUITE
 Analyze(
-    "### HearSuite specific ViewModels", 
+    "### HearSuite specific ViewModels:", 
     pathToBrandViews,
     "(.*)HS(.*)ViewModel.cs$"
     )
 Analyze(
-    "### HearSuite specific Views", 
+    "### HearSuite specific Views:", 
     pathToBrandViews,
     "(.*)HS(.*)View.xaml$"
     )
