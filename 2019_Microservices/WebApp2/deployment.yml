@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myname123-deployment
+  labels:
+    app: myname123
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: myname123
+  template:
+    metadata:
+      labels:
+        app: myname123
+    spec:
+      containers:
+      - name: myname123
+        image: mywebapp2:1
+        imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service123
+spec:
+  type: NodePort
+  selector:
+    app: myname123
+  ports:
+    - protocol: TCP
+      port: 8090
+      targetPort: 80
+      nodePort: 32300

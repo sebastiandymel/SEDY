@@ -1,0 +1,11 @@
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Text;
+
+//namespace Utils
+//{
+//    static class ServiceBusBusConnectionString
+//    {
+//        internal const string ConnectionString = "Endpoint=sb://training-temp.servicebus.windows.net/;SharedAccessKeyName=temp;SharedAccessKey=SKQJ7ZDnLgV721h4qkFiN9WYsFCp+Mk/GcPqDn0ZXkc=";
+//    }
+//}

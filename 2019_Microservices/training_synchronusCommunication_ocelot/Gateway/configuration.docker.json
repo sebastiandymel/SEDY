@@ -1,0 +1,25 @@
+﻿{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/{url}",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/{url}",
+      "UpstreamHttpMethod": ["Get"],
+      "DownstreamHostAndPorts": [
+          {
+            "Host": "serviceapi",
+            "Port": 80
+          },
+          {
+              "Host": "serviceapi-2",
+              "Port": 80
+          }
+      ],
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+  }
+}

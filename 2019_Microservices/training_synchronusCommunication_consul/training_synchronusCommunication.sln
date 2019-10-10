@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{B1E78AB8-525B-4D2B-B3AB-26F4A4D08958}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceApi", "ServiceApi\ServiceApi.csproj", "{D5BF05EB-E824-4B86-A616-9A2926421A3C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{7A7FD1C6-82CB-4A15-8DB0-DB62468B077B}"
+	ProjectSection(SolutionItems) = preProject
+		deployment.yml = deployment.yml
+		docker-compose.yml = docker-compose.yml
+		Readme.md = Readme.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1E78AB8-525B-4D2B-B3AB-26F4A4D08958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1E78AB8-525B-4D2B-B3AB-26F4A4D08958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1E78AB8-525B-4D2B-B3AB-26F4A4D08958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1E78AB8-525B-4D2B-B3AB-26F4A4D08958}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5BF05EB-E824-4B86-A616-9A2926421A3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5BF05EB-E824-4B86-A616-9A2926421A3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5BF05EB-E824-4B86-A616-9A2926421A3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5BF05EB-E824-4B86-A616-9A2926421A3C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2239D15F-72AB-4F59-AFA1-989C793D076F}
+	EndGlobalSection
+EndGlobal

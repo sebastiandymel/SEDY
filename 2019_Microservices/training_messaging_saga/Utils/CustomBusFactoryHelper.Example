@@ -1,0 +1,20 @@
+﻿//using System;
+//using MassTransit;
+
+//namespace Utils
+//{
+//    public static class CustomBusFactoryHelper
+//    {
+//        public static IBusControl CreateInternalBusClient(Action<IBusFactoryConfigurator> additionalConfigure = null)
+//        {
+//            return RabbitMQBusFactory.CreateBusWithRabbitMQTransport(additionalConfigure);
+//            return ServiceBusBusFactory.CreateBusWithServiceBusTransport(additionalConfigure);
+//        }
+
+//        public static IBusControl CreateExternalBusClient(Action<IBusFactoryConfigurator> additionalConfigure = null)
+//        {
+//            return RabbitMQBusFactory.CreateBusWithRabbitMQTransport(additionalConfigure, "rabbitmq://localhost/");
+//            return ServiceBusBusFactory.CreateBusWithServiceBusTransport(additionalConfigure);
+//        }
+//    }
+//}

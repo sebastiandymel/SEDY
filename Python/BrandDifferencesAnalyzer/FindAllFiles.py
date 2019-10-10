@@ -27,7 +27,7 @@ def Analyze(title: str,dirPath: str, regPattern: str):
     if len(listOfFiles):
         f.writelines(listOfFiles)
     else:
-        f.write('-- No differences!')
+        f.write('-- No differences!\n')
 
 # EXPRESSFIT
 pathToBrandViews = r'C:\\GIT\\Phoenix\\Integration\\Application\UserInterface\\Oasis\\BrandViews'

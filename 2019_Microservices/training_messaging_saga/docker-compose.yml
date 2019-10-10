@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  basketservice:
+    build:
+      context: .
+      dockerfile: Basket/Dockerfile
+    networks:
+      - ms-shoppingbasket
+  rabbit:
+    image: rabbitmq:3-management
+    networks:
+      - ms-shoppingbasket
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+networks:
+  ms-shoppingbasket:

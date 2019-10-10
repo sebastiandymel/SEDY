@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  serviceapi-1:
+    build:
+      context: .
+      dockerfile: Server/Dockerfile
+    networks:
+      - ms-messaging
+  serviceapi-2:
+    build:
+      context: .
+      dockerfile: Server/Dockerfile
+    networks:
+      - ms-messaging
+  client-1:
+    build:
+      context: .
+      dockerfile: Client/Dockerfile
+    networks:
+      - ms-messaging
+
+  client-2:
+    build:
+      context: .
+      dockerfile: Client/Dockerfile
+    networks:
+      - ms-messaging
+
+  rabbit:
+    image: rabbitmq:3-management
+    networks:
+      - ms-messaging
+    ports:
+    - "15672:15672"
+    - "5672:5672"
+
+networks:
+  ms-messaging:

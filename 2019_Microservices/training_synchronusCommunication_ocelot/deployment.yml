@@ -1,0 +1,82 @@
+--- 
+apiVersion: v1
+kind: Service
+metadata: 
+  labels: 
+    service: serviceapi
+  name: serviceapi
+spec: 
+  type: ClusterIP
+  ports:
+  - name: "serviceapi"
+    port: 5400
+    targetPort: 80
+  selector: 
+    service: serviceapi
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    service: serviceapi
+  name: serviceapi
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: serviceapi
+    spec:
+      containers:
+      - image: training_synch_com_serviceapi
+        name: serviceapi
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            port: 80
+            path: /health2
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            port: 80
+            path: /api/health/ready
+          initialDelaySeconds: 3
+          periodSeconds: 3
+
+--- 
+apiVersion: v1
+kind: Service
+metadata: 
+  labels: 
+    service: gateway
+  name: gateway
+spec: 
+  type: NodePort
+  ports:
+  - name: "gateway"
+    port: 5600
+    targetPort: 80
+    nodePort: 30003
+  selector: 
+    service: gateway
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    service: gateway
+  name: gateway
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: gateway
+    spec:
+      containers:
+      - image: training_synch_com_gateway
+        name: gateway
+        imagePullPolicy: IfNotPresent

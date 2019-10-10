@@ -1,0 +1,23 @@
+version: "3.7"
+services: 
+  &MY_CONF
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile           
+      args:
+        buildno: 1
+    ports:
+    - "8080-8082:80"
+    image: mywebapp1:1
+    deploy:
+      mode: replicated
+      replicas: 2
+
+
+# services: 
+#   <<: *MY_CONF
+#   webapp:
+#     ports:
+#     - "8080:80"
+

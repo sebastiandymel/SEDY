@@ -1,0 +1,13 @@
+https://app.slack.com/client/TP30CNV2Q/CNQLK4XC2
+
+--- Day 1
+
+docker run --publish=7474:7474 --publish=7687:7687 neo4j:3.0
+
+
+docker build . -t runwebapp
+docker run --rm -p 8080:80 --name mycontainer runwebapp:latest
+
+
+
+docker rm --force $(docker ps -aq) // usun wszystkie kontenery
