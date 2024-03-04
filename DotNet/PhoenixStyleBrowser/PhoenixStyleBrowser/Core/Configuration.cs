@@ -4,7 +4,7 @@
     {
         public string GetRootPath()
         {
-            return @"C:\CODE";
+            return @"C:\GIT\Phoenix";
         }
 
         public void SaveRootPath(string value)
@@ -16,7 +16,7 @@
         {
             return new[] 
             {
-               // "Phoenix.Application.Resources.StyleLibrary.*.dll",
+                "Phoenix.Application.Resources.StyleLibrary.*.dll",
                 "Phoenix.Application.Resources.StringLibrary.*.dll",
                 "MaterialDesignThemes*.dll",
                 "DymmyStyleLibrary.dll",

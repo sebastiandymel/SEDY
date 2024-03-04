@@ -6,7 +6,7 @@ from datetime import datetime
 from PIL import Image
 from glob import glob
 
-def Resize(id: str, dirPath: str):
+def IdentifyImages(id: str, dirPath: str):
     listOfFiles = []
     result = [y for x in os.walk(dirPath) for y in glob(os.path.join(x[0], '*.png'))]
     for r in result:
@@ -14,13 +14,6 @@ def Resize(id: str, dirPath: str):
         im = Image.open(imgPath)
         width, height = im.size
         listOfFiles.append(r.replace(dirPath, "") + "," + str(width) + "x" + str(height) +"," + str(round(os.stat(imgPath).st_size / 1024, 3)))
-
-    #RESIZE IMAGE
-        if width == 640:
-            print ("resizing " + r)
-            im = im.resize((int(0.5 * width), int(0.5 * height)), Image.LANCZOS)
-            im.save(imgPath)
-            im.close()
 
     print (*listOfFiles, sep = "\n")
     
@@ -40,4 +33,7 @@ def Resize(id: str, dirPath: str):
 
 
 pathToImages = r'c:\\GIT\\Phoenix\\APP\\UserInterface\\Resources\\Genie\\StyleLibrary.Flatview\\Images\\InstrumentImages'
-Resize("genie" ,pathToImages)
+IdentifyImages("genie" ,pathToImages)
+
+pathToOasisImages = r'c:\\GIT\\Phoenix\\APP\\UserInterface\\Resources\\Oasis\\StyleLibrary.Oasis\\Images\\InstrumentImages'
+IdentifyImages("oasis" ,pathToOasisImages)

@@ -13,13 +13,16 @@ def Analyze(title: str,dirPath: str, regPattern: str):
         for filename in filenames:
             if re.match(regPattern, filename): 
                 listOfFiles.append(filename)
+    
+    listOfFiles.sort()
+    
     print(title)
     print (*listOfFiles, sep = "\n")
     
     # Prepare list for writing
     for i in range(len(listOfFiles)):
         listOfFiles[i] = listOfFiles[i] + '\n'
-    # Write to file
+    # Write to file    
 
     shortDate = datetime.today().strftime('%Y-%m-%d')
     f = open(shortDate + "-output.txt", "a")
@@ -30,7 +33,7 @@ def Analyze(title: str,dirPath: str, regPattern: str):
         f.write('-- No differences!\n')
 
 # EXPRESSFIT
-pathToBrandViews = r'C:\\GIT\\Phoenix\\Integration\\Application\UserInterface\\Oasis\\BrandViews'
+pathToBrandViews = r'C:\\GIT\\Phoenix\\APP\\UserInterface\\BrandViews\\Oasis\\BrandViews'
 Analyze(
     "### ExpressFit specific ViewModels:", 
     pathToBrandViews, 
@@ -43,16 +46,16 @@ Analyze(
     )
 
 # GENIE MEDICAL
-pathToGenieMedicalViews = r'C:\\GIT\\Phoenix\\Integration\\Application\UserInterface\\GenieMedical\\GenieMedicalViews'
+pathToGenieMedicalViews = r'C:\\GIT\\Phoenix\\APP\UserInterface\\BrandViews\\GenieMedical\\GenieMedicalViews'
 Analyze(
     "### Medical specific ViewModels:", 
     pathToGenieMedicalViews, 
-    "(.*)Medical(.*)View.xaml$"
+    "(.*)ViewModel.cs$"
     )
 Analyze(
     "### Medical specific Views:", 
     pathToGenieMedicalViews, 
-    "(.*)Medical(.*)ViewModel.cs$"
+    "(.*)View.xaml$"
     )
 
 # HEAR SUITE
@@ -65,4 +68,19 @@ Analyze(
     "### HearSuite specific Views:", 
     pathToBrandViews,
     "(.*)HS(.*)View.xaml$"
+    )
+
+
+# GENIE
+pathToGenieViews = r'c:\\GIT\\Phoenix\\APP\\UserInterface\BrandViews\\GenieShared\\Views'
+Analyze(
+    "### GenieShared specific Views:", 
+    pathToGenieViews, 
+    "(.*)View.xaml$"
+    )
+pathToGenieViews = r'c:\\GIT\\Phoenix\\APP\\UserInterface\BrandViews\\Genie\\GenieViews'
+Analyze(
+    "### Genie specific Views:", 
+    pathToGenieViews, 
+    "(.*)View.xaml$"
     )

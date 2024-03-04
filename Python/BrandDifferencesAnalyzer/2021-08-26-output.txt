@@ -1,0 +1,91 @@
+
+### ExpressFit specific ViewModels:
+GeneralControlsEFViewModel.cs
+OrganizerEFViewModel.cs
+TaskPaneEFViewModel.cs
+TinnitusControlsEFViewModel.cs
+
+### ExpressFit specific Views:
+AccessoryTuningAudioClipEFView.xaml
+AccessoryTuningAutoPhoneEFView.xaml
+AccessoryTuningDaiFmEFView.xaml
+AccessoryTuningEFView.xaml
+AccessoryTuningSmartphoneEFView.xaml
+AccessoryTuningTVBoxEFView.xaml
+AdaptationManagerEFView.xaml
+AdaptiveFeaturesEFView.xaml
+AdaptiveFeaturesNextEFView.xaml
+AmplificationEFView.xaml
+AudibleIndicatorsEFView.xaml
+AudioClipIndicatorsEFView.xaml
+AudiometricAudiogramEFView.xaml
+AutoFitEFView.xaml
+AutoFitStepAidedAutomaticEFView.xaml
+AutoFitStepAidedManualEFView.xaml
+AutoFitStepCalibrationEFView.xaml
+AutoFitStepFinishEFView.xaml
+AutoFitStepRecdEFView.xaml
+AutoFitStepSetupEFView.xaml
+AutoFitStepUnaidedEFView.xaml
+BatteryHealthEFView.xaml
+BatteryLevelEFView.xaml
+BatteryReplacementEFView.xaml
+ChannelFreeEFView.xaml
+ClientAudiogramEFView.xaml
+ClientDetailsEFView.xaml
+CrosEFView.xaml
+DataLoggingEFView.xaml
+EditClientEFView.xaml
+FeedbackManagerEFView.xaml
+FrequencyCompositionEFView.xaml
+GeneralControlsEFView.xaml
+InstrumentSelectionEFView.xaml
+NavigationHostEFView.xaml
+OrganizerEFView.xaml
+ProgramAssignmentEFView.xaml
+RecdEFView.xaml
+RemSettingsEFView.xaml
+ReplacementHistoryEFView.xaml
+ReugEFView.xaml
+SaveAndExitEFView.xaml
+SoundPreferenceEFView.xaml
+TaskPaneEFView.xaml
+TestBoxMeasurementEFView.xaml
+TinnitusControlsEFView.xaml
+TinnitusEFView.xaml
+TinnitusMaxWearingEFView.xaml
+TransferSettingsInitialEFView.xaml
+TransferSettingsStartInfoEFView.xaml
+TransferSettingsSummaryEFView.xaml
+VerifitAssistedProbeTubePlacementEFView.xaml
+VerifitAutomaticEFView.xaml
+VerifitEFView.xaml
+VerifitFinishEFView.xaml
+VerifitManualEFView.xaml
+VerifitSetupEFView.xaml
+VisualIndicatorsEFView.xaml
+
+### Medical specific ViewModels:
+BahsPanelViewModel.cs
+BinauralFittingGraphViewModel.cs
+ClientReportGenieMedicalViewModel.cs
+FeedbackManagerGenieMedicalViewModel.cs
+FittingGraphWithPictureViewModel.cs
+FittingRangesGraphGenieMedicalViewModel.cs
+InSituAudiometryGenieMedicalViewModel.cs
+InstrumentSelectionGenieMedicalViewModel.cs
+PediatricSettingsGenieMedicalViewModel.cs
+SaveAndExitGenieMedicalViewModel.cs
+ShellViewModel.cs
+StatusIndicatorWithInstrumentInfoGenieMedicalViewModel.cs
+
+### Medical specific Views:
+BahsPanelView.xaml
+FittingGraphWithPictureView.xaml
+ShellView.xaml
+
+### HearSuite specific ViewModels:
+-- No differences!
+
+### HearSuite specific Views:
+-- No differences!

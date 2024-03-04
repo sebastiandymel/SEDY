@@ -1,0 +1,168 @@
+ "PersonalizationQuestionnaires": [
+          {
+            "Id": "Questionnaire.SoundPreference",
+            "Key": "Questionnaire.SoundPreference",
+            "IsEnabled": true,
+            "Questions": [
+              {
+                "Id": "Question.01",
+                "Key": "Question.DistractedByNoise",
+                "MultiSelect": false,
+                "Answers": [
+                  {
+                    "Id": "Answer.01.01",
+                    "IsSelected": false,
+                    "Key": "Answer.AlmostNever"
+                  },
+                  {
+                    "Id": "Answer.01.02",
+                    "IsSelected": false,
+                    "Key": "Answer.Rarely"
+                  },
+                  {
+                    "Id": "Answer.01.03",
+                    "IsSelected": false,
+                    "Key": "Answer.Sometimes"
+                  },
+                  {
+                    "Id": "Answer.01.04",
+                    "IsSelected": false,
+                    "Key": "Answer.Often"
+                  },
+                  {
+                    "Id": "Answer.01.05",
+                    "IsSelected": false,
+                    "Key": "Answer.AlmostAlways"
+                  }
+                ]
+              },
+              {
+                "Id": "Question.02",
+                "Key": "Question.EnjoyDetails",
+                "MultiSelect": false,
+                "Answers": [
+                  {
+                    "Id": "Answer.02.01",
+                    "IsSelected": false,
+                    "Key": "Answer.AlmostNever"
+                  },
+                  {
+                    "Id": "Answer.02.02",
+                    "IsSelected": false,
+                    "Key": "Answer.Rarely"
+                  },
+                  {
+                    "Id": "Answer.02.03",
+                    "IsSelected": false,
+                    "Key": "Answer.Sometimes"
+                  },
+                  {
+                    "Id": "Answer.02.04",
+                    "IsSelected": false,
+                    "Key": "Answer.Often"
+                  },
+                  {
+                    "Id": "Answer.02.05",
+                    "IsSelected": false,
+                    "Key": "Answer.AlmostAlways"
+                  }
+                ]
+              },
+              {
+                "Id": "Question.03",
+                "Key": "Question.AvoidUnknown",
+                "MultiSelect": false,
+                "Answers": [
+                  {
+                    "Id": "Answer.03.01",
+                    "IsSelected": false,
+                    "Key": "Answer.AlmostNever"
+                  },
+                  {
+                    "Id": "Answer.03.02",
+                    "IsSelected": false,
+                    "Key": "Answer.Rarely"
+                  },
+                  {
+                    "Id": "Answer.03.03",
+                    "IsSelected": false,
+                    "Key": "Answer.Sometimes"
+                  },
+                  {
+                    "Id": "Answer.03.04",
+                    "IsSelected": false,
+                    "Key": "Answer.Often"
+                  },
+                  {
+                    "Id": "Answer.03.05",
+                    "IsSelected": false,
+                    "Key": "Answer.AlmostAlways"
+                  }
+                ]
+              },
+              {
+                "Id": "Question.04",
+                "Key": "Question.FocusInNoise",
+                "MultiSelect": false,
+                "Answers": [
+                  {
+                    "Id": "Answer.04.01",
+                    "IsSelected": false,
+                    "Key": "Answer.AlmostNever"
+                  },
+                  {
+                    "Id": "Answer.04.02",
+                    "IsSelected": false,
+                    "Key": "Answer.Rarely"
+                  },
+                  {
+                    "Id": "Answer.04.03",
+                    "IsSelected": false,
+                    "Key": "Answer.Sometimes"
+                  },
+                  {
+                    "Id": "Answer.04.04",
+                    "IsSelected": false,
+                    "Key": "Answer.Often"
+                  },
+                  {
+                    "Id": "Answer.04.05",
+                    "IsSelected": false,
+                    "Key": "Answer.AlmostAlways"
+                  }
+                ]
+              },
+              {
+                "Id": "Question.05",
+                "Key": "Question.SuddenSounds",
+                "MultiSelect": false,
+                "Answers": [
+                  {
+                    "Id": "Answer.05.01",
+                    "IsSelected": false,
+                    "Key": "Answer.AlmostNever"
+                  },
+                  {
+                    "Id": "Answer.05.02",
+                    "IsSelected": false,
+                    "Key": "Answer.Rarely"
+                  },
+                  {
+                    "Id": "Answer.05.03",
+                    "IsSelected": false,
+                    "Key": "Answer.Sometimes"
+                  },
+                  {
+                    "Id": "Answer.05.04",
+                    "IsSelected": false,
+                    "Key": "Answer.Often"
+                  },
+                  {
+                    "Id": "Answer.05.05",
+                    "IsSelected": false,
+                    "Key": "Answer.AlmostAlways"
+                  }
+                ]
+              }
+            ],
+            "Elements": null

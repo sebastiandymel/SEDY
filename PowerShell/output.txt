@@ -1,0 +1,220 @@
+File: Sonova.General.ApplicationTransferer.exe  # The name of the file
+Status: Valid  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate:  Sonova AG  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: sha256RSA  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate:   # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com, O=DigiCert Inc, C=US  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: CN=Sonova AG, O=Sonova AG, L=Stäfa, C=CH  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: sha256RSA  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: 05/26/2021 02:00:00  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: 07/19/2024 01:59:59  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: HI-PRO 2 Configuration.exe  # The name of the file
+Status: Valid  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate:  Natus Medical Denmark ApS  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: sha256RSA  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate:   # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: CN=Symantec Class 3 SHA256 Code Signing CA, OU=Symantec Trust Network, O=Symantec Corporation, C=US  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: CN=Natus Medical Denmark ApS, OU=Research and Development Taastrup, O=Natus Medical Denmark ApS, L=Taastrup, C=DK  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: sha256RSA  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: 10/02/2018 02:00:00  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: 10/02/2020 01:59:59  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: Driver_NLW_V.1.1.0.0.exe  # The name of the file
+Status: Valid  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate:  HIMSA A/S  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: sha256RSA  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate:   # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: CN=GlobalSign CodeSigning CA - SHA256 - G2, O=GlobalSign nv-sa, C=BE  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: CN=HIMSA A/S, OU=IT, O=HIMSA A/S, L=Copenhagen Oe, S=Copenhagen, C=DK  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: sha256RSA  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: 01/25/2016 11:09:16  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: 01/25/2019 11:09:16  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: NLWUpgrader.exe  # The name of the file
+Status: Valid  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate:  HIMSA II K/S  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: sha256RSA  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate:   # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: CN=GlobalSign GCC R45 CodeSigning CA 2020, O=GlobalSign nv-sa, C=BE  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: E=kpr@himsa.dk, CN=HIMSA II K/S, OU=IT, O=HIMSA II K/S, L=Kobenhavn, S=Kobenhavn, C=DK  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: sha256RSA  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: 01/03/2022 17:52:03  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: 01/04/2023 17:52:03  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: TV Connector Upgrader.exe  # The name of the file
+Status: Valid  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate:  Sonova AG  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: sha256RSA  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate:   # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com, O=DigiCert Inc, C=US  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: CN=Sonova AG, O=Sonova AG, L=Stäfa, C=CH  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: sha256RSA  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: 05/26/2021 02:00:00  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: 07/19/2024 01:59:59  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: ApplicationPlatform.DriverConsole.exe  # The name of the file
+Status: Valid  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate:  Sonova AG  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: sha256RSA  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate:   # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com, O=DigiCert Inc, C=US  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: CN=Sonova AG, O=Sonova AG, L=Stäfa, C=CH  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: sha256RSA  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: 05/26/2021 02:00:00  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: 07/19/2024 01:59:59  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: Sonova.Kona.MeasurementSystem.Imc2.Emulation.Server.exe  # The name of the file
+Status: Valid  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate:  Sonova AG  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: sha256RSA  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate:   # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com, O=DigiCert Inc, C=US  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: CN=Sonova AG, O=Sonova AG, L=Stäfa, C=CH  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: sha256RSA  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: 05/26/2021 02:00:00  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: 07/19/2024 01:59:59  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: Sonova.SqlCe.UpgradeConsole.exe  # The name of the file
+Status: Valid  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate:  Sonova AG  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: sha256RSA  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate:   # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com, O=DigiCert Inc, C=US  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: CN=Sonova AG, O=Sonova AG, L=Stäfa, C=CH  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: sha256RSA  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: 05/26/2021 02:00:00  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: 07/19/2024 01:59:59  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: Target.exe  # The name of the file
+Status: Valid  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate:  Sonova AG  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: sha256RSA  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate:   # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com, O=DigiCert Inc, C=US  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: CN=Sonova AG, O=Sonova AG, L=Stäfa, C=CH  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: sha256RSA  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: 05/26/2021 02:00:00  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: 07/19/2024 01:59:59  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: TargetBackupTool.exe  # The name of the file
+Status: Valid  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate:  Sonova AG  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: sha256RSA  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate:   # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com, O=DigiCert Inc, C=US  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: CN=Sonova AG, O=Sonova AG, L=Stäfa, C=CH  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: sha256RSA  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: 05/26/2021 02:00:00  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: 07/19/2024 01:59:59  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: Demant.MpHal.Ninjago.Emulation.MessageHub.exe  # The name of the file
+Status: NOT-SIGNED  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate: NOT-SIGNED  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: NOT-SIGNED  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate: NOT-SIGNED  # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: NOT-SIGNED  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: NOT-SIGNED  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: NOT-SIGNED  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: NOT-SIGNED  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: NOT-SIGNED  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: Demant.MpHal.Ninjago.Emulation.Client.exe  # The name of the file
+Status: NOT-SIGNED  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate: NOT-SIGNED  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: NOT-SIGNED  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate: NOT-SIGNED  # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: NOT-SIGNED  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: NOT-SIGNED  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: NOT-SIGNED  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: NOT-SIGNED  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: NOT-SIGNED  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: Demant.MpHal.Ninjago.Emulation.Program.exe  # The name of the file
+Status: NOT-SIGNED  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate: NOT-SIGNED  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: NOT-SIGNED  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate: NOT-SIGNED  # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: NOT-SIGNED  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: NOT-SIGNED  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: NOT-SIGNED  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: NOT-SIGNED  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: NOT-SIGNED  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: _emulator.console.exe  # The name of the file
+Status: NOT-SIGNED  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate: NOT-SIGNED  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: NOT-SIGNED  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate: NOT-SIGNED  # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: NOT-SIGNED  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: NOT-SIGNED  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: NOT-SIGNED  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: NOT-SIGNED  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: NOT-SIGNED  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: _emulator.exe  # The name of the file
+Status: NOT-SIGNED  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate: NOT-SIGNED  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: NOT-SIGNED  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate: NOT-SIGNED  # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: NOT-SIGNED  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: NOT-SIGNED  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: NOT-SIGNED  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: NOT-SIGNED  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: NOT-SIGNED  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: Genie.exe  # The name of the file
+Status: Valid  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate:  Oticon A/S  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: sha256RSA  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate:  Symantec Trust Network  # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: CN=DigiCert Trusted G4 Code Signing RSA4096 SHA384 2021 CA1, O="DigiCert, Inc.", C=US  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: CN=Oticon A/S, O=Oticon A/S, L=Smorum, C=DK  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: sha256RSA  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: 07/15/2021 02:00:00  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: 09/20/2024 01:59:59  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: Demant.MpHal.Ninjago.Emulation.MessageHub.exe  # The name of the file
+Status: NOT-SIGNED  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate: NOT-SIGNED  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: NOT-SIGNED  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate: NOT-SIGNED  # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: NOT-SIGNED  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: NOT-SIGNED  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: NOT-SIGNED  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: NOT-SIGNED  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: NOT-SIGNED  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: Demant.MpHal.Ninjago.Emulation.Client.exe  # The name of the file
+Status: NOT-SIGNED  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate: NOT-SIGNED  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: NOT-SIGNED  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate: NOT-SIGNED  # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: NOT-SIGNED  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: NOT-SIGNED  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: NOT-SIGNED  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: NOT-SIGNED  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: NOT-SIGNED  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: Demant.MpHal.Ninjago.Emulation.Program.exe  # The name of the file
+Status: NOT-SIGNED  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate: NOT-SIGNED  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: NOT-SIGNED  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate: NOT-SIGNED  # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: NOT-SIGNED  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: NOT-SIGNED  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: NOT-SIGNED  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: NOT-SIGNED  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: NOT-SIGNED  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: _emulator.console.exe  # The name of the file
+Status: NOT-SIGNED  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate: NOT-SIGNED  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: NOT-SIGNED  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate: NOT-SIGNED  # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: NOT-SIGNED  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: NOT-SIGNED  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: NOT-SIGNED  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: NOT-SIGNED  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: NOT-SIGNED  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: _emulator.exe  # The name of the file
+Status: NOT-SIGNED  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate: NOT-SIGNED  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: NOT-SIGNED  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate: NOT-SIGNED  # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: NOT-SIGNED  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: NOT-SIGNED  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: NOT-SIGNED  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: NOT-SIGNED  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: NOT-SIGNED  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.
+File: Genie.exe  # The name of the file
+Status: Valid  # The status of the signature. If it's 'NotSigned', the file is not signed. Otherwise, it shows the status of the signature.
+Signer Certificate:  Oticon A/S  # The signer certificate. This is the certificate used to sign the file.
+Digest Algorithm: sha256RSA  # The digest algorithm used for the signature. This is the algorithm used to create the hash of the file that is signed.
+Time Stamper Certificate:  Symantec Trust Network  # The time stamper certificate. This is the certificate of the authority that timestamped the signature.
+Issuer: CN=DigiCert Trusted G4 Code Signing RSA4096 SHA384 2021 CA1, O="DigiCert, Inc.", C=US  # The issuer of the signer certificate. This is the authority that issued the signer certificate.
+Subject: CN=Oticon A/S, O=Oticon A/S, L=Smorum, C=DK  # The subject of the signer certificate. This is the entity that the signer certificate was issued to.
+Signature Algorithm: sha256RSA  # The signature algorithm used for the signer certificate. This is the algorithm used to create the signature.
+Valid From: 07/15/2021 02:00:00  # The validity start date of the signer certificate. This is the date from which the signer certificate is valid.
+Valid To: 09/20/2024 01:59:59  # The validity end date of the signer certificate. This is the date until which the signer certificate is valid.

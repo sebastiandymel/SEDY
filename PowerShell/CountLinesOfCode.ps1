@@ -13,9 +13,9 @@ function CountBigFiles($directoryPath, $extension, $outputFile) {
     Where-Object{ -not $_.PSIsContainer }| 
     Where-Object{$_.FullName -notmatch 'GlobalSuppression'} |  
     Where-Object{$_.FullName -notmatch 'Resource.Designer'} | 
-    ForEach-Object { @{ File=$_.Name; Lines= $(Get-Content $_.FullName |  Measure-Object -Line).Lines } }|
+    ForEach-Object { @{ File=$_.FullName; Lines= $(Get-Content $_.FullName |  Measure-Object -Line).Lines } }|
     Where-Object { $_.Lines  -gt 1   }|
-    Select-Object -first 20000).ForEach({[PSCustomObject]$_}) |
+    Select-Object -first 20).ForEach({[PSCustomObject]$_}) |
     Sort-Object -Property Lines -Descending |
     Format-Table -AutoSize > $outputFile
 }
